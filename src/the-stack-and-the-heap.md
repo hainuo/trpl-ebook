@@ -288,7 +288,7 @@ In this case, we’ve allocated four things on the heap, but deallocated two of 
 
 Anyway, back to our example. Since this memory is on the heap, it can stay
 alive longer than the function which allocates the box. In this case, however,
-it doesn’t moving When the function is over, we need to free the stack frame
+it doesn’t [^moving] When the function is over, we need to free the stack frame
 for `main()`. `Box<T>`, though, has a trick up its sleeve: [Drop][drop]. The
 implementation of `Drop` for `Box` deallocates the memory that was allocated
 when it was created. Great! So when `x` goes away, it first frees the memory
@@ -302,17 +302,19 @@ allocated on the heap:
 | 0       | x    | ?????? |
 
 [drop]: drop.html
-[moving]: We can make the memory live longer by transferring ownership,
-          sometimes called ‘moving out of the box’. More complex examples will
-          be covered later.
+[moving]: We can make the memory live longer by transferring ownership,sometimes called ‘moving out of the box’. More complex examples will be covered later.通过转移所有者，我们可以保持更长的内存存活时间，这个有时候被称作“迁出”。稍后会有更多复杂的例子被涉及到。
 
 
 And then the stack frame goes away, freeing all of our memory.
 
-# Arguments and borrowing
+然后栈帧被移除了，所有的内存都被释放了。
 
-We’ve got some basic examples with the stack and the heap going, but what about
-function arguments and borrowing? Here’s a small Rust program:
+# Arguments and borrowing  参数和引用
+
+We’ve got some basic examples with the stack and the heap going, but what about function arguments and borrowing? Here’s a small Rust program:
+
+我们已经理解了栈和堆管理的基本例子，但是对函数的参数和引用了解到了什么？这里有一个简单的Rust程序：
+
 
 ```rust
 fn foo(i: &i32) {
@@ -329,15 +331,20 @@ fn main() {
 
 When we enter `main()`, memory looks like this:
 
+当我们进入`main()`,内存视图看起来是这样子的：
+
 | Address | Name | Value |
 |---------|------|-------|
 | 1       | y    | 0     |
 | 0       | x    | 5     |
 
-`x` is a plain old `5`, and `y` is a reference to `x`. So its value is the
-memory location that `x` lives at, which in this case is `0`.
+`x` is a plain old `5`, and `y` is a reference to `x`. So its value is the memory location that `x` lives at, which in this case is `0`.
+
+`x`被解释为5，`y`是`x`的一个引用。所以`y`的值是`x`存在时在内存中的地址——在本例子中是`0`。
 
 What about when we call `foo()`, passing `y` as an argument?
+
+当我们调用了`foo()`后，将`y`作为参数传递进去后，又是一种什么情况？
 
 | Address | Name | Value |
 |---------|------|-------|
@@ -346,18 +353,19 @@ What about when we call `foo()`, passing `y` as an argument?
 | 1       | y    | 0     |
 | 0       | x    | 5     |
 
-Stack frames aren’t just for local bindings, they’re for arguments too. So in
-this case, we need to have both `i`, our argument, and `z`, our local variable
-binding. `i` is a copy of the argument, `y`. Since `y`’s value is `0`, so is
-`i`’s.
+Stack frames aren’t just for local bindings, they’re for arguments too. So in this case, we need to have both `i`, our argument, and `z`, our local variable binding. `i` is a copy of the argument, `y`. Since `y`’s value is `0`, so is `i`’s.
 
-This is one reason why borrowing a variable doesn’t deallocate any memory: the
-value of a reference is just a pointer to a memory location. If we got rid of
-the underlying memory, things wouldn’t work very well.
+栈帧并不只是分配给局部变量的，它们也会为参数分配的。所以在本案例中，我们需要对`i`——参数，和`z`——本地局部变量分配内存栈帧
 
-# A complex example
+This is one reason why borrowing a variable doesn’t deallocate any memory: the value of a reference is just a pointer to a memory location. If we got rid of the underlying memory, things wouldn’t work very well.
+
+这就是为什么引用一个变量不会释放任何内存的一个原因：引用的值只是指向一个内存地址的指针。如果我们脱离了基础的内存，程序将不能够很好的运行。
+
+# A complex example  一个复杂的例子
 
 Okay, let’s go through this complex program step-by-step:
+
+好了，让我们一步步进入这个复杂的程序
 
 ```rust
 fn foo(x: &i32) {
@@ -391,6 +399,8 @@ fn main() {
 
 First, we call `main()`:
 
+首先，我们调用`main()`：
+
 | Address         | Name | Value          |
 |-----------------|------|----------------|
 | 2<sup>30</sup>  |      | 20             |
@@ -399,10 +409,13 @@ First, we call `main()`:
 | 1               | i    | 2<sup>30</sup> |
 | 0               | h    | 3              |
 
-We allocate memory for `j`, `i`, and `h`. `i` is on the heap, and so has a
-value pointing there.
+We allocate memory for `j`, `i`, and `h`. `i` is on the heap, and so has a value pointing there.
+
+我们为`j`,`i`和`h`分配了内存。`i`被分配在堆上，所以有一个指针在在那里。
 
 Next, at the end of `main()`, `foo()` gets called:
+
+下一步，在`main()`的最后,`foo()`被调用了：
 
 | Address         | Name | Value          |
 |-----------------|------|----------------|
@@ -415,11 +428,13 @@ Next, at the end of `main()`, `foo()` gets called:
 | 1               | i    | 2<sup>30</sup> |
 | 0               | h    | 3              |
 
-Space gets allocated for `x`, `y`, and `z`. The argument `x` has the same value
-as `j`, since that’s what we passed it in. It’s a pointer to the `0` address,
-since `j` points at `h`.
+Space gets allocated for `x`, `y`, and `z`. The argument `x` has the same value as `j`, since that’s what we passed it in. It’s a pointer to the `0` address,since `j` points at `h`.
+
+内存空间被分配给`x`,`y`和`z`。自我们将`j`传递进来后，参数`x`有一个与`j`相同的值。它是指向编号为`0`的内存地址，因为`j`指向`h`。
 
 Next, `foo()` calls `baz()`, passing `z`:
+
+然后，`foo()`调用`baz()`，传参`z`：
 
 | Address         | Name | Value          |
 |-----------------|------|----------------|
@@ -434,8 +449,9 @@ Next, `foo()` calls `baz()`, passing `z`:
 | 1               | i    | 2<sup>30</sup> |
 | 0               | h    | 3              |
 
-We’ve allocated memory for `f` and `g`. `baz()` is very short, so when it’s
-over, we get rid of its stack frame:
+We’ve allocated memory for `f` and `g`. `baz()` is very short, so when it’s over, we get rid of its stack frame:
+
+我们为`f`和`g`分配了内存。
 
 | Address         | Name | Value          |
 |-----------------|------|----------------|
@@ -467,9 +483,7 @@ Next, `foo()` calls `bar()` with `x` and `z`:
 | 1                    | i    | 2<sup>30</sup>       |
 | 0                    | h    | 3                    |
 
-We end up allocating another value on the heap, and so we have to subtract one
-from 2<sup>30</sup>. It’s easier to just write that than `1,073,741,823`. In any
-case, we set up the variables as usual.
+We end up allocating another value on the heap, and so we have to subtract one from 2<sup>30</sup>. It’s easier to just write that than `1,073,741,823`. In any case, we set up the variables as usual.
 
 At the end of `bar()`, it calls `baz()`:
 
