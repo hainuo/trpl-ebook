@@ -1,5 +1,5 @@
-% The Stack and the Heap
-
+% The Stack and the Heap   栈和堆
+ 
 As a systems language, Rust operates at a low level. If you’re coming from a
 high-level language, there are some aspects of systems programming that you may
 not be familiar with. The most important one is how memory works, with a stack
@@ -7,21 +7,31 @@ and a heap. If you’re familiar with how C-like languages use stack allocation,
 this chapter will be a refresher. If you’re not, you’ll learn about this more
 general concept, but with a Rust-y focus.
 
-# Memory management
+作为一门系统语言，rust在系统中一个比较低的层次运行。如果你来自于 高级语言，有几个系统编程方面的内容可能你不熟悉。最重要的事情是内存是如何通过栈和堆来进行工作的。如果你熟悉类似c语言的堆栈分配机制，本章将会重温一遍。如果你不熟悉，你将学到更多的通用知识，但是是站在rust语言的角度上
+
+# Memory management 内存管理
 
 These two terms are about memory management. The stack and the heap are
 abstractions that help you determine when to allocate and deallocate memory.
 
-Here’s a high-level comparison:
+有两种内存管理方式，栈和堆是抽象的，用于帮助你决定什么时候分配和释放内存。
+
+Here’s a high-level comparison:  
+
+这里有一个比较好的解释：
 
 The stack is very fast, and is where memory is allocated in Rust by default.
 But the allocation is local to a function call, and is limited in size. The
 heap, on the other hand, is slower, and is explicitly allocated by your
 program. But it’s effectively unlimited in size, and is globally accessible.
 
-# The Stack
+栈的管理是非常快的，尤其是在内存有rust语言默认进行内存分配的时候。但是这些分配是局部函数方法调用，且会收到占用空间大小的限制。另一个管理方式堆的管理相对比较就慢多了，并且由你的程序进行明确分配。优点是，它不受限于占用空间的大小，并且能够被全局访问。
+
+# The Stack  栈
 
 Let’s talk about this Rust program:
+
+让我们看看下面的rust程序
 
 ```rust
 fn main() {
@@ -33,26 +43,24 @@ This program has one variable binding, `x`. This memory needs to be allocated
 from somewhere. Rust ‘stack allocates’ by default, which means that basic
 values ‘go on the stack’. What does that mean?
 
-Well, when a function gets called, some memory gets allocated for all of its
-local variables and some other information. This is called a ‘stack frame’, and
-for the purpose of this tutorial, we’re going to ignore the extra information
-and just consider the local variables we’re allocating. So in this case, when
-`main()` is run, we’ll allocate a single 32-bit integer for our stack frame.
-This is automatically handled for you, as you can see, we didn’t have to write
-any special Rust code or anything.
+这个程序有一个变量`x`.内存需要从某一处开始分配。在rust中默认的“栈分配”有一个基本的叫法‘入栈’。那这意味着什么呢？
+
+Well, when a function gets called, some memory gets allocated for all of its local variables and some other information. This is called a ‘stack frame’, and for the purpose of this tutorial, we’re going to ignore the extra information and just consider the local variables we’re allocating. So in this case, when `main()` is run, we’ll allocate a single 32-bit integer for our stack frame.This is automatically handled for you, as you can see, we didn’t have to write any special Rust code or anything.
+
+嗯，当一个函数被调用，一些内存就会被分配给所有的局部变量和一些其他信息。这被称作“栈帧”。介于本教程的意图，我们讲忽略掉一些额外的信息，只考虑所有的局部变量。因此，在这种情况下 当 `main()`运行的时候，我们将会为“栈帧”分配一个32位的整数。这个内存分配是自动处理的，正如你所见到的，我们不需要写任何特殊的Rust代码和做其他事情。
 
 When the function is over, its stack frame gets deallocated. This happens
 automatically, we didn’t have to do anything special here.
 
-That’s all there is for this simple program. The key thing to understand here
-is that stack allocation is very, very fast. Since we know all the local
-variables we have ahead of time, we can grab the memory all at once. And since
-we’ll throw them all away at the same time as well, we can get rid of it very
-fast too.
+当一个函数执行结束，他的栈帧就会被回收，这也是自动发生的，我们不需要做任何特殊的操作。
 
-The downside is that we can’t keep values around if we need them for longer
-than a single function. We also haven’t talked about what that name, ‘stack’
-means. To do that, we need a slightly more complicated example:
+That’s all there is for this simple program. The key thing to understand here is that stack allocation is very, very fast. Since we know all the local variables we have ahead of time, we can grab the memory all at once. And since we’ll throw them all away at the same time as well, we can get rid of it very fast too.
+
+这就是这个简单的程序的全部了。我们需要弄清楚的关键事情就是栈管理操作是非常非常快的。一旦我们提前知道所有的变量，我们就能够一次抓取到所有的内存信息。同样，一旦我们在这个过程中较好的丢掉他们，我们也就能够快速的清除掉它。
+
+The downside is that we can’t keep values around if we need them for longer than a single function. We also haven’t talked about what that name, ‘stack’ means. To do that, we need a slightly more complicated example:
+
+缺点是我们不能够保持变量存在，当我们不只在一个函数中需要他们。我们同样还没有讨论‘stack’到底是什么。为了说明这一个问题，我们需要一个更复杂些的例子。
 
 ```rust
 fn foo() {
@@ -67,44 +75,44 @@ fn main() {
 }
 ```
 
-This program has three variables total: two in `foo()`, one in `main()`. Just
-as before, when `main()` is called, a single integer is allocated for its stack
-frame. But before we can show what happens when `foo()` is called, we need to
-visualize what’s going on with memory. Your operating system presents a view of
-memory to your program that’s pretty simple: a huge list of addresses, from 0
-to a large number, representing how much RAM your computer has. For example, if
-you have a gigabyte of RAM, your addresses go from `0` to `1,073,741,824`. That
-number comes from 2<sup>30</sup>, the number of bytes in a gigabyte.
+This program has three variables total: two in `foo()`, one in `main()`. Just as before, when `main()` is called, a single integer is allocated for its stack frame. But before we can show what happens when `foo()` is called, we need to visualize what’s going on with memory. Your operating system presents a view of memory to your program that’s pretty simple: a huge list of addresses, from 0 to a large number, representing how much RAM your computer has. For example, if you have a gigabyte of RAM, your addresses go from `0` to `1,073,741,824`. That number comes from 2<sup>30</sup>, the number of bytes in a gigabyte.
+
+这个程序总共有三个变量：2个在`foo()`中，一个在`main()`中。就像签一个例子，当`main()`被执行时，一个整数被分配在栈帧上。但是，在我们展示当`foo()`被执行时发生什么前，我们需要想象一下在内存中发生了什么。你的操作系统呈现程序的内存视图是非常简单的：一个从0到一个很大的数字的很长的地址列表用来表示你的电脑中有多少内存空间。例如，如果你有一个1G的内存，你的地址列表将是从`0`到`1,073,741,824`。这个数字是2<sup>30</sup>，1GB所表示的字节数。
 
 This memory is kind of like a giant array: addresses start at zero and go
 up to the final number. So here’s a diagram of our first stack frame:
 
-| Address | Name | Value |
+内存像是一个巨大的数组，地址从0开始走到最终数目。所以我们第一个栈帧的图表如下
+
+
+| Address 地址 | Name 名称 | Value 值 |
 |---------|------|-------|
 | 0       | x    | 42    |
 
 We’ve got `x` located at address `0`, with the value `42`.
+我们在地址`0`处得到`x`,他的值是`42`.
 
 When `foo()` is called, a new stack frame is allocated:
 
-| Address | Name | Value |
+当`foo()`被执行时，一下新的栈帧被分配出来：
+
+| Address 地址 | Name 名称 | Value 值 |
 |---------|------|-------|
 | 2       | z    | 100   |
 | 1       | y    | 5     |
 | 0       | x    | 42    |
 
-Because `0` was taken by the first frame, `1` and `2` are used for `foo()`’s
-stack frame. It grows upward, the more functions we call.
+Because `0` was taken by the first frame, `1` and `2` are used for `foo()`’s stack frame. It grows upward, the more functions we call.
 
+因为`0`被第一帧占用，所以`1`和`2`被用于`foo()`的栈帧。我们调用的函数越多，他增长的越快。
 
-There’s some important things we have to take note of here. The numbers 0, 1,
-and 2 are all solely for illustrative purposes, and bear no relationship to the
-actual numbers the computer will actually use. In particular, the series of
-addresses are in reality going to be separated by some number of bytes that
-separate each address, and that separation may even exceed the size of the
-value being stored.
+There’s some important things we have to take note of here. The numbers 0, 1, and 2 are all solely for illustrative purposes, and bear no relationship to the actual numbers the computer will actually use. In particular, the series of addresses are in reality going to be separated by some number of bytes that separate each address, and that separation may even exceed the size of the value being stored.
+
+这里有些特别重要的地方需要我们注意。数字0,1和2只是用来表名我们的意图，和电脑中实际使用的真实数目没有任何关系。特别是在实际中，系列中的地址是被一些字节数分离开的，并且有些分离甚至超过了数据被分配的大小。
 
 After `foo()` is over, its frame is deallocated:
+
+在`foo()`执行结束后，他的栈帧被释放了：
 
 | Address | Name | Value |
 |---------|------|-------|
@@ -112,12 +120,18 @@ After `foo()` is over, its frame is deallocated:
 
 And then, after `main()`, even this last value goes away. Easy!
 
+然后，`main()`执行结束后，连最终的数据都被清空了。真简单!
+
 It’s called a ‘stack’ because it works like a stack of dinner plates: the first
 plate you put down is the last plate to pick back up. Stacks are sometimes
 called ‘last in, first out queues’ for this reason, as the last value you put
 on the stack is the first one you retrieve from it.
 
+它被称之为“栈”是因为它工作起来向是一摞餐盘
+
 Let’s try a three-deep example:
+
+让我们尝试一下三层嵌套的例子：
 
 ```rust
 fn bar() {
@@ -141,11 +155,15 @@ fn main() {
 
 Okay, first, we call `main()`:
 
+OK，首先我们执行`main()`:
+
 | Address | Name | Value |
 |---------|------|-------|
 | 0       | x    | 42    |
 
 Next up, `main()` calls `foo()`:
+
+下一步，`mian()` 调用`foo()`:
 
 | Address | Name | Value |
 |---------|------|-------|
@@ -156,6 +174,8 @@ Next up, `main()` calls `foo()`:
 
 And then `foo()` calls `bar()`:
 
+然后，`foo()` 调用`bar()`:
+
 | Address | Name | Value |
 |---------|------|-------|
 | 4       | i    | 6     |
@@ -165,9 +185,11 @@ And then `foo()` calls `bar()`:
 | 0       | x    | 42    |
 
 Whew! Our stack is growing tall.
+噢，我们的栈长高了。
 
 After `bar()` is over, its frame is deallocated, leaving just `foo()` and
 `main()`:
+当`bar()`调用结束，他的栈帧被释放，只留下`foo()`和`main()`：
 
 | Address | Name | Value |
 |---------|------|-------|
@@ -176,23 +198,31 @@ After `bar()` is over, its frame is deallocated, leaving just `foo()` and
 | 1       | a    | 5     |
 | 0       | x    | 42    |
 
-And then `foo()` ends, leaving just `main()`
+And then `foo()` ends, leaving just `main()`:
+
+然后 `foo()`运行结束，只剩下`main()`：
 
 | Address | Name | Value |
 |---------|------|-------|
 | 0       | x    | 42    |
 
-And then we’re done. Getting the hang of it? It’s like piling up dishes: you
-add to the top, you take away from the top.
+And then we’re done. Getting the hang of it? It’s like piling up dishes: you add to the top, you take away from the top.
 
-# The Heap
+然后，运行结束。懂得它的窍门了吗？这就像我们堆放的零食：你放在顶部，然后从顶部拿走。
 
-Now, this works pretty well, but not everything can work like this. Sometimes,
-you need to pass some memory between different functions, or keep it alive for
-longer than a single function’s execution. For this, we can use the heap.
+# The Heap 堆
+
+Now, this works pretty well, but not everything can work like this. Sometimes,you need to pass some memory between different functions, or keep it alive for longer than a single function’s execution. For this, we can use the heap.
+
+现在，它运行的很好，但是并不是所有的事情都能够像那样运行。有些时候，你需要在几个不同的函数中传递内存，或者保持它存在时间比函数执行时间还要长久。为达到这个目的，我们可以使用堆。
 
 In Rust, you can allocate memory on the heap with the [`Box<T>` type][box].
+
+在Rust语言中，你能够以盒模型([`Box<T>` type][box])的方式在堆上分配内存。
+
 Here’s an example:
+
+下面是一个例子
 
 ```rust
 fn main() {
@@ -205,17 +235,16 @@ fn main() {
 
 Here’s what happens in memory when `main()` is called:
 
+当`main()`被执行时，内存发生如下变化:
+
 | Address | Name | Value  |
 |---------|------|--------|
 | 1       | y    | 42     |
 | 0       | x    | ?????? |
 
-We allocate space for two variables on the stack. `y` is `42`, as it always has
-been, but what about `x`? Well, `x` is a `Box<i32>`, and boxes allocate memory
-on the heap. The actual value of the box is a structure which has a pointer to
-‘the heap’. When we start executing the function, and `Box::new()` is called,
-it allocates some memory for the heap, and puts `5` there. The memory now looks
-like this:
+We allocate space for two variables on the stack. `y` is `42`, as it always has been, but what about `x`? Well, `x` is a `Box<i32>`, and boxes allocate memory on the heap. The actual value of the box is a structure which has a pointer to ‘the heap’. When we start executing the function, and `Box::new()` is called,it allocates some memory for the heap, and puts `5` there. The memory now lookslike this:
+
+我们在栈上分配了两个变量的空间。`y`是`42`,它永远都是，但是`x`呢？好吧，`x`是一个盒模型`Box<i32>`, 盒模型分配的内存是在堆上的。盒模型实际上是一个结构体，它有一个指向“堆”的指针。当我们开始执行函数的时候，`Box::new()`被调用了，它在堆上分配了一些内存，并把`5`放在那些内存地址上。现在内存看起来像是这样：
 
 | Address         | Name | Value          |
 |-----------------|------|----------------|
@@ -231,16 +260,13 @@ of the struct at `x` has a [raw pointer][rawpointer] to the place we’ve
 allocated on the heap, so the value of `x` is 2<sup>30</sup>, the memory
 location we’ve asked for.
 
+在我们假定的电脑的1G内存上我们有2<sup>30</sup>个地址。一旦我们的栈从0开始增长，最容易的方式是从另一端分配内存。所以，我们的第一个值时在内存地址最大的地方。x结构体的值有一个[原始指针][rawpointer] 指向我们在堆上申请的地址，所以x结构体的值是我们申请的内存地址——2<sup>30</sup>。
+
 [rawpointer]: raw-pointers.html
 
-We haven’t really talked too much about what it actually means to allocate and
-deallocate memory in these contexts. Getting into very deep detail is out of
-the scope of this tutorial, but what’s important to point out here is that
-the heap isn’t just a stack that grows from the opposite end. We’ll have an
-example of this later in the book, but because the heap can be allocated and
-freed in any order, it can end up with ‘holes’. Here’s a diagram of the memory
-layout of a program which has been running for a while now:
+We haven’t really talked too much about what it actually means to allocate and deallocate memory in these contexts. Getting into very deep detail is out of the scope of this tutorial, but what’s important to point out here is that the heap isn’t just a stack that grows from the opposite end. We’ll have an example of this later in the book, but because the heap can be allocated and freed in any order, it can end up with ‘holes’. Here’s a diagram of the memory layout of a program which has been running for a while now:
 
+我们还没有真正探讨实际意义上的上下文内存分配和释放问题。谈论更深层次的细节超出了本书的内容范围，但是需要指出的是，堆并不总是从另一端开始的栈。稍后，本书中会有一个关于这个的例子，但是由于堆可以以任何顺序分配和释放，他可能产生漏洞。这里有一个正在运行的程序的内存层的视图：
 
 | Address              | Name | Value                |
 |----------------------|------|----------------------|
@@ -254,22 +280,21 @@ layout of a program which has been running for a while now:
 | 1                    | y    | 42                   |
 | 0                    | x    | 2<sup>30</sup>       |
 
-In this case, we’ve allocated four things on the heap, but deallocated two of
-them. There’s a gap between 2<sup>30</sup> and (2<sup>30</sup>) - 3 which isn’t
-currently being used. The specific details of how and why this happens depends
-on what kind of strategy you use to manage the heap. Different programs can use
-different ‘memory allocators’, which are libraries that manage this for you.
-Rust programs use [jemalloc][jemalloc] for this purpose.
+In this case, we’ve allocated four things on the heap, but deallocated two of them. There’s a gap between 2<sup>30</sup> and (2<sup>30</sup>) - 3 which isn’t currently being used. The specific details of how and why this happens depends on what kind of strategy you use to manage the heap. Different programs can use different ‘memory allocators’, which are libraries that manage this for you.Rust programs use [jemalloc][jemalloc] for this purpose.
+
+在这种情况下，我们分配了四个结构体在堆上，并且释放了他们中的两个。在2<sup>30</sup> 和 (2<sup>30</sup>) - 3之间有一个间隙，在当前的内存中没有被使用。为什么会产生这么特殊的情况取决于你用何种策略来管理堆。不同的程序使用不同“内存分配器”——就是为你管理堆的库。Rust程序使用[jemalloc][jemalloc] 来达到这一目的。
 
 [jemalloc]: http://www.canonware.com/jemalloc/
 
 Anyway, back to our example. Since this memory is on the heap, it can stay
 alive longer than the function which allocates the box. In this case, however,
-it doesn’t.[^moving] When the function is over, we need to free the stack frame
+it doesn’t moving When the function is over, we need to free the stack frame
 for `main()`. `Box<T>`, though, has a trick up its sleeve: [Drop][drop]. The
 implementation of `Drop` for `Box` deallocates the memory that was allocated
 when it was created. Great! So when `x` goes away, it first frees the memory
 allocated on the heap:
+
+让我们回到我们的例子中来。一旦内存在堆上，它就能够比分配盒模型空间的函数存在时间更长。然而在这种情况下，在函数运行结束的时候，它不能够移除，我们需要为`main()`.`Box<T>`释放栈帧，不过有一个诀窍来解决他的遗留： [Drop][drop]。当为`Box`执行`Drop`的操作时，释放了在它被创建时分配的内存。强大！所以，当`x`被注销时，首先释放的是在堆上分配的内存空间：
 
 | Address | Name | Value  |
 |---------|------|--------|

@@ -1,2 +1,6 @@
 dist/
 .DS_Store
+
+rustlanguage.sublime-project
+
+rustlanguage.sublime-workspace
