@@ -3,7 +3,7 @@
 
 由 @hainuo 翻译成中文，由于第一次翻译科技文献，不太熟悉英语的表达方式，所以可能有不少地方不到位请大家见谅，并指出其中翻译错误地方，以便 @hainuo 进行修正；另外由于是根据个人兴趣进行翻译，可能你所需要的章节没有翻译，如果你想加入到翻译中来，请fork 并提交pull request
 
-##翻译进度（已经完成张姐列表）
+##翻译进度（已经完成章节列表）
 + 第四章  内存管理
   - 第一节
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
