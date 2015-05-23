@@ -451,11 +451,11 @@ Next, `foo()` calls `baz()`, passing `z`:
 
 We’ve allocated memory for `f` and `g`. `baz()` is very short, so when it’s over, we get rid of its stack frame:
 
-我们为`f`和`g`分配了内存。
+我们为`f`和`g`分配了内存。函数`baz()`非常短，所以当他结束的时候，我们清除了它的栈帧。
 
 | Address         | Name | Value          |
 |-----------------|------|----------------|
-| 2<sup>30</sup>  |      | 20             |
+| 2<sup>30</sup>  | ...  | 20             |
 | ...             | ...  | ...            |
 | 5               | z    | 4              |
 | 4               | y    | 10             |
@@ -466,10 +466,12 @@ We’ve allocated memory for `f` and `g`. `baz()` is very short, so when it’s 
 
 Next, `foo()` calls `bar()` with `x` and `z`:
 
+然后是，`foo()`调用了`bar()`，使用`x`和`z`作为参数：
+
 | Address              | Name | Value                |
 |----------------------|------|----------------------|
-|  2<sup>30</sup>      |      | 20                   |
-| (2<sup>30</sup>) - 1 |      | 5                    |
+|  2<sup>30</sup>      | ...  | 20                   |
+| (2<sup>30</sup>) - 1 | ...  | 5                    |
 | ...                  | ...  | ...                  |
 | 10                   | e    | 9                    |
 | 9                    | d    | (2<sup>30</sup>) - 1 |
@@ -485,7 +487,11 @@ Next, `foo()` calls `bar()` with `x` and `z`:
 
 We end up allocating another value on the heap, and so we have to subtract one from 2<sup>30</sup>. It’s easier to just write that than `1,073,741,823`. In any case, we set up the variables as usual.
 
+我们不能够在堆上分配另一个值，所以我们必须在内存地址2<sup>30</sup>-1处分配。这么标记只是因为它比`1,073,741,823`好写。无论任何情况，我们像平常一样建立了变量。
+
 At the end of `bar()`, it calls `baz()`:
+
+在函数`bar()`的最后，它调用了函数`baz()`：
 
 | Address              | Name | Value                |
 |----------------------|------|----------------------|
@@ -506,10 +512,13 @@ At the end of `bar()`, it calls `baz()`:
 | 1                    | i    | 2<sup>30</sup>       |
 | 0                    | h    | 3                    |
 
-With this, we’re at our deepest point! Whew! Congrats for following along this
-far.
+With this, we’re at our deepest point! Whew! Congrats for following along this far.
+
+通过这个，我们到达了最深层！恭喜你跟随着走了这么远。
 
 After `baz()` is over, we get rid of `f` and `g`:
+
+`baz()`结束后，我们清除了`f`和`g`：
 
 | Address              | Name | Value                |
 |----------------------|------|----------------------|
@@ -531,6 +540,8 @@ After `baz()` is over, we get rid of `f` and `g`:
 Next, we return from `bar()`. `d` in this case is a `Box<T>`, so it also frees
 what it points to: (2<sup>30</sup>) - 1.
 
+然后，我们返回到函数`bar()`。在本案例中`d` 是一个盒模型`Box<T>`,所以它指向的内存地址(2<sup>30</sup>) - 1 同样被释放了。
+
 | Address         | Name | Value          |
 |-----------------|------|----------------|
 |  2<sup>30</sup> |      | 20             |
@@ -544,6 +555,8 @@ what it points to: (2<sup>30</sup>) - 1.
 
 And after that, `foo()` returns:
 
+之后，返回到了函数`foo()`：
+
 | Address         | Name | Value          |
 |-----------------|------|----------------|
 |  2<sup>30</sup> |      | 20             |
@@ -552,58 +565,47 @@ And after that, `foo()` returns:
 | 1               | i    | 2<sup>30</sup> |
 | 0               | h    | 3              |
 
-And then, finally, `main()`, which cleans the rest up. When `i` is `Drop`ped,
-it will clean up the last of the heap too.
+And then, finally, `main()`, which cleans the rest up. When `i` is `Drop`ped,it will clean up the last of the heap too.
 
-# What do other languages do?
+最终，`main()`开始清理释放。当`i`被`Drop`的时候，它同样将清理掉最后的堆。
 
-Most languages with a garbage collector heap-allocate by default. This means
-that every value is boxed. There are a number of reasons why this is done, but
-they’re out of scope for this tutorial. There are some possible optimizations
-that don’t make it true 100% of the time, too. Rather than relying on the stack
-and `Drop` to clean up memory, the garbage collector deals with the heap
-instead.
+# What do other languages do?  其他的语言是怎么做的？
 
-# Which to use?
+Most languages with a garbage collector heap-allocate by default. This means that every value is boxed. There are a number of reasons why this is done, but they’re out of scope for this tutorial. There are some possible optimizations that don’t make it true 100% of the time, too. Rather than relying on the stack and `Drop` to clean up memory, the garbage collector deals with the heap instead.
 
-So if the stack is faster and easier to manage, why do we need the heap? A big
-reason is that Stack-allocation alone means you only have LIFO semantics for
-reclaiming storage. Heap-allocation is strictly more general, allowing storage
-to be taken from and returned to the pool in arbitrary order, but at a
+大多数的语言默认有一个垃圾回收器。这意味着，每一个值都是一个盒模型。这样做有许多原因，他们超出了本教程的范围，故不在此赘述。同样，这些可能的优化并不总是保证100%正确。但是垃圾回收器使用堆管理而不是依赖栈和“Drop”来清理内存。
+
+# Which to use?  到底该使用哪一种
+
+So if the stack is faster and easier to manage, why do we need the heap? A big reason is that Stack-allocation alone means you only have LIFO semantics for reclaiming storage. Heap-allocation is strictly more general, allowing storage to be taken from and returned to the pool in arbitrary order, but at a
 complexity cost.
 
-Generally, you should prefer stack allocation, and so, Rust stack-allocates by
-default. The LIFO model of the stack is simpler, at a fundamental level. This
-has two big impacts: runtime efficiency and semantic impact.
+那么尽管栈操作比较快，且更容易管理，我们为什么还需要堆？一个很大方面的原因是栈分配意味着你只有先进后出，后进先出的方式来声明存储空间。堆分配更加通用一些，允许内存空间以任意顺序方式分配和返回到内存池，但是这需要付出一个复杂度大小的代价。
 
-## Runtime Efficiency.
+Generally, you should prefer stack allocation, and so, Rust stack-allocates by default. The LIFO model of the stack is simpler, at a fundamental level. This has two big impacts: runtime efficiency and semantic impact.
 
-Managing the memory for the stack is trivial: The machine just
-increments or decrements a single value, the so-called “stack pointer”.
-Managing memory for the heap is non-trivial: heap-allocated memory is freed at
-arbitrary points, and each block of heap-allocated memory can be of arbitrary
-size, the memory manager must generally work much harder to identify memory for
-reuse.
+通常，我们选择栈分配，同样Rust语言也是默认使用栈分配。在系统基础层面上，栈的先进后出的方式是比较简单的。这会产生两个方面的影响：执行效率和语义对撞。
 
-If you’d like to dive into this topic in greater detail, [this paper][wilson]
-is a great introduction.
+## Runtime Efficiency. 
+
+Managing the memory for the stack is trivial: The machine just increments or decrements a single value, the so-called “stack pointer”.Managing memory for the heap is non-trivial: heap-allocated memory is freed at
+arbitrary points, and each block of heap-allocated memory can be of arbitrary size, the memory manager must generally work much harder to identify memory for reuse.
+
+栈的内存管理是琐碎的：机器只能够递增或者递减一个值，这个被称作“堆栈指针”。堆的内存管理是不琐碎的：堆分配内存可以被随意的释放，并且堆分配内存的每一块都可以是任意大小，内存管理者必须费力运行，以保证内存确认可用的内存被重新使用
+
+If you’d like to dive into this topic in greater detail, [this paper][wilson] is a great introduction.
+
+如果你想喜欢本话题的更深层次，[this paper][wilson] 是一个非常不错的介绍。
 
 [wilson]: http://www.cs.northwestern.edu/~pdinda/icsclass/doc/dsa.pdf
 
 ## Semantic impact 
 
-Stack-allocation impacts the Rust language itself, and thus the developer’s
-mental model. The LIFO semantics is what drives how the Rust language handles
-automatic memory management. Even the deallocation of a uniquely-owned
-heap-allocated box can be driven by the stack-based LIFO semantics, as
-discussed throughout this chapter. The flexibility (i.e. expressiveness) of non
-LIFO-semantics means that in general the compiler cannot automatically infer at
-compile-time where memory should be freed; it has to rely on dynamic protocols,
-potentially from outside the language itself, to drive deallocation (reference
+Stack-allocation impacts the Rust language itself, and thus the developer’s mental model. The LIFO semantics is what drives how the Rust language handles automatic memory management. Even the deallocation of a uniquely-owned heap-allocated box can be driven by the stack-based LIFO semantics, as discussed throughout this chapter. The flexibility (i.e. expressiveness) of non LIFO-semantics means that in general the compiler cannot automatically infer at compile-time where memory should be freed; it has to rely on dynamic protocols,potentially from outside the language itself, to drive deallocation (reference
 counting, as used by `Rc<T>` and `Arc<T>`, is one example of this).
 
-When taken to the extreme, the increased expressive power of heap allocation
-comes at the cost of either significant runtime support (e.g. in the form of a
-garbage collector) or significant programmer effort (in the form of explicit
-memory management calls that require verification not provided by the Rust
-compiler).
+栈分配影响着Rust语言本身和开发者的心智模型。后进先出的哲学驱动着Rust语言如何自动进行内存管理。甚至于就像本章中探讨的，独有的堆分配也是被基于栈分配的后进先出的哲学来驱动的。非后进先出的灵活性（即表现）是指在编译器在编译过程中无法自动推断某些内存应该被释放时，它不得不依赖于来字语言本身之外的动态协议，来驱动释放操作——参考：`Rc<T>`和`Arc<T>`的用法就是一个关于这方面的例子。
+
+When taken to the extreme, the increased expressive power of heap allocation comes at the cost of either significant runtime support (e.g. in the form of a garbage collector) or significant programmer effort (in the form of explicit memory management calls that require verification not provided by the Rust compiler).
+
+当到了极致的时候，随着不断增加的堆分配的表现力来自于每一个重要运行时支持的成本（比如垃圾回收器的形式）或者重要成员（在Rust编译器提供的方法之外的明确的内存管理形式上）所花费的精力。
