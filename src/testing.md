@@ -1,27 +1,27 @@
-% Testing
+% Testing 测试
 
-> Program testing can be a very effective way to show the presence of bugs, but
-> it is hopelessly inadequate for showing their absence.
->
-> Edsger W. Dijkstra, "The Humble Programmer" (1972)
+> Program testing can be a very effective way to show the presence of bugs, butit is hopelessly inadequate for showing their absence.Edsger W. Dijkstra, "The Humble Programmer" (1972)
+> 
+> “程序测试是表明存在故障的非常有效的方法，但对于证明没有故障，调试是很无能为力的。” 艾兹格·迪科斯彻  《谦卑的程序员》 1972
 
-Let's talk about how to test Rust code. What we will not be talking about is
-the right way to test Rust code. There are many schools of thought regarding
-the right and wrong way to write tests. All of these approaches use the same
-basic tools, and so we'll show you the syntax for using them.
+Let's talk about how to test Rust code. What we will not be talking about is the right way to test Rust code. There are many schools of thought regarding the right and wrong way to write tests. All of these approaches use the same basic tools, and so we'll show you the syntax for using them.
 
-# The `test` attribute
+那么，我们来讨论下如何调试Rust代码。我们不会讨论调试Rust代码的正确方法。有很多在写测试代码的正确和错误方式方面有想法的学校。他们都在使用最基本的工具，所以我们将告诉你使用它们的方法。
 
-At its simplest, a test in Rust is a function that's annotated with the `test`
-attribute. Let's make a new project with Cargo called `adder`:
+# The `test` attribute `test`属性
+
+At its simplest, a test in Rust is a function that's annotated with the `test` attribute. Let's make a new project with Cargo called `adder`:
+
+简单说来，Rust语言中的测试代码是一个函数，它使用`test`属性作为注解。现在，让我们使用`Cargo new` 新建一个名为`adder`的项目：
 
 ```bash
 $ cargo new adder
 $ cd adder
 ```
 
-Cargo will automatically generate a simple test when you make a new project.
-Here's the contents of `src/lib.rs`:
+Cargo will automatically generate a simple test when you make a new project.Here's the contents of `src/lib.rs`:
+
+当你新建一个项目的时候，`Cargo` 将自动生成一个简单的测试. 下面是`src/lib.rs`文件的内容：
 
 ```rust
 #[test]
@@ -29,9 +29,9 @@ fn it_works() {
 }
 ```
 
-Note the `#[test]`. This attribute indicates that this is a test function. It
-currently has no body. That's good enough to pass! We can run the tests with
-`cargo test`:
+Note the `#[test]`. This attribute indicates that this is a test function. It currently has no body. That's good enough to pass! We can run the tests with `cargo test`:
+
+
 
 ```bash
 $ cargo test
