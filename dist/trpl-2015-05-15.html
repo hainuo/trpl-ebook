@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="The Rust Team">
+  <meta name="author" content="The Rust Team，hainuo">
   <meta name="dcterms.date" content="2015-05-15">
-  <title>The Rust Programming Language</title>
+  <title>The Rust Programming Language Rust编程语言</title>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -37,12 +37,12 @@ code > span.er { font-weight: bold; }
 
 
 <header>
-  <h1 class="title">The Rust Programming Language</h1>
+  <h1 class="title">The Rust Programming Language Rust编程语言</h1>
 
   
   <div class="byline vcard">
     <address>
-          <p class="author">The Rust Team</p>
+          <p class="author">The Rust Team，hainuo</p>
         </address>
       <time pubdate="pubdate" date="2015-05-15" class="date">2015-05-15</time>
     </div>
@@ -91,10 +91,10 @@ code > span.er { font-weight: bold; }
   <li><a href="#which-to-use-到底该使用哪一种">Which to use? 到底该使用哪一种</a></li>
   </ul></li>
   <li><a href="#sec--testing">Testing</a><ul>
-  <li><a href="#the-test-attribute">The <code>test</code> attribute</a></li>
-  <li><a href="#the-tests-module">The <code>tests</code> module</a></li>
-  <li><a href="#the-tests-directory">The <code>tests</code> directory</a></li>
-  <li><a href="#documentation-tests">Documentation tests</a></li>
+  <li><a href="#the-test-attribute-test属性">The <code>test</code> attribute <code>test</code>属性</a></li>
+  <li><a href="#the-tests-module-tests单元">The <code>tests</code> module <code>tests</code>单元</a></li>
+  <li><a href="#the-tests-directory-tests目录">The <code>tests</code> directory <code>tests</code>目录</a></li>
+  <li><a href="#documentation-tests-文档测试">Documentation tests 文档测试</a></li>
   </ul></li>
   <li><a href="#sec--conditional-compilation">Conditional Compilation</a><ul>
   <li><a href="#cfg_attr">cfg_attr</a></li>
@@ -2700,45 +2700,56 @@ code > span.er { font-weight: bold; }
   <p>当到了极致的时候，随着不断增加的堆分配的表现力来自于每一个重要运行时支持的成本（比如垃圾回收器的形式）或者重要成员（在Rust编译器提供的方法之外的明确的内存管理形式上）所花费的精力。</p>
   <h2 id="sec--testing">Testing</h2>
   <blockquote>
-  <p>Program testing can be a very effective way to show the presence of bugs, but it is hopelessly inadequate for showing their absence.</p>
-  <p>Edsger W. Dijkstra, “The Humble Programmer” (1972)</p>
+  <p>Program testing can be a very effective way to show the presence of bugs, butit is hopelessly inadequate for showing their absence.Edsger W. Dijkstra, “The Humble Programmer” (1972)</p>
+  <p>“程序测试是表明存在故障的非常有效的方法，但对于证明没有故障，调试是很无能为力的。” 艾兹格·迪科斯彻 《谦卑的程序员》 1972</p>
   </blockquote>
   <p>Let’s talk about how to test Rust code. What we will not be talking about is the right way to test Rust code. There are many schools of thought regarding the right and wrong way to write tests. All of these approaches use the same basic tools, and so we’ll show you the syntax for using them.</p>
-  <h3 id="the-test-attribute">The <code>test</code> attribute</h3>
+  <p>那么，我们来讨论下如何调试Rust代码。我们不会讨论调试Rust代码的正确方法。有很多在写测试代码的正确和错误方式方面有想法的学校。他们都在使用最基本的工具，所以我们将告诉你使用它们的方法。</p>
+  <h3 id="the-test-attribute-test属性">The <code>test</code> attribute <code>test</code>属性</h3>
   <p>At its simplest, a test in Rust is a function that’s annotated with the <code>test</code> attribute. Let’s make a new project with Cargo called <code>adder</code>:</p>
+  <p>简单说来，Rust语言中的测试代码是一个函数，它使用<code>test</code>属性作为注解。现在，让我们使用<code>Cargo new</code> 新建一个名为<code>adder</code>的项目：</p>
   <pre><code>$ cargo new adder
   $ cd adder</code></pre>
-  <p>Cargo will automatically generate a simple test when you make a new project. Here’s the contents of <code>src/lib.rs</code>:</p>
+  <p>Cargo will automatically generate a simple test when you make a new project.Here’s the contents of <code>src/lib.rs</code>:</p>
+  <p>当你新建一个项目的时候，<code>Cargo</code> 将自动生成一个简单的测试. 下面是<code>src/lib.rs</code>文件的内容：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>test<span class="ot">]</span>
   <span class="kw">fn</span> it_works() {
   }</code></pre></div>
   <p>Note the <code>#[test]</code>. This attribute indicates that this is a test function. It currently has no body. That’s good enough to pass! We can run the tests with <code>cargo test</code>:</p>
+  <p>大家注意下<code>#[test]</code>，这个属性表明这是一个测试函数。现在，它还没有内容。但是已经足够我们进行测试了。我们可以使用<code>cargo test</code>命令来运行这些测试用例：</p>
   <pre><code>$ cargo test
      Compiling adder v0.0.1 (file:///home/you/projects/adder)
        Running target/adder-91b3e234d4ed382a
   
-  running 1 test
-  test it_works ... ok
+  running 1 test  运行一条测试
+  test it_works ... ok   运行测试方法it_works成功
   
-  test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured
+  test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured 
+  测试结果：成功。1通过；0失败；0略过；0达标
   
-     Doc-tests adder
+     Doc-tests adder   文档测试
   
-  running 0 tests
+  running 0 tests     运行0条测试
   
-  test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+  test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured
+  测试结果：成功。0通过；0失败；0略过；0达标</code></pre>
   <p>Cargo compiled and ran our tests. There are two sets of output here: one for the test we wrote, and another for documentation tests. We’ll talk about those later. For now, see this line:</p>
+  <p>Cargo编译并运行测试。这里有两个输出结果：一个是我们写的测试的，另一个是文档测试。我们稍后谈论他们。现在，看着一行代码：</p>
   <pre><code>test it_works ... ok</code></pre>
   <p>Note the <code>it_works</code>. This comes from the name of our function:</p>
+  <p>注意这个<code>it_works</code>,他来自于我们定义的方法名</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> it_works() {</code></pre></div>
   <p>We also get a summary line:</p>
+  <p>我们还得到概要信息：</p>
   <pre><code>test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
   <p>So why does our do-nothing test pass? Any test which doesn’t <code>panic!</code> passes, and any test that does <code>panic!</code> fails. Let’s make our test fail:</p>
+  <p>为什么我们什么都没做，然后测试就通过了呢？任何没有<code>panic!</code>的测试通过，任何有<code>pannic!</code>的测试失败。让我们来做一个失败情况的测试吧：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>test<span class="ot">]</span>
   <span class="kw">fn</span> it_works() {
       <span class="ot">assert!</span>(<span class="kw">false</span>);
   }</code></pre></div>
-  <p><code>assert!</code> is a macro provided by Rust which takes one argument: if the argument is <code>true</code>, nothing happens. If the argument is false, it <code>panic!</code>s. Let’s run our tests again:</p>
+  <p><code>assert!</code> is a macro provided by Rust which takes one argument: if the argument is <code>true</code>, nothing happens. If the argument is <code>false</code>, it <code>panic!</code>s.Let’s run our tests again:</p>
+  <p><code>assert!</code> 是一个Rust内置的需要一个参数的宏：如果这个参数是<code>true</code>，那么什么都不会发生。如果参数是<code>false</code>,那么他就<code>panic!</code>.我们再运行一下测试：</p>
   <pre><code>$ cargo test
      Compiling adder v0.0.1 (file:///home/you/projects/adder)
        Running target/adder-91b3e234d4ed382a
@@ -2760,20 +2771,26 @@ code > span.er { font-weight: bold; }
   
   thread '&lt;main&gt;' panicked at 'Some tests failed', /home/steve/src/rust/src/libtest/lib.rs:247</code></pre>
   <p>Rust indicates that our test failed:</p>
+  <p>Rust命令行显示我们的测试失败了：</p>
   <pre><code>test it_works ... FAILED</code></pre>
   <p>And that’s reflected in the summary line:</p>
+  <p>并且反映在概要信息中：</p>
   <pre><code>test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured</code></pre>
   <p>We also get a non-zero status code:</p>
+  <p>我们还可以得到了一个非零状态码：</p>
   <pre><code>$ echo $?
   101</code></pre>
   <p>This is useful if you want to integrate <code>cargo test</code> into other tooling.</p>
+  <p>如果你想集成<code>cargo test</code>到其他工具中，这是非常有用的。</p>
   <p>We can invert our test’s failure with another attribute: <code>should_panic</code>:</p>
+  <p>我们还可以通过使用另一个属性——<code>should_panic</code>——来将测试失败情况确认为成功情况：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>test<span class="ot">]</span>
   <span class="ot">#[</span>should_panic<span class="ot">]</span>
   <span class="kw">fn</span> it_works() {
       <span class="ot">assert!</span>(<span class="kw">false</span>);
   }</code></pre></div>
   <p>This test will now succeed if we <code>panic!</code> and fail if we complete. Let’s try it:</p>
+  <p>如果我们<code>panic!</code>且执行结果为失败时，这个测试将会显示成功。让我们运行它：</p>
   <pre><code>$ cargo test
      Compiling adder v0.0.1 (file:///home/you/projects/adder)
        Running target/adder-91b3e234d4ed382a
@@ -2789,12 +2806,14 @@ code > span.er { font-weight: bold; }
   
   test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured</code></pre>
   <p>Rust provides another macro, <code>assert_eq!</code>, that compares two arguments for equality:</p>
+  <p>Rust提供了另一个宏——<code>assert_eq!</code>——它是用来比较两个参数是否相等：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>test<span class="ot">]</span>
   <span class="ot">#[</span>should_panic<span class="ot">]</span>
   <span class="kw">fn</span> it_works() {
       <span class="ot">assert_eq!</span>(<span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;world&quot;</span>);
   }</code></pre></div>
   <p>Does this test pass or fail? Because of the <code>should_panic</code> attribute, it passes:</p>
+  <p>现在测试是否成功呢？因为它拥有<code>should_panic</code>属性，所以他测试通过：</p>
   <pre><code>$ cargo test
      Compiling adder v0.0.1 (file:///home/you/projects/adder)
        Running target/adder-91b3e234d4ed382a
@@ -2810,12 +2829,14 @@ code > span.er { font-weight: bold; }
   
   test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured</code></pre>
   <p><code>should_panic</code> tests can be fragile, as it’s hard to guarantee that the test didn’t fail for an unexpected reason. To help with this, an optional <code>expected</code> parameter can be added to the <code>should_panic</code> attribute. The test harness will make sure that the failure message contains the provided text. A safer version of the example above would be:</p>
+  <p><code>should_panic</code>测试是很不可靠的，因为它很难保证测试不会因为意外原因而运行失败。为了确保测试不会因为意外原因运行失败，一个可选的<code>expected</code>参数被加入到<code>should_panic</code>属性中。测试套件将确保失败信息中包含着提供的文本。上面例子的安全版本应当如下：</p>
   <pre><code>#[test]
   #[should_panic(expected = &quot;assertion failed&quot;)]
   fn it_works() {
       assert_eq!(&quot;Hello&quot;, &quot;world&quot;);
   }</code></pre>
   <p>That’s all there is to the basics! Let’s write one ‘real’ test:</p>
+  <p>基础知识就是这些了！让我们写一个<code>真正</code>的测试吧：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">pub</span> <span class="kw">fn</span> add_two(a: <span class="kw">i32</span>) -&gt; <span class="kw">i32</span> {
       a + <span class="dv">2</span>
   }
@@ -2825,8 +2846,10 @@ code > span.er { font-weight: bold; }
       <span class="ot">assert_eq!</span>(<span class="dv">4</span>, add_two(<span class="dv">2</span>));
   }</code></pre></div>
   <p>This is a very common use of <code>assert_eq!</code>: call some function with some known arguments and compare it to the expected output.</p>
-  <h3 id="the-tests-module">The <code>tests</code> module</h3>
+  <p>这是一个<code>assert_eq!</code>的普通用法：调用一个使用可知参数的函数，并将他的运行结果与预期输出进行比较。</p>
+  <h3 id="the-tests-module-tests单元">The <code>tests</code> module <code>tests</code>单元</h3>
   <p>There is one way in which our existing example is not idiomatic: it’s missing the <code>tests</code> module. The idiomatic way of writing our example looks like this:</p>
+  <p>在我们存在的例子中有一点是不符合通用习惯的：他没有<code>tests</code>单元。写例子的惯用方式应该像这样：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">pub</span> <span class="kw">fn</span> add_two(a: <span class="kw">i32</span>) -&gt; <span class="kw">i32</span> {
       a + <span class="dv">2</span>
   }
@@ -2841,7 +2864,9 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre></div>
   <p>There’s a few changes here. The first is the introduction of a <code>mod tests</code> with a <code>cfg</code> attribute. The module allows us to group all of our tests together, and to also define helper functions if needed, that don’t become a part of the rest of our crate. The <code>cfg</code> attribute only compiles our test code if we’re currently trying to run the tests. This can save compile time, and also ensures that our tests are entirely left out of a normal build.</p>
-  <p>The second change is the <code>use</code> declaration. Because we’re in an inner module, we need to bring our test function into scope. This can be annoying if you have a large module, and so this is a common use of the <code>glob</code> feature. Let’s change our <code>src/lib.rs</code> to make use of it:</p>
+  <p>这里有少许的不同。第一个变化是在声明一个<code>mod tests</code>之前需要一个<code>cfg</code>属性。 这样，这个模块允许我们将所有的测试放在一起，并且如果需要的话，还可以定义辅助函数——不会成为我们crate剩余的一部分。如果我们当前正在尝试运行测试，那么<code>cfg</code>属性只会编译我们的测试代码。这样就会节省编译时间，同样能够确定的是，我们的测试是完全被排除在普通构建之外的。</p>
+  <p>The second change is the <code>use</code> declaration. Because we’re in an inner module,we need to bring our test function into scope. This can be annoying if you have a large module, and so this is a common use of the <code>glob</code> feature.Let’s change our <code>src/lib.rs</code> to make use of it:</p>
+  <p>第二个变化是使用<code>use</code>声明。因为测试代码是在一个内部模块，我们需要将测试方法引入到当前的作用域内。如果你有一个庞大的模块，这会非常麻烦的，所以有一个通用的<code>glob</code>方法。那么让我们修改一下我们的代码<code>src/lib.rs</code>来使用这个测试方法。</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">
   <span class="kw">pub</span> <span class="kw">fn</span> add_two(a: <span class="kw">i32</span>) -&gt; <span class="kw">i32</span> {
       a + <span class="dv">2</span>
@@ -2857,6 +2882,7 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre></div>
   <p>Note the different <code>use</code> line. Now we run our tests:</p>
+  <p>注意，这里有所不同的<code>use</code>语句，运行测试：</p>
   <pre><code>$ cargo test
       Updating registry `https://github.com/rust-lang/crates.io-index`
      Compiling adder v0.0.1 (file:///home/you/projects/adder)
@@ -2873,17 +2899,22 @@ code > span.er { font-weight: bold; }
   
   test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured</code></pre>
   <p>It works!</p>
-  <p>The current convention is to use the <code>tests</code> module to hold your “unit-style” tests. Anything that just tests one small bit of functionality makes sense to go here. But what about “integration-style” tests instead? For that, we have the <code>tests</code> directory</p>
-  <h3 id="the-tests-directory">The <code>tests</code> directory</h3>
+  <p>它运行正常！</p>
+  <p>The current convention is to use the <code>tests</code> module to hold your “unit-style” tests. Anything that just tests one small bit of functionality makes sense to go here. But what about “integration-style” tests instead? For that, we have the <code>tests</code> directory.</p>
+  <p>当前的约定是使用<code>test</code>单元作为单元式测试。，通常情况，他只能够测试一个功能的一小部分。如果是集成测试呢。为达到这一目的，我们设定了<code>tests</code>目录。</p>
+  <h3 id="the-tests-directory-tests目录">The <code>tests</code> directory <code>tests</code>目录</h3>
   <p>To write an integration test, let’s make a <code>tests</code> directory, and put a <code>tests/lib.rs</code> file inside, with this as its contents:</p>
+  <p>要编写集成测试，我们先建立一个<code>tests</code>目录，并且放入一个<code>tests/lib.rs</code>文件，文件内容如下：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">extern</span> crate adder;
   
   <span class="ot">#[</span>test<span class="ot">]</span>
   <span class="kw">fn</span> it_works() {
       <span class="ot">assert_eq!</span>(<span class="dv">4</span>, adder::add_two(<span class="dv">2</span>));
   }</code></pre></div>
-  <p>This looks similar to our previous tests, but slightly different. We now have an <code>extern crate adder</code> at the top. This is because the tests in the <code>tests</code> directory are an entirely separate crate, and so we need to import our library. This is also why <code>tests</code> is a suitable place to write integration-style tests: they use the library like any other consumer of it would.</p>
+  <p>This looks similar to our previous tests, but slightly different. We now have an <code>extern crate adder</code> at the top. This is because the tests in the <code>tests</code> directory are an entirely separate crate, and so we need to import our library.This is also why <code>tests</code> is a suitable place to write integration-style tests:they use the library like any other consumer of it would.</p>
+  <p>看上去与之前的测试代码没啥不同，但还是有一些区别。我们现在在文件开始使用了<code>extern crate adder</code>。这是因为在<code>tests</code>目录中的测试代码是完全独立的包。所以我们需要导入我们的库文件。这样是为什么<code>tests</code>目录是一个适合些继承测试的地方：它们可以随意的使用库文件。</p>
   <p>Let’s run them:</p>
+  <p>运行测试：</p>
   <pre><code>$ cargo test
      Compiling adder v0.0.1 (file:///home/you/projects/adder)
        Running target/adder-91b3e234d4ed382a
@@ -2906,10 +2937,14 @@ code > span.er { font-weight: bold; }
   
   test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured</code></pre>
   <p>Now we have three sections: our previous test is also run, as well as our new one.</p>
+  <p>现在，我们有三个部分：我们以前测试也运行，我们新的测试内容。</p>
   <p>That’s all there is to the <code>tests</code> directory. The <code>tests</code> module isn’t needed here, since the whole thing is focused on tests.</p>
+  <p>这就是<code>tests</code>目录的所有内容了。<code>tests</code>单元在这里是不需要的，因为这里所有的事情重点都在测试上。</p>
   <p>Let’s finally check out that third section: documentation tests.</p>
-  <h3 id="documentation-tests">Documentation tests</h3>
+  <p>最后让我们进入到第三部分：文档测试</p>
+  <h3 id="documentation-tests-文档测试">Documentation tests 文档测试</h3>
   <p>Nothing is better than documentation with examples. Nothing is worse than examples that don’t actually work, because the code has changed since the documentation has been written. To this end, Rust supports automatically running examples in your documentation. Here’s a fleshed-out <code>src/lib.rs</code> with examples:</p>
+  <p>没有什么比带例子的文档更好的。没有什么比不能如期运行的例子更差劲的了，因为文档一旦被写入，代码就被改变了。为此，Rust语言支持自动运行你在文档中的例子。这里有一个非常充实的有着使用例子的文件<code>src/lib.rs</code>:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">//! The `adder` crate provides functions that add numbers to other numbers.</span>
   <span class="co">//!</span>
   <span class="co">//! # Examples</span>
@@ -2941,7 +2976,9 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre></div>
   <p>Note the module-level documentation with <code>//!</code> and the function-level documentation with <code>///</code>. Rust’s documentation supports Markdown in comments, and so triple graves mark code blocks. It is conventional to include the <code># Examples</code> section, exactly like that, with examples following.</p>
+  <p>注意使用了<code>//!</code>的模块级文档和使用了<code>///</code>的函数级文档。Rust的文件支持MarkDown语法注释，所以有三种标记代码块。包含<code># Examples</code>是常规做法，并且紧跟随着的是实例。</p>
   <p>Let’s run the tests again:</p>
+  <p>在此运行测试：</p>
   <pre><code>$ cargo test
      Compiling adder v0.0.1 (file:///home/steve/tmp/adder)
        Running target/adder-91b3e234d4ed382a
@@ -2966,6 +3003,7 @@ code > span.er { font-weight: bold; }
   
   test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured</code></pre>
   <p>Now we have all three kinds of tests running! Note the names of the documentation tests: the <code>_0</code> is generated for the module test, and <code>add_two_0</code> for the function test. These will auto increment with names like <code>add_two_1</code> as you add more examples.</p>
+  <p>现在我们掌握了全部的三种测试方式！注意文档测试的名称：<code>_0</code>是由模块测试生成的，<code>add_two_0</code>是有函数测试生成的。随着你增加更多的例子，<code>_*</code>将像<code>add_two_1</code>这样自动增加。</p>
   <h2 id="sec--conditional-compilation">Conditional Compilation</h2>
   <p>Rust has a special attribute, <code>#[cfg]</code>, which allows you to compile code based on a flag passed to the compiler. It has two forms:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>cfg<span class="ot">(</span>foo<span class="ot">)]</span>
