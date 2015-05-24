@@ -99,11 +99,11 @@ end
 
 book = <<-eos
 ---
-title: "The Rust Programming Language"
-author: "The Rust Team"
+title: "The Rust Programming Language  Rust编程语言"
+author: "The Rust Team  hainuo"
 date: #{RELEASE_DATE}
-description: "This book will teach you about the Rust Programming Language. Rust is a modern systems programming language focusing on safety and speed. It accomplishes these goals by being memory safe without using garbage collection."
-language: en
+description: "This book will teach you about the Rust Programming Language. Rust is a modern systems programming language focusing on safety and speed. It accomplishes these goals by being memory safe without using garbage collection.这本书将教授你Rust变成语言。Rust是一个现在系统级的编程语言，它关注安全和性能，它实现了不需要使用垃圾回收便能够保证内存安全的目标。"
+language:"en zh-cn"
 documentclass: book
 links-as-notes: true
 verbatim-in-note: true
