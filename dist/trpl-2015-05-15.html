@@ -52,9 +52,9 @@ code > span.er { font-weight: bold; }
 <nav class="toc" id="TOC">
   <h2>Table of Contents</h2>
   <ul>
-  <li><a href="#introduction">Introduction</a><ul>
-  <li><a href="#contributing">Contributing</a></li>
-  <li><a href="#a-brief-introduction-to-rust">A brief introduction to Rust</a></li>
+  <li><a href="#introduction-介绍说明">Introduction 介绍说明</a><ul>
+  <li><a href="#contributing-社区贡献">Contributing 社区贡献</a></li>
+  <li><a href="#a-brief-introduction-to-rust-rust简单说明">A brief introduction to Rust Rust简单说明</a></li>
   </ul></li>
   <li><a href="#sec--getting-started">Getting Started 开始使用Rust</a><ul>
   <li><a href="#sec--installing-rust">Installing Rust 安装Rust</a></li>
@@ -111,7 +111,7 @@ code > span.er { font-weight: bold; }
   <li><a href="#using-try">Using <code>try!</code></a></li>
   </ul></li>
   <li><a href="#sec--ffi">FFI 对外函数接口</a><ul>
-  <li><a href="#introduction-1">Introduction</a></li>
+  <li><a href="#introduction">Introduction</a></li>
   <li><a href="#creating-a-safe-interface">Creating a safe interface</a></li>
   <li><a href="#destructors">Destructors</a></li>
   <li><a href="#callbacks-from-c-code-to-rust-functions">Callbacks from C code to Rust functions</a></li>
@@ -265,7 +265,7 @@ code > span.er { font-weight: bold; }
   </ul></li>
   <li><a href="#sec--nightly-rust">Nightly Rust 每日Rust版本</a><ul>
   <li><a href="#sec--compiler-plugins">Compiler Plugins 编译插件</a><ul>
-  <li><a href="#introduction-2">Introduction</a></li>
+  <li><a href="#introduction-1">Introduction</a></li>
   <li><a href="#syntax-extensions">Syntax extensions</a></li>
   <li><a href="#lint-plugins">Lint plugins</a></li>
   </ul></li>
@@ -287,28 +287,35 @@ code > span.er { font-weight: bold; }
 </nav>
 
 <article role="main">
-  <h1 id="introduction">Introduction</h1>
-  <p>Welcome! This book will teach you about the <a href="http://rust-lang.org">Rust Programming Language</a>. Rust is a systems programming language focused on three goals: safety, speed, and concurrency. It maintains these goals without having a garbage collector, making it a useful language for a number of use cases other languages aren’t good at: embedding in other languages, programs with specific space and time requirements, and writing low-level code, like device drivers and operating systems. It improves on current languages targeting this space by having a number of compile-time safety checks that produce no runtime overhead, while eliminating all data races. Rust also aims to achieve ‘zero-cost abstractions’ even though some of these abstractions feel like those of a high-level language. Even then, Rust still allows precise control like a low-level language would.</p>
+  <h1 id="introduction-介绍说明">Introduction 介绍说明</h1>
+  <p>Welcome! This book will teach you about the <a href="http://rust-lang.org">Rust Programming Language</a>.Rust is a systems programming language focused on three goals: safety, speed,and concurrency. It maintains these goals without having a garbage collector,making it a useful language for a number of use cases other languages aren’t good at: embedding in other languages, programs with specific space and time requirements, and writing low-level code, like device drivers and operating systems. It improves on current languages targeting this space by having a number of compile-time safety checks that produce no runtime overhead, while eliminating all data races. Rust also aims to achieve ‘zero-cost abstractions’ even though some of these abstractions feel like those of a high-level language. Even then, Rust still allows precise control like a low-level language would.</p>
+  <p>欢迎你了解Rust！这本书将教你关于<a href="http://rust-lang.org">Rust编程语言</a>的知识。Rust是一个系统编程语言，它的诞生是为了做到三个目标：安全、快速、和并发。它没有使用垃圾回收器，来实现这些目标；这使它变得非常有用，尤其是在其他语言并不擅长的用例上：在特殊空间和时间要求嵌入到其他语言中，和编写底层代码，比如设陪驱动程序和操作系统。在清除了所有数据races的同时，通过没有任何运行时开销的多个编译时的安全检查操作改善当前语言的性能，Rust同样致力于实现“零成本抽象概念”，尽管有些抽象概念像是高级语言。然而及时这样，Rust仍然向一个低级语言一样允许精确控制。</p>
   <p>“The Rust Programming Language” is split into seven sections. This introduction is the first. After this:</p>
+  <p>“Rust编程语言”分为7大部分，这个说明是第一部分，然后是：</p>
   <ul>
-  <li><a href="#sec--getting-started">Getting started</a> - Set up your computer for Rust development.</li>
-  <li><a href="#sec--learn-rust">Learn Rust</a> - Learn Rust programming through small projects.</li>
-  <li><a href="#sec--effective-rust">Effective Rust</a> - Higher-level concepts for writing excellent Rust code.</li>
-  <li><a href="#sec--syntax-and-semantics">Syntax and Semantics</a> - Each bit of Rust, broken down into small chunks.</li>
-  <li><a href="#sec--nightly-rust">Nightly Rust</a> - Cutting-edge features that aren’t in stable builds yet.</li>
-  <li><a href="#sec--glossary">Glossary</a> - A reference of terms used in the book.</li>
-  <li><a href="#sec--academic-research">Academic Research</a> - Literature that influenced Rust.</li>
+  <li><a href="#sec--getting-started">Getting started 开始使用</a> - Set up your computer for Rust development.配置你的Rust开发环境。</li>
+  <li><a href="#sec--learn-rust">Learn Rust 学习Rust</a> - Learn Rust programming through small projects.通过几个小例子来学习Rust编程。</li>
+  <li><a href="#sec--effective-rust">Effective Rust 高效的Rust</a> - Higher-level concepts for writing excellent Rust code.编写优质Rust代码的高级理论。</li>
+  <li><a href="#sec--syntax-and-semantics">Syntax and Semantics 语法与语义</a> - Each bit of Rust, broken down into small chunks.Rust的每一部分，分解成一个个小块。</li>
+  <li><a href="#sec--nightly-rust">Nightly Rust 每日Rust构建</a> - Cutting-edge features that aren’t in stable builds yet. 尚未稳定构建的顶端特性。</li>
+  <li><a href="#sec--glossary">Glossary 术语表</a> - A reference of terms used in the book. 本书中一些术语的引用</li>
+  <li><a href="#sec--academic-research">Academic Research 学术研究</a> - Literature that influenced Rust.影响了Rust的文献。</li>
   </ul>
-  <p>After reading this introduction, you’ll want to dive into either ‘Learn Rust’ or ‘Syntax and Semantics’, depending on your preference: ‘Learn Rust’ if you want to dive in with a project, or ‘Syntax and Semantics’ if you prefer to start small, and learn a single concept thoroughly before moving onto the next. Copious cross-linking connects these parts together.</p>
-  <h2 id="contributing">Contributing</h2>
+  <p>After reading this introduction, you’ll want to dive into either ‘Learn Rust’ or ‘Syntax and Semantics’, depending on your preference: ‘Learn Rust’ if you want to dive in with a project, or ‘Syntax and Semantics’ if you prefer to start small, and learn a single concept thoroughly before moving onto the next.Copious cross-linking connects these parts together.</p>
+  <p>在阅读完本介绍之后，你可以根据你的喜好，随意选择<code>Learn Rust 学习Rust</code>或者<code>Syntax and Semantics 语法与语义</code>章节：如果你想要从一个项目开始，那么选择<code>Learn Rust 学习Rust</code>，或者如果你喜欢从小事做起，通过移动到下一页，一个概念一个概念的学习，将这些广泛的关联的只是连接起来。</p>
+  <h2 id="contributing-社区贡献">Contributing 社区贡献</h2>
   <p>The source files from which this book is generated can be found on Github: <a href="https://github.com/rust-lang/rust/tree/master/src/doc/trpl">github.com/rust-lang/rust/tree/master/src/doc/trpl</a></p>
-  <h2 id="a-brief-introduction-to-rust">A brief introduction to Rust</h2>
+  <p>生成本书的源代码的被放在github上：<a href="https://github.com/rust-lang/rust/tree/master/src/doc/trpl">github.com/rust-lang/rust/tree/master/src/doc/trpl</a></p>
+  <h2 id="a-brief-introduction-to-rust-rust简单说明">A brief introduction to Rust Rust简单说明</h2>
   <p>Is Rust a language you might be interested in? Let’s examine a few small code samples to show off a few of its strengths.</p>
+  <p>Rust是你可能感兴趣的语言吗？让我们看着一些小的代码例子，展示它的一些优势。</p>
   <p>The main concept that makes Rust unique is called ‘ownership’. Consider this small example:</p>
+  <p>使Rust独一无二的主要概念被称作“ownership 所有权”。参考如下例子：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> <span class="kw">mut</span> x = <span class="ot">vec!</span>[<span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;world&quot;</span>];
   }</code></pre></div>
   <p>This program makes a <a href="#sec--variable-bindings">variable binding</a> named <code>x</code>. The value of this binding is a <code>Vec&lt;T&gt;</code>, a ‘vector’, that we create through a <a href="#sec--macros">macro</a> defined in the standard library. This macro is called <code>vec</code>, and we invoke macros with a <code>!</code>. This follows a general principle of Rust: make things explicit. Macros can do significantly more complicated things than function calls, and so they’re visually distinct. The <code>!</code> also helps with parsing, making tooling easier to write, which is also important.</p>
+  <p>这段程序创建了一个叫做<code>x</code>的<a href="#sec--variable-bindings">variable binding变量绑定</a>。这个绑定的值是一个<code>Vec&lt;T&gt;</code>——一个向量<code>vector</code>,他是在标准库中通过一个<a href="#sec--macros">macro 宏</a>来定义的。这个宏被称作<code>Vec</code>，我们使用<code>!</code>来强调宏。这遵循了Rust的一般原则：把事情明确。宏可以做比函数调用更加显著更加复杂的事情，这样使他们在视觉上区分开来。<code>!</code>同样帮助解析，是的工具更容易编写，所以也很重要。</p>
   <p>We used <code>mut</code> to make <code>x</code> mutable: bindings are immutable by default in Rust. We’ll be mutating this vector later in the example.</p>
   <p>It’s also worth noting that we didn’t need a type annotation here: while Rust is statically typed, we didn’t need to explicitly annotate the type. Rust has type inference to balance out the power of static typing with the verbosity of annotating types.</p>
   <p>Rust prefers stack allocation to heap allocation: <code>x</code> is placed directly on the stack. However, the <code>Vec&lt;T&gt;</code> type allocates space for the elements of the vector on the heap. If you’re not familiar with this distinction, you can ignore it for now, or check out <a href="#sec--the-stack-and-the-heap">‘The Stack and the Heap’</a>. As a systems programming language, Rust gives you the ability to control how your memory is allocated, but when we’re getting started, it’s less of a big deal.</p>
@@ -3005,19 +3012,23 @@ code > span.er { font-weight: bold; }
   <p>Now we have all three kinds of tests running! Note the names of the documentation tests: the <code>_0</code> is generated for the module test, and <code>add_two_0</code> for the function test. These will auto increment with names like <code>add_two_1</code> as you add more examples.</p>
   <p>现在我们掌握了全部的三种测试方式！注意文档测试的名称：<code>_0</code>是由模块测试生成的，<code>add_two_0</code>是有函数测试生成的。随着你增加更多的例子，<code>_*</code>将像<code>add_two_1</code>这样自动增加。</p>
   <h2 id="sec--conditional-compilation">Conditional Compilation 条件编译</h2>
-  <p>Rust has a special attribute, <code>#[cfg]</code>, which allows you to compile code based on a flag passed to the compiler. It has two forms:</p>
+  <p>Rust has a special attribute, <code>#[cfg]</code>, which allows you to compile codebased on a flag passed to the compiler. It has two forms:</p>
+  <p>Rust语言有一个特殊的属性——<code>#[cfg]</code>——它允许你基于一个标记参数来编译代码。它有两种形式：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>cfg<span class="ot">(</span>foo<span class="ot">)]</span>
   
   <span class="ot">#[</span>cfg<span class="ot">(</span>bar <span class="ot">=</span> <span class="st">&quot;baz&quot;</span><span class="ot">)]</span></code></pre></div>
   <p>They also have some helpers:</p>
+  <p>他们有一些辅助项</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>cfg<span class="ot">(</span>any<span class="ot">(</span>unix<span class="ot">,</span> windows<span class="ot">))]</span>
   
   <span class="ot">#[</span>cfg<span class="ot">(</span>all<span class="ot">(</span>unix<span class="ot">,</span> target_pointer_width <span class="ot">=</span> <span class="st">&quot;32&quot;</span><span class="ot">))]</span>
   
   <span class="ot">#[</span>cfg<span class="ot">(</span>not<span class="ot">(</span>foo<span class="ot">))]</span></code></pre></div>
   <p>These can nest arbitrarily:</p>
+  <p>他们可以任意嵌套：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>cfg<span class="ot">(</span>any<span class="ot">(</span>not<span class="ot">(</span>unix<span class="ot">),</span> all<span class="ot">(</span>target_os<span class="ot">=</span><span class="st">&quot;macos&quot;</span><span class="ot">,</span> target_arch <span class="ot">=</span> <span class="st">&quot;powerpc&quot;</span><span class="ot">)))]</span></code></pre></div>
-  <p>As for how to enable or disable these switches, if you’re using Cargo, they get set in the <a href="http://doc.crates.io/manifest.html#the-[features]-section"><code>[features]</code> section</a> of your <code>Cargo.toml</code>:</p>
+  <p>As for how to enable or disable these switches, if you’re using Cargo,they get set in the <a href="http://doc.crates.io/manifest.html#the-[features]-section"><code>[features]</code> section</a> of your <code>Cargo.toml</code>:</p>
+  <p>那么当你使用Cargo的时候，如何开启和禁用这些开关呢？他们被设定在你的<code>Cargo.toml</code>文件的<a href="http://doc.crates.io/manifest.html#the-[features]-section"><code>[features]</code> section</a> 配置块中。</p>
   <pre><code>[features]
   # no features by default
   default = []
@@ -3025,22 +3036,29 @@ code > span.er { font-weight: bold; }
   # The “secure-password” feature depends on the bcrypt package.
   secure-password = [&quot;bcrypt&quot;]</code></pre>
   <p>When you do this, Cargo passes along a flag to <code>rustc</code>:</p>
+  <p>当你做这么做时，Cargo传递给<code>rustc</code>一个标记：</p>
   <pre><code>--cfg feature=&quot;${feature_name}&quot;</code></pre>
   <p>The sum of these <code>cfg</code> flags will determine which ones get activated, and therefore, which code gets compiled. Let’s take this code:</p>
+  <p>这些<code>cfg</code>标记汇总起来将决定哪些代码能够被激活，因此那部分代码得以被编译。让我们看下面的代码：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>cfg<span class="ot">(</span>feature <span class="ot">=</span> <span class="st">&quot;foo&quot;</span><span class="ot">)]</span>
   <span class="kw">mod</span> foo {
   }</code></pre></div>
-  <p>If we compile it with <code>cargo build --features &quot;foo&quot;</code>, it will send the <code>--cfg feature=&quot;foo&quot;</code> flag to <code>rustc</code>, and the output will have the <code>mod foo</code> in it. If we compile it with a regular <code>cargo build</code>, no extra flags get passed on, and so, no <code>foo</code> module will exist.</p>
+  <p>If we compile it with <code>cargo build --features &quot;foo&quot;</code>, it will send the <code>--cfg feature=&quot;foo&quot;</code> flag to <code>rustc</code>, and the output will have the <code>mod foo</code> in it.If we compile it with a regular <code>cargo build</code>, no extra flags get passed on,and so, no <code>foo</code> module will exist.</p>
+  <p>如果我们使用<code>cargo build --features &quot;foo&quot;</code>来编译它，它将会给<code>tustc</code>添加一个<code>--cfg feature=&quot;foo&quot;</code>的标记，并且在输出信息中有<code>mod foo</code>。如果我们使用普通的<code>cargo build</code>来编译它，那么就没有给<code>rustc</code>添加任何标记，因此也就没有<code>foo</code>存在。</p>
   <h3 id="cfg_attr">cfg_attr</h3>
   <p>You can also set another attribute based on a <code>cfg</code> variable with <code>cfg_attr</code>:</p>
+  <p>你同样可以使用<code>cfg_attr</code>给<code>cfg</code>变量设置额外的属性值。</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>cfg_attr<span class="ot">(</span>a<span class="ot">,</span> b<span class="ot">)]</span></code></pre></div>
   <p>Will be the same as <code>#[b]</code> if <code>a</code> is set by <code>cfg</code> attribute, and nothing otherwise.</p>
+  <p>如果<code>a</code>被<code>cfg</code>属性设置，<code>#[b]</code>也将同样被设计，否则反之。</p>
   <h3 id="cfg">cfg!</h3>
   <p>The <code>cfg!</code> <a href="#sec--compiler-plugins">syntax extension</a> lets you use these kinds of flags elsewhere in your code, too:</p>
+  <p><code>cfg!</code><a href="#sec--compiler-plugins">语法扩展</a>也能让你在代码中其他地方使用这种标记：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">if</span> <span class="ot">cfg!</span>(target_os = <span class="st">&quot;macos&quot;</span>) || <span class="ot">cfg!</span>(target_os = <span class="st">&quot;ios&quot;</span>) {
       <span class="ot">println!</span>(<span class="st">&quot;Think Different!&quot;</span>);
   }</code></pre></div>
   <p>These will be replaced by a <code>true</code> or <code>false</code> at compile-time, depending on the configuration settings.</p>
+  <p>根据不同的配置设置，在编译时，这些标记被<code>true</code>或者<code>false</code>替代。</p>
   <h2 id="sec--documentation">Documentation 文件</h2>
   <p>Documentation is an important part of any software project, and it’s first-class in Rust. Let’s talk about the tooling Rust gives you to document your project.</p>
   <h4 id="about-rustdoc">About <code>rustdoc</code></h4>
@@ -3835,7 +3853,7 @@ code > span.er { font-weight: bold; }
   <p>It’s worth noting that you can only use <code>try!</code> from a function that returns a <code>Result</code>, which means that you cannot use <code>try!</code> inside of <code>main()</code>, because <code>main()</code> doesn’t return anything.</p>
   <p><code>try!</code> makes use of <a href="http://doc.rust-lang.org/std/convert/trait.From.html"><code>From&lt;Error&gt;</code></a> to determine what to return in the error case.</p>
   <h2 id="sec--ffi">FFI 对外函数接口</h2>
-  <h3 id="introduction-1">Introduction</h3>
+  <h3 id="introduction">Introduction</h3>
   <p>This guide will use the <a href="https://github.com/google/snappy">snappy</a> compression/decompression library as an introduction to writing bindings for foreign code. Rust is currently unable to call directly into a C++ library, but snappy includes a C interface (documented in <a href="https://github.com/google/snappy/blob/master/snappy-c.h"><code>snappy-c.h</code></a>).</p>
   <p>The following is a minimal example of calling a foreign function which will compile if snappy is installed:</p>
   <pre><code># #![feature(libc)]
@@ -7722,7 +7740,7 @@ code > span.er { font-weight: bold; }
   <p>This installer also installs a copy of the documentation locally, so you can read it offline. On UNIX systems, <code>/usr/local/share/doc/rust</code> is the location. On Windows, it’s in a <code>share/doc</code> directory, inside wherever you installed Rust to.</p>
   <p>If not, there are a number of places where you can get help. The easiest is <a href="irc://irc.mozilla.org/#rust">the #rust IRC channel on irc.mozilla.org</a>, which you can access through <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">Mibbit</a>. Click that link, and you’ll be chatting with other Rustaceans (a silly nickname we call ourselves), and we can help you out. Other great resources include <a href="http://users.rust-lang.org/">the user’s forum</a>, and <a href="http://stackoverflow.com/questions/tagged/rust">Stack Overflow</a>.</p>
   <h2 id="sec--compiler-plugins">Compiler Plugins 编译插件</h2>
-  <h3 id="introduction-2">Introduction</h3>
+  <h3 id="introduction-1">Introduction</h3>
   <p><code>rustc</code> can load compiler plugins, which are user-provided libraries that extend the compiler’s behavior with new syntax extensions, lint checks, etc.</p>
   <p>A plugin is a dynamic library crate with a designated <em>registrar</em> function that registers extensions with <code>rustc</code>. Other crates can load these extensions using the crate attribute <code>#![plugin(...)]</code>. See the <a href="http://doc.rust-lang.org/rustc/plugin/index.html"><code>rustc::plugin</code></a> documentation for more about the mechanics of defining and loading a plugin.</p>
   <p>If present, arguments passed as <code>#![plugin(foo(... args ...))]</code> are not interpreted by rustc itself. They are provided to the plugin through the <code>Registry</code>’s <a href="http://doc.rust-lang.org/rustc/plugin/registry/struct.Registry.html#method.args"><code>args</code> method</a>.</p>
