@@ -1,17 +1,8 @@
-% The Rust Programming Language
+% The Rust Programming Language Rust编程语言
 
-Welcome! This book will teach you about the [Rust Programming Language][rust].
-Rust is a systems programming language focused on three goals: safety, speed,
-and concurrency. It maintains these goals without having a garbage collector,
-making it a useful language for a number of use cases other languages aren’t
-good at: embedding in other languages, programs with specific space and time
-requirements, and writing low-level code, like device drivers and operating
-systems. It improves on current languages targeting this space by having a
-number of compile-time safety checks that produce no runtime overhead, while
-eliminating all data races. Rust also aims to achieve ‘zero-cost abstractions’
-even though some of these abstractions feel like those of a high-level
-language. Even then, Rust still allows precise control like a low-level
-language would.
+Welcome! This book will teach you about the [Rust Programming Language][rust].Rust is a systems programming language focused on three goals: safety, speed,and concurrency. It maintains these goals without having a garbage collector,making it a useful language for a number of use cases other languages aren’t good at: embedding in other languages, programs with specific space and time requirements, and writing low-level code, like device drivers and operating systems. It improves on current languages targeting this space by having a number of compile-time safety checks that produce no runtime overhead, while eliminating all data races. Rust also aims to achieve ‘zero-cost abstractions’ even though some of these abstractions feel like those of a high-level language. Even then, Rust still allows precise control like a low-level language would.
+
+欢迎你了解Rust！这本书将教你关于[Rust编程语言][rust]的知识。Rust是一个系统编程语言，它的诞生是为了做到三个目标：安全、快速、和并发。它没有使用垃圾回收器，来实现这些目标；这使它变得非常有用，尤其是在其他语言并不擅长的用例上：
 
 [rust]: http://rust-lang.org
 
@@ -40,12 +31,12 @@ want to dive in with a project, or ‘Syntax and Semantics’ if you prefer to
 start small, and learn a single concept thoroughly before moving onto the next.
 Copious cross-linking connects these parts together.
 
-## Contributing
+## Contributing 社区贡献
 
 The source files from which this book is generated can be found on Github:
 [github.com/rust-lang/rust/tree/master/src/doc/trpl](https://github.com/rust-lang/rust/tree/master/src/doc/trpl)
 
-## A brief introduction to Rust
+## A brief introduction to Rust Rust简单说明
 
 Is Rust a language you might be interested in? Let’s examine a few small code
 samples to show off a few of its strengths.
