@@ -37,7 +37,7 @@ code > span.er { font-weight: bold; }
 
 
 <header>
-  <h1 class="title">The Rust Programming Language Rust编程语言</h1>
+  <h1 class="title"><p>The Rust Programming Language Rust编程语言</p></h1>
 
   
   <div class="byline vcard">
@@ -56,13 +56,13 @@ code > span.er { font-weight: bold; }
   <li><a href="#contributing">Contributing</a></li>
   <li><a href="#a-brief-introduction-to-rust">A brief introduction to Rust</a></li>
   </ul></li>
-  <li><a href="#sec--getting-started">Getting Started</a><ul>
-  <li><a href="#sec--installing-rust">Installing Rust</a></li>
+  <li><a href="#sec--getting-started">Getting Started 开始使用Rust</a><ul>
+  <li><a href="#sec--installing-rust">Installing Rust 安装Rust</a></li>
   <li><a href="#sec--hello-world">Hello, world!</a></li>
-  <li><a href="#sec--hello-cargo">Hello, Cargo!</a></li>
+  <li><a href="#sec--hello-cargo">Hello, Cargo! Cargo命令介绍</a></li>
   </ul></li>
-  <li><a href="#sec--learn-rust">Learn Rust</a><ul>
-  <li><a href="#sec--guessing-game">Guessing Game</a><ul>
+  <li><a href="#sec--learn-rust">Learn Rust Rust入门</a><ul>
+  <li><a href="#sec--guessing-game">Guessing Game 猜数字</a><ul>
   <li><a href="#set-up">Set up</a></li>
   <li><a href="#processing-a-guess">Processing a Guess</a></li>
   <li><a href="#generating-a-secret-number">Generating a secret number</a></li>
@@ -70,8 +70,8 @@ code > span.er { font-weight: bold; }
   <li><a href="#looping">Looping</a></li>
   <li><a href="#complete">Complete!</a></li>
   </ul></li>
-  <li><a href="#sec--dining-philosophers">Dining Philosophers</a></li>
-  <li><a href="#sec--rust-inside-other-languages">Rust inside other languages</a><ul>
+  <li><a href="#sec--dining-philosophers">Dining Philosophers 哲学家就餐问题</a></li>
+  <li><a href="#sec--rust-inside-other-languages">Rust inside other languages Rust与其他语言</a><ul>
   <li><a href="#the-problem">The problem</a></li>
   <li><a href="#a-rust-library">A Rust library</a></li>
   <li><a href="#ruby">Ruby</a></li>
@@ -80,8 +80,8 @@ code > span.er { font-weight: bold; }
   <li><a href="#conclusion">Conclusion</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec--effective-rust">Effective Rust</a><ul>
-  <li><a href="#sec--the-stack-and-the-heap">The Stack and the Heap</a><ul>
+  <li><a href="#sec--effective-rust">Effective Rust高效的Rust</a><ul>
+  <li><a href="#sec--the-stack-and-the-heap">The Stack and the Heap 栈和堆</a><ul>
   <li><a href="#memory-management-内存管理">Memory management 内存管理</a></li>
   <li><a href="#the-stack-栈">The Stack 栈</a></li>
   <li><a href="#the-heap-堆">The Heap 堆</a></li>
@@ -90,27 +90,27 @@ code > span.er { font-weight: bold; }
   <li><a href="#what-do-other-languages-do-其他的语言是怎么做的">What do other languages do? 其他的语言是怎么做的？</a></li>
   <li><a href="#which-to-use-到底该使用哪一种">Which to use? 到底该使用哪一种</a></li>
   </ul></li>
-  <li><a href="#sec--testing">Testing</a><ul>
+  <li><a href="#sec--testing">Testing测试</a><ul>
   <li><a href="#the-test-attribute-test属性">The <code>test</code> attribute <code>test</code>属性</a></li>
   <li><a href="#the-tests-module-tests单元">The <code>tests</code> module <code>tests</code>单元</a></li>
   <li><a href="#the-tests-directory-tests目录">The <code>tests</code> directory <code>tests</code>目录</a></li>
   <li><a href="#documentation-tests-文档测试">Documentation tests 文档测试</a></li>
   </ul></li>
-  <li><a href="#sec--conditional-compilation">Conditional Compilation</a><ul>
+  <li><a href="#sec--conditional-compilation">Conditional Compilation 条件编译</a><ul>
   <li><a href="#cfg_attr">cfg_attr</a></li>
   <li><a href="#cfg">cfg!</a></li>
   </ul></li>
-  <li><a href="#sec--documentation">Documentation</a></li>
-  <li><a href="#sec--iterators">Iterators</a></li>
-  <li><a href="#sec--concurrency">Concurrency</a></li>
-  <li><a href="#sec--error-handling">Error Handling</a><ul>
+  <li><a href="#sec--documentation">Documentation 文件</a></li>
+  <li><a href="#sec--iterators">Iterators 迭代器</a></li>
+  <li><a href="#sec--concurrency">Concurrency 并发</a></li>
+  <li><a href="#sec--error-handling">Error Handling 错误处理</a><ul>
   <li><a href="#failure-vs.panic">Failure vs. Panic</a></li>
   <li><a href="#handling-errors-with-option-and-result">Handling errors with <code>Option</code> and <code>Result</code></a></li>
   <li><a href="#non-recoverable-errors-with-panic">Non-recoverable errors with <code>panic!</code></a></li>
   <li><a href="#upgrading-failures-to-panics">Upgrading failures to panics</a></li>
   <li><a href="#using-try">Using <code>try!</code></a></li>
   </ul></li>
-  <li><a href="#sec--ffi">FFI</a><ul>
+  <li><a href="#sec--ffi">FFI 对外函数接口</a><ul>
   <li><a href="#introduction-1">Introduction</a></li>
   <li><a href="#creating-a-safe-interface">Creating a safe interface</a></li>
   <li><a href="#destructors">Destructors</a></li>
@@ -123,21 +123,21 @@ code > span.er { font-weight: bold; }
   <li><a href="#the-nullable-pointer-optimization">The “nullable pointer optimization”</a></li>
   <li><a href="#calling-rust-code-from-c">Calling Rust code from C</a></li>
   </ul></li>
-  <li><a href="#sec--borrow-and-asref">Borrow and AsRef</a><ul>
+  <li><a href="#sec--borrow-and-asref">Borrow and AsRef 借用和引用</a><ul>
   <li><a href="#borrow">Borrow</a></li>
   <li><a href="#asref">AsRef</a></li>
   <li><a href="#which-should-i-use">Which should I use?</a></li>
   </ul></li>
-  <li><a href="#sec--release-channels">Release Channels</a><ul>
+  <li><a href="#sec--release-channels">Release Channels 释放通道</a><ul>
   <li><a href="#overview">Overview</a></li>
   <li><a href="#choosing-a-version">Choosing a version</a></li>
   <li><a href="#helping-the-ecosystem-through-ci">Helping the ecosystem through CI</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec--syntax-and-semantics">Syntax and Semantics</a><ul>
-  <li><a href="#sec--variable-bindings">Variable Bindings</a></li>
-  <li><a href="#sec--functions">Functions</a></li>
-  <li><a href="#sec--primitive-types">Primitive Types</a><ul>
+  <li><a href="#sec--syntax-and-semantics">Syntax and Semantics 语法和语义</a><ul>
+  <li><a href="#sec--variable-bindings">Variable Bindings 变量绑定</a></li>
+  <li><a href="#sec--functions">Functions 函数</a></li>
+  <li><a href="#sec--primitive-types">Primitive Types 复合数据类型</a><ul>
   <li><a href="#booleans">Booleans</a></li>
   <li><a href="#char"><code>char</code></a></li>
   <li><a href="#numeric-types">Numeric types</a></li>
@@ -147,39 +147,39 @@ code > span.er { font-weight: bold; }
   <li><a href="#tuples">Tuples</a></li>
   <li><a href="#functions">Functions</a></li>
   </ul></li>
-  <li><a href="#sec--comments">Comments</a></li>
-  <li><a href="#sec--if">if</a></li>
-  <li><a href="#sec--for-loops">for loops</a></li>
-  <li><a href="#sec--while-loops">while loops</a></li>
-  <li><a href="#sec--ownership">Ownership</a><ul>
+  <li><a href="#sec--comments">Comments 注释</a></li>
+  <li><a href="#sec--if">if if条件语句</a></li>
+  <li><a href="#sec--for-loops">for loops for循环语句</a></li>
+  <li><a href="#sec--while-loops">while loops while循环语句</a></li>
+  <li><a href="#sec--ownership">Ownership 权限体系</a><ul>
   <li><a href="#meta">Meta</a></li>
   <li><a href="#ownership">Ownership</a></li>
   <li><a href="#move-semantics">Move semantics</a></li>
   <li><a href="#more-than-ownership">More than ownership</a></li>
   </ul></li>
-  <li><a href="#sec--references-and-borrowing">References and Borrowing</a><ul>
+  <li><a href="#sec--references-and-borrowing">References and Borrowing 地址引用和借用</a><ul>
   <li><a href="#meta-1">Meta</a></li>
   <li><a href="#borrowing">Borrowing</a></li>
   <li><a href="#mut-references">&amp;mut references</a></li>
   <li><a href="#the-rules">The Rules</a></li>
   </ul></li>
-  <li><a href="#sec--lifetimes">Lifetimes</a><ul>
+  <li><a href="#sec--lifetimes">Lifetimes 生命周期</a><ul>
   <li><a href="#meta-2">Meta</a></li>
   <li><a href="#lifetimes">Lifetimes</a></li>
   </ul></li>
-  <li><a href="#sec--mutability">Mutability</a><ul>
+  <li><a href="#sec--mutability">Mutability 可变性</a><ul>
   <li><a href="#interior-vs.exterior-mutability">Interior vs. Exterior Mutability</a></li>
   </ul></li>
-  <li><a href="#sec--structs">Structs</a><ul>
+  <li><a href="#sec--structs">Structs 结构体</a><ul>
   <li><a href="#update-syntax">Update syntax</a></li>
   <li><a href="#tuple-structs">Tuple structs</a></li>
   <li><a href="#unit-like-structs">Unit-like structs</a></li>
   </ul></li>
-  <li><a href="#sec--enums">Enums</a></li>
-  <li><a href="#sec--match">Match</a><ul>
+  <li><a href="#sec--enums">Enums 枚举</a></li>
+  <li><a href="#sec--match">Match 比较匹配</a><ul>
   <li><a href="#matching-on-enums">Matching on enums</a></li>
   </ul></li>
-  <li><a href="#sec--patterns">Patterns</a><ul>
+  <li><a href="#sec--patterns">Patterns 模式</a><ul>
   <li><a href="#multiple-patterns">Multiple patterns</a></li>
   <li><a href="#ranges">Ranges</a></li>
   <li><a href="#bindings">Bindings</a></li>
@@ -189,34 +189,34 @@ code > span.er { font-weight: bold; }
   <li><a href="#destructuring">Destructuring</a></li>
   <li><a href="#mix-and-match">Mix and Match</a></li>
   </ul></li>
-  <li><a href="#sec--method-syntax">Method Syntax</a><ul>
+  <li><a href="#sec--method-syntax">Method Syntax 方法</a><ul>
   <li><a href="#method-calls">Method calls</a></li>
   <li><a href="#chaining-method-calls">Chaining method calls</a></li>
   <li><a href="#associated-functions">Associated functions</a></li>
   <li><a href="#builder-pattern">Builder Pattern</a></li>
   </ul></li>
-  <li><a href="#sec--vectors">Vectors</a></li>
-  <li><a href="#sec--strings">Strings</a></li>
-  <li><a href="#sec--generics">Generics</a></li>
-  <li><a href="#sec--traits">Traits</a><ul>
+  <li><a href="#sec--vectors">Vectors 向量</a></li>
+  <li><a href="#sec--strings">Strings 字符串</a></li>
+  <li><a href="#sec--generics">Generics 泛型</a></li>
+  <li><a href="#sec--traits">Traits 特征</a><ul>
   <li><a href="#multiple-trait-bounds">Multiple trait bounds</a></li>
   <li><a href="#where-clause">Where clause</a></li>
   <li><a href="#inheritance">Inheritance</a></li>
   </ul></li>
-  <li><a href="#sec--drop">Drop</a></li>
-  <li><a href="#sec--if-let">if let</a></li>
-  <li><a href="#sec--trait-objects">Trait Objects</a></li>
-  <li><a href="#sec--closures">Closures</a><ul>
+  <li><a href="#sec--drop">Drop 丢弃</a></li>
+  <li><a href="#sec--if-let">if let if-let语句</a></li>
+  <li><a href="#sec--trait-objects">Trait Objects 特质对象</a></li>
+  <li><a href="#sec--closures">Closures 闭包</a><ul>
   <li><a href="#syntax">Syntax</a></li>
   <li><a href="#closures-and-their-environment">Closures and their environment</a></li>
   <li><a href="#closure-implementation">Closure implementation</a></li>
   <li><a href="#taking-closures-as-arguments">Taking closures as arguments</a></li>
   <li><a href="#returning-closures">Returning closures</a></li>
   </ul></li>
-  <li><a href="#sec--ufcs">Universal Function Call Syntax</a><ul>
+  <li><a href="#sec--ufcs">Universal Function Call Syntax 通用函数调用语法</a><ul>
   <li><a href="#angle-bracket-form">Angle-bracket Form</a></li>
   </ul></li>
-  <li><a href="#sec--crates-and-modules">Crates and Modules</a><ul>
+  <li><a href="#sec--crates-and-modules">Crates and Modules 箱型和模型</a><ul>
   <li><a href="#basic-terminology-crates-and-modules">Basic terminology: Crates and Modules</a></li>
   <li><a href="#defining-modules">Defining Modules</a></li>
   <li><a href="#multiple-file-crates">Multiple file crates</a></li>
@@ -224,24 +224,24 @@ code > span.er { font-weight: bold; }
   <li><a href="#exporting-a-public-interface">Exporting a Public Interface</a></li>
   <li><a href="#importing-modules-with-use">Importing Modules with <code>use</code></a></li>
   </ul></li>
-  <li><a href="#sec--const-and-static"><code>const</code> and <code>static</code></a><ul>
+  <li><a href="#sec--const-and-static"><code>const</code> and <code>static</code> 常量定义与静态型</a><ul>
   <li><a href="#static-1"><code>static</code></a></li>
   <li><a href="#initializing">Initializing</a></li>
   <li><a href="#which-construct-should-i-use">Which construct should I use?</a></li>
   </ul></li>
-  <li><a href="#sec--attributes">Attributes</a></li>
-  <li><a href="#sec--type-aliases"><code>type</code> aliases</a></li>
-  <li><a href="#sec--casting-between-types">Casting between types</a><ul>
+  <li><a href="#sec--attributes">Attributes 属性</a></li>
+  <li><a href="#sec--type-aliases"><code>type</code> aliases 类型</a></li>
+  <li><a href="#sec--casting-between-types">Casting between types 类型转换</a><ul>
   <li><a href="#as"><code>as</code></a></li>
   <li><a href="#transmute"><code>transmute</code></a></li>
   </ul></li>
-  <li><a href="#sec--associated-types">Associated Types</a></li>
-  <li><a href="#sec--unsized-types">Unsized Types</a><ul>
+  <li><a href="#sec--associated-types">Associated Types 事务</a></li>
+  <li><a href="#sec--unsized-types">Unsized Types 动态大小类型</a><ul>
   <li><a href="#sized">?Sized</a></li>
   </ul></li>
-  <li><a href="#sec--operators-and-overloading">Operators and Overloading</a></li>
-  <li><a href="#sec--deref-coercions">Deref coercions</a></li>
-  <li><a href="#sec--macros">Macros</a><ul>
+  <li><a href="#sec--operators-and-overloading">Operators and Overloading 运行和重载</a></li>
+  <li><a href="#sec--deref-coercions">Deref coercions 强制Deref</a></li>
+  <li><a href="#sec--macros">Macros 宏</a><ul>
   <li><a href="#defining-a-macro">Defining a macro</a></li>
   <li><a href="#hygiene">Hygiene</a></li>
   <li><a href="#recursive-macros">Recursive macros</a></li>
@@ -253,36 +253,36 @@ code > span.er { font-weight: bold; }
   <li><a href="#common-macros">Common macros</a></li>
   <li><a href="#procedural-macros">Procedural macros</a></li>
   </ul></li>
-  <li><a href="#sec--raw-pointers">Raw Pointers</a><ul>
+  <li><a href="#sec--raw-pointers">Raw Pointers 原始指针</a><ul>
   <li><a href="#basics">Basics</a></li>
   <li><a href="#ffi">FFI</a></li>
   <li><a href="#references-and-raw-pointers">References and raw pointers</a></li>
   </ul></li>
-  <li><a href="#sec--unsafe"><code>unsafe</code></a><ul>
+  <li><a href="#sec--unsafe"><code>unsafe</code> 不安全块</a><ul>
   <li><a href="#what-does-safe-mean">What does ‘safe’ mean?</a></li>
   <li><a href="#unsafe-superpowers">Unsafe Superpowers</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec--nightly-rust">Nightly Rust</a><ul>
-  <li><a href="#sec--compiler-plugins">Compiler Plugins</a><ul>
+  <li><a href="#sec--nightly-rust">Nightly Rust 每日Rust版本</a><ul>
+  <li><a href="#sec--compiler-plugins">Compiler Plugins 编译插件</a><ul>
   <li><a href="#introduction-2">Introduction</a></li>
   <li><a href="#syntax-extensions">Syntax extensions</a></li>
   <li><a href="#lint-plugins">Lint plugins</a></li>
   </ul></li>
-  <li><a href="#sec--inline-assembly">Inline Assembly</a></li>
-  <li><a href="#sec--no-stdlib">No stdlib</a></li>
-  <li><a href="#sec--intrinsics">Intrinsics</a></li>
-  <li><a href="#sec--lang-items">Lang items</a></li>
-  <li><a href="#sec--link-args">Link args</a></li>
-  <li><a href="#sec--benchmark-tests">Benchmark Tests</a></li>
-  <li><a href="#sec--box-syntax-and-patterns">Box Syntax and Patterns</a><ul>
+  <li><a href="#sec--inline-assembly">Inline Assembly 内联汇编</a></li>
+  <li><a href="#sec--no-stdlib">No stdlib 没有std库文件</a></li>
+  <li><a href="#sec--intrinsics">Intrinsics 内部函数</a></li>
+  <li><a href="#sec--lang-items">Lang items 组件</a></li>
+  <li><a href="#sec--link-args">Link args 连接属性</a></li>
+  <li><a href="#sec--benchmark-tests">Benchmark Tests 基准测试</a></li>
+  <li><a href="#sec--box-syntax-and-patterns">Box Syntax and Patterns Box语法和模式</a><ul>
   <li><a href="#returning-pointers">Returning Pointers</a></li>
   </ul></li>
-  <li><a href="#sec--slice-patterns">Slice Patterns</a></li>
-  <li><a href="#sec--associated-constants">Associated Constants</a></li>
+  <li><a href="#sec--slice-patterns">Slice Patterns 分片模式</a></li>
+  <li><a href="#sec--associated-constants">Associated Constants 关联常量</a></li>
   </ul></li>
-  <li><a href="#sec--glossary">Glossary</a></li>
-  <li><a href="#sec--academic-research">Academic Research</a></li>
+  <li><a href="#sec--glossary">Glossary 专业术语</a></li>
+  <li><a href="#sec--academic-research">Academic Research 学术研究</a></li>
   </ul>
 </nav>
 
@@ -363,9 +363,9 @@ code > span.er { font-weight: bold; }
   }</code></pre></div>
   <p>We created an inner scope with an additional set of curly braces. <code>y</code> will go out of scope before we call <code>push()</code>, and so we’re all good.</p>
   <p>This concept of ownership isn’t just good for preventing dangling pointers, but an entire set of related problems, like iterator invalidation, concurrency, and more.</p>
-  <h1 id="sec--getting-started">Getting Started</h1>
+  <h1 id="sec--getting-started">Getting Started 开始使用Rust</h1>
   <p>This first section of the book will get you going with Rust and its tooling. First, we’ll install Rust. Then, the classic ‘Hello World’ program. Finally, we’ll talk about Cargo, Rust’s build system and package manager.</p>
-  <h2 id="sec--installing-rust">Installing Rust</h2>
+  <h2 id="sec--installing-rust">Installing Rust 安装Rust</h2>
   <p>The first step to using Rust is to install it! There are a number of ways to install Rust, but the easiest is to use the <code>rustup</code> script. If you’re on Linux or a Mac, all you need to do is this (note that you don’t need to type in the <code>$</code>s, they just indicate the start of each command):</p>
   <pre><code>$ curl -sf -L https://static.rust-lang.org/rustup.sh | sh</code></pre>
   <p>If you’re concerned about the <a href="http://curlpipesh.tumblr.com">potential insecurity</a> of using <code>curl | sh</code>, please keep reading and see our disclaimer below. And feel free to use a two-step version of the installation and examine our installation script:</p>
@@ -437,7 +437,7 @@ code > span.er { font-weight: bold; }
   <p>If you come from a dynamic language like Ruby, Python, or JavaScript, you may not be used to these two steps being separate. Rust is an ‘ahead-of-time compiled language’, which means that you can compile a program, give it to someone else, and they don’t need to have Rust installed. If you give someone a <code>.rb</code> or <code>.py</code> or <code>.js</code> file, they need to have a Ruby/Python/JavaScript implementation installed, but you just need one command to both compile and run your program. Everything is a tradeoff in language design, and Rust has made its choice.</p>
   <p>Congratulations! You have officially written a Rust program. That makes you a Rust programmer! Welcome. 🎊🎉👍</p>
   <p>Next, I’d like to introduce you to another tool, Cargo, which is used to write real-world Rust programs. Just using <code>rustc</code> is nice for simple things, but as your project grows, you’ll want something to help you manage all of the options that it has, and to make it easy to share your code with other people and projects.</p>
-  <h2 id="sec--hello-cargo">Hello, Cargo!</h2>
+  <h2 id="sec--hello-cargo">Hello, Cargo! Cargo命令介绍</h2>
   <p><a href="http://doc.crates.io">Cargo</a> is a tool that Rustaceans use to help manage their Rust projects. Cargo is currently in a pre-1.0 state, and so it is still a work in progress. However, it is already good enough to use for many Rust projects, and so it is assumed that Rust projects will use Cargo from the beginning.</p>
   <p>Cargo manages three things: building your code, downloading the dependencies your code needs, and building those dependencies. At first, your program doesn’t have any dependencies, so we’ll only be using the first part of its functionality. Eventually, we’ll add more. Since we started off by using Cargo, it’ll be easy to add later.</p>
   <p>If you installed Rust via the official installers you will also have Cargo. If you installed Rust some other way, you may want to <a href="https://github.com/rust-lang/cargo#installing-cargo-from-nightlies">check the Cargo README</a> for specific instructions about installing it.</p>
@@ -516,10 +516,10 @@ code > span.er { font-weight: bold; }
   <p>Cargo has generated a “Hello World!” for us, and you’re ready to start coding! Cargo has its own <a href="http://doc.crates.io/guide.html">guide</a> which covers Cargo’s features in much more depth.</p>
   <p>Now that you’ve got the tools down, let’s actually learn more about the Rust language itself. These are the basics that will serve you well through the rest of your time with Rust.</p>
   <p>You have two options: Dive into a project with ‘<a href="#sec--learn-rust">Learn Rust</a>’, or start from the bottom and work your way up with ‘<a href="#sec--syntax-and-semantics">Syntax and Semantics</a>’. More experienced systems programmers will probably prefer ‘Learn Rust’, while those from dynamic backgrounds may enjoy either. Different people learn differently! Choose whatever’s right for you.</p>
-  <h1 id="sec--learn-rust">Learn Rust</h1>
+  <h1 id="sec--learn-rust">Learn Rust Rust入门</h1>
   <p>Welcome! This section has a few tutorials that teach you Rust through building projects. You’ll get a high-level overview, but we’ll skim over the details.</p>
   <p>If you’d prefer a more ‘from the ground up’-style experience, check out <a href="#sec--syntax-and-semantics">Syntax and Semantics</a>.</p>
-  <h2 id="sec--guessing-game">Guessing Game</h2>
+  <h2 id="sec--guessing-game">Guessing Game 猜数字</h2>
   <p>For our first project, we’ll implement a classic beginner programming problem: the guessing game. Here’s how it works: Our program will generate a random integer between one and a hundred. It will then prompt us to enter a guess. Upon entering our guess, it will tell us if we’re too low or too high. Once we guess correctly, it will congratulate us. Sounds good?</p>
   <h3 id="set-up">Set up</h3>
   <p>Let’s set up a new project. Go to your projects directory. Remember how we had to create our directory structure and a <code>Cargo.toml</code> for <code>hello_world</code>? Cargo has a command that does that for us. Let’s give it a shot:</p>
@@ -1028,7 +1028,7 @@ code > span.er { font-weight: bold; }
   <h3 id="complete">Complete!</h3>
   <p>At this point, you have successfully built the Guessing Game! Congratulations!</p>
   <p>This first project showed you a lot: <code>let</code>, <code>match</code>, methods, associated functions, using external crates, and more. Our next project will show off even more.</p>
-  <h2 id="sec--dining-philosophers">Dining Philosophers</h2>
+  <h2 id="sec--dining-philosophers">Dining Philosophers 哲学家就餐问题</h2>
   <p>For our second project, let’s look at a classic concurrency problem. It’s called ‘the dining philosophers’. It was originally conceived by Dijkstra in 1965, but we’ll use the version from <a href="http://www.usingcsp.com/cspbook.pdf">this paper</a> by Tony Hoare in 1985.</p>
   <blockquote>
   <p>In ancient times, a wealthy philanthropist endowed a College to accommodate five eminent philosophers. Each philosopher had a room in which he could engage in his professional activity of thinking; there was also a common dining room, furnished with a circular table, surrounded by five chairs, each labelled by the name of the philosopher who was to sit in it. They sat anticlockwise around the table. To the left of each philosopher there was laid a golden fork, and in the centre stood a large bowl of spaghetti, which was constantly replenished. A philosopher was expected to spend most of his time thinking; but when he felt hungry, he went to the dining room, sat down in his own chair, picked up his own fork on his left, and plunged it into the spaghetti. But such is the tangled nature of spaghetti that a second fork is required to carry it to the mouth. The philosopher therefore had also to pick up the fork on his right. When we was finished he would put down both his forks, get up from his chair, and continue thinking. Of course, a fork can be used by only one philosopher at a time. If the other philosopher wants it, he just has to wait until the fork is available again.</p>
@@ -1419,7 +1419,7 @@ code > span.er { font-weight: bold; }
   Karl Marx is done eating.
   Michel Foucault is done eating.</code></pre>
   <p>Congrats! You’ve implemented a classic concurrency problem in Rust.</p>
-  <h2 id="sec--rust-inside-other-languages">Rust inside other languages</h2>
+  <h2 id="sec--rust-inside-other-languages">Rust inside other languages Rust与其他语言</h2>
   <p>For our third project, we’re going to choose something that shows off one of Rust’s greatest strengths: a lack of a substantial runtime.</p>
   <p>As organizations grow, they increasingly rely on a multitude of programming languages. Different programming languages have different strengths and weaknesses, and a polyglot stack lets you use a particular language where its strengths make sense, and use a different language where it’s weak.</p>
   <p>A very common area where many programming languages are weak is in runtime performance of programs. Often, using a language that is slower, but offers greater programmer productivity is a worthwhile trade-off. To help mitigate this, they provide a way to write some of your system in C, and then call the C code as though it were written in the higher-level language. This is called a ‘foreign function interface’, often shortened to ‘FFI’.</p>
@@ -1577,12 +1577,12 @@ code > span.er { font-weight: bold; }
   <p>On my system, this takes a quick <code>0.092</code> seconds.</p>
   <h3 id="conclusion">Conclusion</h3>
   <p>As you can see, the basics of doing this are <em>very</em> easy. Of course, there’s a lot more that we could do here. Check out the <a href="#sec--ffi">FFI</a> chapter for more details.</p>
-  <h1 id="sec--effective-rust">Effective Rust</h1>
+  <h1 id="sec--effective-rust">Effective Rust高效的Rust</h1>
   <p>So you’ve learned how to write some Rust code. But there’s a difference between writing <em>any</em> Rust code and writing <em>good</em> Rust code.</p>
   <p>到现在为止，你已经学过如何写一些rust语言的代码了。但是，在普通的rust代码和好的rust代码之间是有些大不同的</p>
   <p>This section consists of relatively independent tutorials which show you how to take your Rust to the next level. Common patterns and standard library features will be introduced. Read these sections in any order of your choosing.</p>
   <p>本章节有相对独立的教程，能够向你展示如何让你的rust语言水平下一个更高阶段。通用模式和标准库特性将会被介绍到。你可以以任意顺序阅读本章节。</p>
-  <h2 id="sec--the-stack-and-the-heap">The Stack and the Heap</h2>
+  <h2 id="sec--the-stack-and-the-heap">The Stack and the Heap 栈和堆</h2>
   <p>As a systems language, Rust operates at a low level. If you’re coming from a high-level language, there are some aspects of systems programming that you may not be familiar with. The most important one is how memory works, with a stack and a heap. If you’re familiar with how C-like languages use stack allocation, this chapter will be a refresher. If you’re not, you’ll learn about this more general concept, but with a Rust-y focus.</p>
   <p>作为一门系统语言，rust在系统中一个比较低的层次运行。如果你来自于 高级语言，有几个系统编程方面的内容可能你不熟悉。最重要的事情是内存是如何通过栈和堆来进行工作的。如果你熟悉类似c语言的堆栈分配机制，本章将会重温一遍。如果你不熟悉，你将学到更多的通用知识，但是是站在rust语言的角度上</p>
   <h3 id="memory-management-内存管理">Memory management 内存管理</h3>
@@ -2698,7 +2698,7 @@ code > span.er { font-weight: bold; }
   <p>栈分配影响着Rust语言本身和开发者的心智模型。后进先出的哲学驱动着Rust语言如何自动进行内存管理。甚至于就像本章中探讨的，独有的堆分配也是被基于栈分配的后进先出的哲学来驱动的。非后进先出的灵活性（即表现）是指在编译器在编译过程中无法自动推断某些内存应该被释放时，它不得不依赖于来字语言本身之外的动态协议，来驱动释放操作——参考：<code>Rc&lt;T&gt;</code>和<code>Arc&lt;T&gt;</code>的用法就是一个关于这方面的例子。</p>
   <p>When taken to the extreme, the increased expressive power of heap allocation comes at the cost of either significant runtime support (e.g. in the form of a garbage collector) or significant programmer effort (in the form of explicit memory management calls that require verification not provided by the Rust compiler).</p>
   <p>当到了极致的时候，随着不断增加的堆分配的表现力来自于每一个重要运行时支持的成本（比如垃圾回收器的形式）或者重要成员（在Rust编译器提供的方法之外的明确的内存管理形式上）所花费的精力。</p>
-  <h2 id="sec--testing">Testing</h2>
+  <h2 id="sec--testing">Testing测试</h2>
   <blockquote>
   <p>Program testing can be a very effective way to show the presence of bugs, butit is hopelessly inadequate for showing their absence.Edsger W. Dijkstra, “The Humble Programmer” (1972)</p>
   <p>“程序测试是表明存在故障的非常有效的方法，但对于证明没有故障，调试是很无能为力的。” 艾兹格·迪科斯彻 《谦卑的程序员》 1972</p>
@@ -3004,7 +3004,7 @@ code > span.er { font-weight: bold; }
   test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured</code></pre>
   <p>Now we have all three kinds of tests running! Note the names of the documentation tests: the <code>_0</code> is generated for the module test, and <code>add_two_0</code> for the function test. These will auto increment with names like <code>add_two_1</code> as you add more examples.</p>
   <p>现在我们掌握了全部的三种测试方式！注意文档测试的名称：<code>_0</code>是由模块测试生成的，<code>add_two_0</code>是有函数测试生成的。随着你增加更多的例子，<code>_*</code>将像<code>add_two_1</code>这样自动增加。</p>
-  <h2 id="sec--conditional-compilation">Conditional Compilation</h2>
+  <h2 id="sec--conditional-compilation">Conditional Compilation 条件编译</h2>
   <p>Rust has a special attribute, <code>#[cfg]</code>, which allows you to compile code based on a flag passed to the compiler. It has two forms:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>cfg<span class="ot">(</span>foo<span class="ot">)]</span>
   
@@ -3041,7 +3041,7 @@ code > span.er { font-weight: bold; }
       <span class="ot">println!</span>(<span class="st">&quot;Think Different!&quot;</span>);
   }</code></pre></div>
   <p>These will be replaced by a <code>true</code> or <code>false</code> at compile-time, depending on the configuration settings.</p>
-  <h2 id="sec--documentation">Documentation</h2>
+  <h2 id="sec--documentation">Documentation 文件</h2>
   <p>Documentation is an important part of any software project, and it’s first-class in Rust. Let’s talk about the tooling Rust gives you to document your project.</p>
   <h4 id="about-rustdoc">About <code>rustdoc</code></h4>
   <p>The Rust distribution includes a tool, <code>rustdoc</code>, that generates documentation. <code>rustdoc</code> is also used by Cargo through <code>cargo doc</code>.</p>
@@ -3333,7 +3333,7 @@ code > span.er { font-weight: bold; }
   <h4 id="security-note">Security note</h4>
   <p>The Markdown in documentation comments is placed without processing into the final webpage. Be careful with literal HTML:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">/// &lt;script&gt;alert(document.cookie)&lt;/script&gt;</span></code></pre></div>
-  <h2 id="sec--iterators">Iterators</h2>
+  <h2 id="sec--iterators">Iterators 迭代器</h2>
   <p>Let’s talk about loops.</p>
   <p>Remember Rust’s <code>for</code> loop? Here’s an example:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> x in <span class="dv">0.</span>.<span class="dv">10</span> {
@@ -3486,7 +3486,7 @@ code > span.er { font-weight: bold; }
       .collect::&lt;Vec&lt;<span class="kw">i32</span>&gt;&gt;();</code></pre></div>
   <p>This will give you a vector containing <code>6</code>, <code>12</code>, <code>18</code>, <code>24</code>, and <code>30</code>.</p>
   <p>This is just a small taste of what iterators, iterator adapters, and consumers can help you with. There are a number of really useful iterators, and you can write your own as well. Iterators provide a safe, efficient way to manipulate all kinds of lists. They’re a little unusual at first, but if you play with them, you’ll get hooked. For a full list of the different iterators and consumers, check out the <a href="http://doc.rust-lang.org/std/iter/index.html">iterator module documentation</a>.</p>
-  <h2 id="sec--concurrency">Concurrency</h2>
+  <h2 id="sec--concurrency">Concurrency 并发</h2>
   <p>Concurrency and parallelism are incredibly important topics in computer science, and are also a hot topic in industry today. Computers are gaining more and more cores, yet many programmers aren’t prepared to fully utilize them.</p>
   <p>Rust’s memory safety features also apply to its concurrency story too. Even concurrent Rust programs must be memory safe, having no data races. Rust’s type system is up to the task, and gives you powerful ways to reason about concurrent code at compile time.</p>
   <p>Before we talk about the concurrency features that come with Rust, it’s important to understand something: Rust is low-level enough that all of this is provided by the standard library, not by the language. This means that if you don’t like some aspect of the way Rust handles concurrency, you can implement an alternative way of doing things. <a href="https://github.com/carllerche/mio">mio</a> is a real-world example of this principle in action.</p>
@@ -3654,7 +3654,7 @@ code > span.er { font-weight: bold; }
   
   assert!(result.is_err());</code></pre>
   <p>Our <code>Thread</code> gives us a <code>Result</code> back, which allows us to check if the thread has panicked or not.</p>
-  <h2 id="sec--error-handling">Error Handling</h2>
+  <h2 id="sec--error-handling">Error Handling 错误处理</h2>
   <blockquote>
   <p>The best-laid plans of mice and men<br />Often go awry</p>
   <p>“Tae a Moose”, Robert Burns</p>
@@ -3834,7 +3834,7 @@ code > span.er { font-weight: bold; }
   <p>Wrapping an expression in <code>try!</code> will result in the unwrapped success (<code>Ok</code>) value, unless the result is <code>Err</code>, in which case <code>Err</code> is returned early from the enclosing function.</p>
   <p>It’s worth noting that you can only use <code>try!</code> from a function that returns a <code>Result</code>, which means that you cannot use <code>try!</code> inside of <code>main()</code>, because <code>main()</code> doesn’t return anything.</p>
   <p><code>try!</code> makes use of <a href="http://doc.rust-lang.org/std/convert/trait.From.html"><code>From&lt;Error&gt;</code></a> to determine what to return in the error case.</p>
-  <h2 id="sec--ffi">FFI</h2>
+  <h2 id="sec--ffi">FFI 对外函数接口</h2>
   <h3 id="introduction-1">Introduction</h3>
   <p>This guide will use the <a href="https://github.com/google/snappy">snappy</a> compression/decompression library as an introduction to writing bindings for foreign code. Rust is currently unable to call directly into a C++ library, but snappy includes a C interface (documented in <a href="https://github.com/google/snappy/blob/master/snappy-c.h"><code>snappy-c.h</code></a>).</p>
   <p>The following is a minimal example of calling a foreign function which will compile if snappy is installed:</p>
@@ -4140,7 +4140,7 @@ code > span.er { font-weight: bold; }
   }
   # fn main() {}</code></pre>
   <p>The <code>extern</code> makes this function adhere to the C calling convention, as discussed above in “<a href="ffi.html#foreign-calling-conventions">Foreign Calling Conventions</a>”. The <code>no_mangle</code> attribute turns off Rust’s name mangling, so that it is easier to link to.</p>
-  <h2 id="sec--borrow-and-asref">Borrow and AsRef</h2>
+  <h2 id="sec--borrow-and-asref">Borrow and AsRef 借用和引用</h2>
   <p>The <a href="http://doc.rust-lang.org/std/borrow/trait.Borrow.html"><code>Borrow</code></a> and <a href="http://doc.rust-lang.org/std/convert/trait.AsRef.html"><code>AsRef</code></a> traits are very similar, but different. Here’s a quick refresher on what these two traits mean.</p>
   <h3 id="borrow">Borrow</h3>
   <p>The <code>Borrow</code> trait is used when you’re writing a datastructure, and you want to use either an owned or borrowed type as synonymous for some purpose.</p>
@@ -4182,7 +4182,7 @@ code > span.er { font-weight: bold; }
   <p>We can see how they’re kind of the same: they both deal with owned and borrowed versions of some type. However, they’re a bit different.</p>
   <p>Choose <code>Borrow</code> when you want to abstract over different kinds of borrowing, or when you’re building a datastructure that treats owned and borrowed values in equivalent ways, such as hashing and comparison.</p>
   <p>Choose <code>AsRef</code> when you want to convert something to a reference directly, and you’re writing generic code.</p>
-  <h2 id="sec--release-channels">Release Channels</h2>
+  <h2 id="sec--release-channels">Release Channels 释放通道</h2>
   <p>The Rust project uses a concept called ‘release channels’ to manage releases. It’s important to understand this process to choose which version of Rust your project should use.</p>
   <h3 id="overview">Overview</h3>
   <p>There are three channels for Rust releases:</p>
@@ -4199,11 +4199,11 @@ code > span.er { font-weight: bold; }
   <h3 id="helping-the-ecosystem-through-ci">Helping the ecosystem through CI</h3>
   <p>What about beta? We encourage all Rust users who use the stable release channel to also test against the beta channel in their continuous integration systems. This will help alert the team in case there’s an accidental regression.</p>
   <p>Additionally, testing against nightly can catch regressions even sooner, and so if you don’t mind a third build, we’d appreciate testing against all channels.</p>
-  <h1 id="sec--syntax-and-semantics">Syntax and Semantics</h1>
+  <h1 id="sec--syntax-and-semantics">Syntax and Semantics 语法和语义</h1>
   <p>This section breaks Rust down into small chunks, one for each concept.</p>
   <p>If you’d like to learn Rust from the bottom up, reading this in order is a great way to do that.</p>
   <p>These sections also form a reference for each concept, so if you’re reading another tutorial and find something confusing, you can find it explained somewhere in here.</p>
-  <h2 id="sec--variable-bindings">Variable Bindings</h2>
+  <h2 id="sec--variable-bindings">Variable Bindings 变量绑定</h2>
   <p>Virtually every non-‘Hello World’ Rust program uses <em>variable bindings</em>. They look like this:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> x = <span class="dv">5</span>;
@@ -4268,7 +4268,7 @@ code > span.er { font-weight: bold; }
   <p>Rust will not let us use a value that has not been initialized. Next, let’s talk about this stuff we’ve added to <code>println!</code>.</p>
   <p>If you include two curly braces (<code>{}</code>, some call them moustaches…) in your string to print, Rust will interpret this as a request to interpolate some sort of value. <em>String interpolation</em> is a computer science term that means “stick in the middle of a string.” We add a comma, and then <code>x</code>, to indicate that we want <code>x</code> to be the value we’re interpolating. The comma is used to separate arguments we pass to functions and macros, if you’re passing more than one.</p>
   <p>When you just use the curly braces, Rust will attempt to display the value in a meaningful way by checking out its type. If you want to specify the format in a more detailed manner, there are a <a href="http://doc.rust-lang.org/std/fmt/index.html">wide number of options available</a>. For now, we’ll just stick to the default: integers aren’t very complicated to print.</p>
-  <h2 id="sec--functions">Functions</h2>
+  <h2 id="sec--functions">Functions 函数</h2>
   <p>Every Rust program has at least one function, the <code>main</code> function:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
   }</code></pre></div>
@@ -4366,7 +4366,7 @@ code > span.er { font-weight: bold; }
   # }
   let x: i32 = diverges();
   let x: String = diverges();</code></pre>
-  <h2 id="sec--primitive-types">Primitive Types</h2>
+  <h2 id="sec--primitive-types">Primitive Types 复合数据类型</h2>
   <p>The Rust language has a number of types that are considered ‘primitive’. This means that they’re built-in to the language. Rust is structured in such a way that the standard library also provides a number of useful types built on top of these ones, as well, but these are the most primitive.</p>
   <h3 id="booleans">Booleans</h3>
   <p>Rust has a built in boolean type, named <code>bool</code>. It has two values, <code>true</code> and <code>false</code>:</p>
@@ -4477,7 +4477,7 @@ code > span.er { font-weight: bold; }
   
   let x: fn(i32) -&gt; i32 = foo;</code></pre>
   <p>In this case, <code>x</code> is a ‘function pointer’ to a function that takes an <code>i32</code> and returns an <code>i32</code>.</p>
-  <h2 id="sec--comments">Comments</h2>
+  <h2 id="sec--comments">Comments 注释</h2>
   <p>Now that we have some functions, it’s a good idea to learn about comments. Comments are notes that you leave to other programmers to help explain things about your code. The compiler mostly ignores them.</p>
   <p>Rust has two kinds of comments that you should care about: <em>line comments</em> and <em>doc comments</em>.</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">// Line comments are anything after ‘//’ and extend to the end of the line.</span>
@@ -4502,7 +4502,7 @@ code > span.er { font-weight: bold; }
   }</code></pre></div>
   <p>When writing doc comments, providing some examples of usage is very, very helpful. You’ll notice we’ve used a new macro here: <code>assert_eq!</code>. This compares two values, and <code>panic!</code>s if they’re not equal to each other. It’s very helpful in documentation. There’s another macro, <code>assert!</code>, which <code>panic!</code>s if the value passed to it is <code>false</code>.</p>
   <p>You can use the <a href="#sec--documentation"><code>rustdoc</code></a> tool to generate HTML documentation from these doc comments, and also to run the code examples as tests!</p>
-  <h2 id="sec--if">if</h2>
+  <h2 id="sec--if">if if条件语句</h2>
   <p>Rust’s take on <code>if</code> is not particularly complex, but it’s much more like the <code>if</code> you’ll find in a dynamically typed language than in a more traditional systems language. So let’s talk about it, to make sure you grasp the nuances.</p>
   <p><code>if</code> is a specific form of a more general concept, the ‘branch’. The name comes from a branch in a tree: a decision point, where depending on a choice, multiple paths can be taken.</p>
   <p>In the case of <code>if</code>, there is one choice that leads down two paths:</p>
@@ -4543,7 +4543,7 @@ code > span.er { font-weight: bold; }
   
   <span class="kw">let</span> y = <span class="kw">if</span> x == <span class="dv">5</span> { <span class="dv">10</span> } <span class="kw">else</span> { <span class="dv">15</span> }; <span class="co">// y: i32</span></code></pre></div>
   <p>This works because <code>if</code> is an expression. The value of the expression is the value of the last expression in whichever branch was chosen. An <code>if</code> without an <code>else</code> always results in <code>()</code> as the value.</p>
-  <h2 id="sec--for-loops">for loops</h2>
+  <h2 id="sec--for-loops">for loops for循环语句</h2>
   <p>The <code>for</code> loop is used to loop a particular number of times. Rust’s <code>for</code> loops work a bit differently than in other systems languages, however. Rust’s <code>for</code> loop doesn’t look like this “C-style” <code>for</code> loop:</p>
   <pre><code>for (x = 0; x &lt; 10; x++) {
       printf( &quot;%d\n&quot;, x );
@@ -4559,7 +4559,7 @@ code > span.er { font-weight: bold; }
   <p>The expression is an <a href="#sec--iterators">iterator</a>. The iterator gives back a series of elements. Each element is one iteration of the loop. That value is then bound to the name <code>var</code>, which is valid for the loop body. Once the body is over, the next value is fetched from the iterator, and we loop another time. When there are no more values, the <code>for</code> loop is over.</p>
   <p>In our example, <code>0..10</code> is an expression that takes a start and an end position, and gives an iterator over those values. The upper bound is exclusive, though, so our loop will print <code>0</code> through <code>9</code>, not <code>10</code>.</p>
   <p>Rust does not have the “C-style” <code>for</code> loop on purpose. Manually controlling each element of the loop is complicated and error prone, even for experienced C developers.</p>
-  <h2 id="sec--while-loops">while loops</h2>
+  <h2 id="sec--while-loops">while loops while循环语句</h2>
   <p>Rust also has a <code>while</code> loop. It looks like this:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> x = <span class="dv">5</span>; <span class="co">// mut x: i32</span>
   <span class="kw">let</span> <span class="kw">mut</span> done = <span class="kw">false</span>; <span class="co">// mut done: bool</span>
@@ -4612,7 +4612,7 @@ code > span.er { font-weight: bold; }
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, x);
   }</code></pre></div>
   <p>Both <code>continue</code> and <code>break</code> are valid in both <code>while</code> loops and <a href="#sec--for-loops"><code>for</code> loops</a>.</p>
-  <h2 id="sec--ownership">Ownership</h2>
+  <h2 id="sec--ownership">Ownership 权限体系</h2>
   <p>This guide is one of three presenting Rust’s ownership system. This is one of Rust’s most unique and compelling features, with which Rust developers should become quite acquainted. Ownership is how Rust achieves its largest goal, memory safety. There are a few distinct concepts, each with its own chapter:</p>
   <ul>
   <li>ownership, which you’re reading now</li>
@@ -4695,7 +4695,7 @@ code > span.er { font-weight: bold; }
   <span class="kw">let</span> (v1, v2, answer) = foo(v1, v2);</code></pre></div>
   <p>Ugh! The return type, return line, and calling the function gets way more complicated.</p>
   <p>Luckily, Rust offers a feature, borrowing, which helps us solve this problem. It’s the topic of the next section!</p>
-  <h2 id="sec--references-and-borrowing">References and Borrowing</h2>
+  <h2 id="sec--references-and-borrowing">References and Borrowing 地址引用和借用</h2>
   <p>This guide is one of three presenting Rust’s ownership system. This is one of Rust’s most unique and compelling features, with which Rust developers should become quite acquainted. Ownership is how Rust achieves its largest goal, memory safety. There are a few distinct concepts, each with its own chapter:</p>
   <ul>
   <li><a href="#sec--ownership">ownership</a>, the key concept</li>
@@ -4908,7 +4908,7 @@ code > span.er { font-weight: bold; }
       
       println!(&quot;{}&quot;, y);
   }</code></pre>
-  <h2 id="sec--lifetimes">Lifetimes</h2>
+  <h2 id="sec--lifetimes">Lifetimes 生命周期</h2>
   <p>This guide is one of three presenting Rust’s ownership system. This is one of Rust’s most unique and compelling features, with which Rust developers should become quite acquainted. Ownership is how Rust achieves its largest goal, memory safety. There are a few distinct concepts, each with its own chapter:</p>
   <ul>
   <li><a href="#sec--ownership">ownership</a>, the key concept</li>
@@ -5051,7 +5051,7 @@ code > span.er { font-weight: bold; }
   
   <span class="kw">fn</span> new(buf: &amp;<span class="kw">mut</span> [<span class="kw">u8</span>]) -&gt; BufWriter; <span class="co">// elided</span>
   <span class="kw">fn</span> new&lt;<span class="ot">'a</span>&gt;(buf: &amp;<span class="ot">'a</span> <span class="kw">mut</span> [<span class="kw">u8</span>]) -&gt; BufWriter&lt;<span class="ot">'a</span>&gt; <span class="co">// expanded</span></code></pre></div>
-  <h2 id="sec--mutability">Mutability</h2>
+  <h2 id="sec--mutability">Mutability 可变性</h2>
   <p>Mutability, the ability to change something, works a bit differently in Rust than in other languages. The first aspect of mutability is its non-default status:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">5</span>;
   x = <span class="dv">6</span>; <span class="co">// error!</span></code></pre></div>
@@ -5135,7 +5135,7 @@ code > span.er { font-weight: bold; }
   
   println!(&quot;y: {:?}&quot;, point.y);</code></pre>
   <p>This will print <code>y: Cell { value: 7 }</code>. We’ve successfully updated <code>y</code>.</p>
-  <h2 id="sec--structs">Structs</h2>
+  <h2 id="sec--structs">Structs 结构体</h2>
   <p>Structs are a way of creating more complex data types. For example, if we were doing calculations involving coordinates in 2D space, we would need both an <code>x</code> and a <code>y</code> value:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> origin_x = <span class="dv">0</span>;
   <span class="kw">let</span> origin_y = <span class="dv">0</span>;</code></pre></div>
@@ -5233,7 +5233,7 @@ code > span.er { font-weight: bold; }
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Electron;</code></pre></div>
   <p>Such a struct is called ‘unit-like’ because it resembles the empty tuple, <code>()</code>, sometimes called ‘unit’. Like a tuple struct, it defines a new type.</p>
   <p>This is rarely useful on its own (although sometimes it can serve as a marker type), but in combination with other features, it can become useful. For instance, a library may ask you to create a structure that implements a certain <a href="#sec--traits">trait</a> to handle events. If you don’t have any data you need to store in the structure, you can just create a unit-like struct.</p>
-  <h2 id="sec--enums">Enums</h2>
+  <h2 id="sec--enums">Enums 枚举</h2>
   <p>An <code>enum</code> in Rust is a type that represents data that could be one of several possible variants:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Message {
       Quit,
@@ -5257,7 +5257,7 @@ code > span.er { font-weight: bold; }
       <span class="kw">let</span> Message::ChangeColor(r, g, b) = msg; <span class="co">// compile-time error</span>
   }</code></pre></div>
   <p>Not supporting these operations may seem rather limiting, but it’s a limitation which we can overcome. There are two ways: by implementing equality ourselves, or by pattern matching variants with <a href="#sec--match"><code>match</code></a> expressions, which you’ll learn in the next section. We don’t know enough about Rust to implement equality yet, but we’ll find out in the <a href="#sec--traits"><code>traits</code></a> section.</p>
-  <h2 id="sec--match">Match</h2>
+  <h2 id="sec--match">Match 比较匹配</h2>
   <p>Often, a simple <a href="#sec--if"><code>if</code></a>/<code>else</code> isn’t enough, because you have more than two possible options. Also, conditions can get quite complex. Rust has a keyword, <code>match</code>, that allows you to replace complicated <code>if</code>/<code>else</code> groupings with something more powerful. Check it out:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">5</span>;
   
@@ -5308,7 +5308,7 @@ code > span.er { font-weight: bold; }
   }</code></pre></div>
   <p>Again, the Rust compiler checks exhaustiveness, so it demands that you have a match arm for every variant of the enum. If you leave one off, it will give you a compile-time error unless you use <code>_</code>.</p>
   <p>Unlike the previous uses of <code>match</code>, you can’t use the normal <code>if</code> statement to do this. You can use the <a href="#sec--if-let"><code>if let</code></a> statement, which can be seen as an abbreviated form of <code>match</code>.</p>
-  <h2 id="sec--patterns">Patterns</h2>
+  <h2 id="sec--patterns">Patterns 模式</h2>
   <p>Patterns are quite common in Rust. We use them in <a href="#sec--variable-bindings">variable bindings</a>, <a href="#sec--match">match statements</a>, and other places, too. Let’s go on a whirlwind tour of all of the things patterns can do!</p>
   <p>A quick refresher: you can match against literals directly, and <code>_</code> acts as an ‘any’ case:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">1</span>;
@@ -5462,7 +5462,7 @@ code > span.er { font-weight: bold; }
       Foo { x: <span class="kw">Some</span>(<span class="kw">ref</span> name), y: <span class="kw">None</span> } =&gt; ...
   }</code></pre></div>
   <p>Patterns are very powerful. Make good use of them.</p>
-  <h2 id="sec--method-syntax">Method Syntax</h2>
+  <h2 id="sec--method-syntax">Method Syntax 方法</h2>
   <p>Functions are great, but if you want to call a bunch of them on some data, it can be awkward. Consider this code:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">baz(bar(foo)));</code></pre></div>
   <p>We would read this left-to right, and so we see ‘baz bar foo’. But this isn’t the order that the functions would get called in, that’s inside-out: ‘foo bar baz’. Wouldn’t it be nice if we could do this instead?</p>
@@ -5619,7 +5619,7 @@ code > span.er { font-weight: bold; }
       println!(&quot;y: {}&quot;, c.y);
   }</code></pre>
   <p>What we’ve done here is make another struct, <code>CircleBuilder</code>. We’ve defined our builder methods on it. We’ve also defined our <code>area()</code> method on <code>Circle</code>. We also made one more method on <code>CircleBuilder</code>: <code>finalize()</code>. This method creates our final <code>Circle</code> from the builder. Now, we’ve used the type system to enforce our concerns: we can use the methods on <code>CircleBuilder</code> to constrain making <code>Circle</code>s in any way we choose.</p>
-  <h2 id="sec--vectors">Vectors</h2>
+  <h2 id="sec--vectors">Vectors 向量</h2>
   <p>A ‘vector’ is a dynamic or ‘growable’ array, implemented as the standard library type <a href="http://doc.rust-lang.org/std/vec/index.html"><code>Vec&lt;T&gt;</code></a>. The <code>T</code> means that we can have vectors of any type (see the chapter on <a href="#sec--generics">generics</a> for more). Vectors always allocate their data on the heap. You can create them with the <code>vec!</code> macro:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> v = <span class="ot">vec!</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]; <span class="co">// v: Vec&lt;i32&gt;</span></code></pre></div>
   <p>(Notice that unlike the <code>println!</code> macro we’ve used in the past, we use square brackets <code>[]</code> with <code>vec!</code> macro. Rust allows you to use either in either situation, this is just convention.)</p>
@@ -5647,7 +5647,7 @@ code > span.er { font-weight: bold; }
       <span class="ot">println!</span>(<span class="st">&quot;Take ownership of the vector and its element {}&quot;</span>, i);
   }</code></pre></div>
   <p>Vectors have many more useful methods, which you can read about in <a href="http://doc.rust-lang.org/std/vec/index.html">their API documentation</a>.</p>
-  <h2 id="sec--strings">Strings</h2>
+  <h2 id="sec--strings">Strings 字符串</h2>
   <p>Strings are an important concept for any programmer to master. Rust’s string handling system is a bit different from other languages, due to its systems focus. Any time you have a data structure of variable size, things can get tricky, and strings are a re-sizable data structure. That being said, Rust’s strings also work differently than in some other systems languages, such as C.</p>
   <p>Let’s dig into the details. A ‘string’ is a sequence of Unicode scalar values encoded as a stream of UTF-8 bytes. All strings are guaranteed to be a valid encoding of UTF-8 sequences. Additionally, unlike some systems languages, strings are not null-terminated and can contain null bytes.</p>
   <p>Rust has two main types of strings: <code>&amp;str</code> and <code>String</code>. Let’s talk about <code>&amp;str</code> first. These are called ‘string slices’. String literals are of the type <code>&amp;'static str</code>:</p>
@@ -5707,7 +5707,7 @@ code > span.er { font-weight: bold; }
   
   <span class="kw">let</span> hello_world = hello + &amp;world;</code></pre></div>
   <p>This is because <code>&amp;String</code> can automatically coerece to a <code>&amp;str</code>. This is a feature called ‘<a href="#sec--deref-coercions"><code>Deref</code> coercions</a>’.</p>
-  <h2 id="sec--generics">Generics</h2>
+  <h2 id="sec--generics">Generics 泛型</h2>
   <p>Sometimes, when writing a function or data type, we may want it to work for multiple types of arguments. Luckily, Rust has a feature that gives us a better way: generics. Generics are called ‘parametric polymorphism’ in type theory, which means that they are types or functions that have multiple forms (‘poly’ is multiple, ‘morph’ is form) over a given parameter (‘parametric’).</p>
   <p>Anyway, enough with type theory, let’s check out some generic code. Rust’s standard library provides a type, <code>Option&lt;T&gt;</code>, that’s generic:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> <span class="kw">Option</span>&lt;T&gt; {
@@ -5761,7 +5761,7 @@ code > span.er { font-weight: bold; }
   let int_origin = Point { x: 0, y: 0 };
   let float_origin = Point { x: 0.0, y: 0.0 };</code></pre>
   <p>Similarly to functions, the <code>&lt;T&gt;</code> is where we declare the generic parameters, and we then use <code>x: T</code> in the type declaration, too.</p>
-  <h2 id="sec--traits">Traits</h2>
+  <h2 id="sec--traits">Traits 特征</h2>
   <p>Do you remember the <code>impl</code> keyword, used to call a function with <a href="#sec--method-syntax">method syntax</a>?</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Circle {
       x: <span class="kw">f64</span>,
@@ -6013,7 +6013,7 @@ code > span.er { font-weight: bold; }
   }</code></pre></div>
   <p>If we forget to implement <code>Foo</code>, Rust will tell us:</p>
   <pre><code>error: the trait `main::Foo` is not implemented for the type `main::Baz` [E0277]</code></pre>
-  <h2 id="sec--drop">Drop</h2>
+  <h2 id="sec--drop">Drop 丢弃</h2>
   <p>Now that we’ve discussed traits, let’s talk about a particular trait provided by the Rust standard library, <a href="http://doc.rust-lang.org/std/ops/trait.Drop.html"><code>Drop</code></a>. The <code>Drop</code> trait provides a way to run some code when a value goes out of scope. For example:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> HasDrop;
   
@@ -6050,7 +6050,7 @@ code > span.er { font-weight: bold; }
   BOOM times 1!!!</code></pre>
   <p>The TNT goes off before the firecracker does, because it was declared afterwards. Last in, first out.</p>
   <p>So what is <code>Drop</code> good for? Generally, <code>Drop</code> is used to clean up any resources associated with a <code>struct</code>. For example, the <a href="http://doc.rust-lang.org/std/sync/struct.Arc.html"><code>Arc&lt;T&gt;</code> type</a> is a reference-counted type. When <code>Drop</code> is called, it will decrement the reference count, and if the total number of references is zero, will clean up the underlying value.</p>
-  <h2 id="sec--if-let">if let</h2>
+  <h2 id="sec--if-let">if let if-let语句</h2>
   <p><code>if let</code> allows you to combine <code>if</code> and <code>let</code> together to reduce the overhead of certain kinds of pattern matches.</p>
   <p>For example, let’s say we have some sort of <code>Option&lt;T&gt;</code>. We want to call a function on it if it’s <code>Some&lt;T&gt;</code>, but do nothing if it’s <code>None</code>. That looks like this:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> option {
@@ -6085,7 +6085,7 @@ code > span.er { font-weight: bold; }
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">while</span> <span class="kw">let</span> <span class="kw">Some</span>(x) = option {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, x);
   }</code></pre></div>
-  <h2 id="sec--trait-objects">Trait Objects</h2>
+  <h2 id="sec--trait-objects">Trait Objects 特质对象</h2>
   <p>When code involves polymorphism, there needs to be a mechanism to determine which specific version is actually run. This is called ‘dispatch’. There are two major forms of dispatch: static dispatch and dynamic dispatch. While Rust favors static dispatch, it also supports dynamic dispatch through a mechanism called ‘trait objects’.</p>
   <h4 id="background">Background</h4>
   <p>For the rest of this chapter, we’ll need a trait and some implementations. Let’s make a simple one, <code>Foo</code>. It has one method that is expected to return a <code>String</code>.</p>
@@ -6245,7 +6245,7 @@ code > span.er { font-weight: bold; }
   <span class="co">// y.method();</span>
   (y.vtable.method)(y.data);</code></pre></div>
   <p>If <code>b</code> or <code>y</code> were owning trait objects (<code>Box&lt;Foo&gt;</code>), there would be a <code>(b.vtable.destructor)(b.data)</code> (respectively <code>y</code>) call when they went out of scope.</p>
-  <h2 id="sec--closures">Closures</h2>
+  <h2 id="sec--closures">Closures 闭包</h2>
   <p>Rust not only has named functions, but anonymous functions as well. Anonymous functions that have an associated environment are called ‘closures’, because they close over an environment. Rust has a really great implementation of them, as we’ll see.</p>
   <h3 id="syntax">Syntax</h3>
   <p>Closures look like this:</p>
@@ -6487,7 +6487,7 @@ code > span.er { font-weight: bold; }
   <span class="kw">let</span> answer = f(<span class="dv">1</span>);
   <span class="ot">assert_eq!</span>(<span class="dv">6</span>, answer);</code></pre></div>
   <p>By making the inner closure a <code>move Fn</code>, we create a new stack frame for our closure. By <code>Box</code>ing it up, we’ve given it a known size, and allowing it to escape our stack frame.</p>
-  <h2 id="sec--ufcs">Universal Function Call Syntax</h2>
+  <h2 id="sec--ufcs">Universal Function Call Syntax 通用函数调用语法</h2>
   <p>Sometimes, functions can have the same names. Consider this code:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">trait</span> Foo {
       <span class="kw">fn</span> f(&amp;<span class="kw">self</span>);
@@ -6551,7 +6551,7 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre></div>
   <p>This will call the <code>Clone</code> trait’s <code>clone()</code> method, rather than <code>Foo</code>’s.</p>
-  <h2 id="sec--crates-and-modules">Crates and Modules</h2>
+  <h2 id="sec--crates-and-modules">Crates and Modules 箱型和模型</h2>
   <p>When a project starts getting large, it’s considered good software engineering practice to split it up into a bunch of smaller pieces, and then fit them together. It’s also important to have a well-defined interface, so that some of your functionality is private, and some is public. To facilitate these kinds of things, Rust has a module system.</p>
   <h3 id="basic-terminology-crates-and-modules">Basic terminology: Crates and Modules</h3>
   <p>Rust has two distinct terms that relate to the module system: ‘crate’ and ‘module’. A crate is synonymous with a ‘library’ or ‘package’ in other languages. Hence “Cargo” as the name of Rust’s package management tool: you ship your crates to others with Cargo. Crates can produce an executable or a library, depending on the project.</p>
@@ -6823,7 +6823,7 @@ code > span.er { font-weight: bold; }
   Goodbye in English: Goodbye.
   Hello in Japanese: こんにちは
   Goodbye in Japanese: さようなら</code></pre>
-  <h2 id="sec--const-and-static"><code>const</code> and <code>static</code></h2>
+  <h2 id="sec--const-and-static"><code>const</code> and <code>static</code> 常量定义与静态型</h2>
   <p>Rust has a way of defining constants with the <code>const</code> keyword:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">const N: <span class="kw">i32</span> = <span class="dv">5</span>;</code></pre></div>
   <p>Unlike <a href="#sec--variable-bindings"><code>let</code></a> bindings, you must annotate the type of a <code>const</code>.</p>
@@ -6851,7 +6851,7 @@ code > span.er { font-weight: bold; }
   <h3 id="which-construct-should-i-use">Which construct should I use?</h3>
   <p>Almost always, if you can choose between the two, choose <code>const</code>. It’s pretty rare that you actually want a memory location associated with your constant, and using a const allows for optimizations like constant propagation not only in your crate but downstream crates.</p>
   <p>A const can be thought of as a <code>#define</code> in C: it has metadata overhead but it has no runtime overhead. “Should I use a #define or a static in C,” is largely the same question as whether you should use a const or a static in Rust.</p>
-  <h2 id="sec--attributes">Attributes</h2>
+  <h2 id="sec--attributes">Attributes 属性</h2>
   <p>Declarations can be annotated with ‘attributes’ in Rust. They look like this:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>test<span class="ot">]</span></code></pre></div>
   <p>or like this:</p>
@@ -6877,7 +6877,7 @@ code > span.er { font-weight: bold; }
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>cfg<span class="ot">(</span>target_os <span class="ot">=</span> <span class="st">&quot;macos&quot;</span><span class="ot">)]</span>
   <span class="kw">mod</span> macos_only {</code></pre></div>
   <p>Rust attributes are used for a number of different things. There is a full list of attributes <a href="http://doc.rust-lang.org/reference.html#attributes">in the reference</a>. Currently, you are not allowed to create your own attributes, the Rust compiler defines them.</p>
-  <h2 id="sec--type-aliases"><code>type</code> aliases</h2>
+  <h2 id="sec--type-aliases"><code>type</code> aliases 类型</h2>
   <p>The <code>type</code> keyword lets you declare an alias of another type:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">type</span> Name = String;</code></pre></div>
   <p>You can then use this type as if it were a real type:</p>
@@ -6919,7 +6919,7 @@ code > span.er { font-weight: bold; }
   
   <span class="kw">type</span> Result&lt;T&gt; = result::<span class="kw">Result</span>&lt;T, ConcreteError&gt;;</code></pre></div>
   <p>This creates a specialized version of the <code>Result</code> type, which always has a <code>ConcreteError</code> for the <code>E</code> part of <code>Result&lt;T, E&gt;</code>. This is commonly used in the standard library to create custom errors for each subsection. For example, <a href="http://doc.rust-lang.org/std/io/type.Result.html">io::Result</a>.</p>
-  <h2 id="sec--casting-between-types">Casting between types</h2>
+  <h2 id="sec--casting-between-types">Casting between types 类型转换</h2>
   <p>Rust, with its focus on safety, provides two different ways of casting different types between each other. The first, <code>as</code>, is for safe casts. In contrast, <code>transmute</code> allows for arbitrary casting, and is one of the most dangerous features of Rust!</p>
   <h3 id="as"><code>as</code></h3>
   <p>The <code>as</code> keyword does basic casting:</p>
@@ -6958,7 +6958,7 @@ code > span.er { font-weight: bold; }
   <pre><code>error: transmute called on types with different sizes: [u8; 4] (32 bits) to u64
   (64 bits)</code></pre>
   <p>Other than that, you’re on your own!</p>
-  <h2 id="sec--associated-types">Associated Types</h2>
+  <h2 id="sec--associated-types">Associated Types 事务</h2>
   <p>Associated types are a powerful part of Rust’s type system. They’re related to the idea of a ‘type family’, in other words, grouping multiple types together. That description is a bit abstract, so let’s dive right into an example. If you want to write a <code>Graph</code> trait, you have two types to be generic over: the node type and the edge type. So you might write a trait, <code>Graph&lt;N, E&gt;</code>, that looks like this:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">trait</span> Graph&lt;N, E&gt; {
       <span class="kw">fn</span> has_edge(&amp;<span class="kw">self</span>, &amp;N, &amp;N) -&gt; <span class="kw">bool</span>;
@@ -7041,7 +7041,7 @@ code > span.er { font-weight: bold; }
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> graph = MyGraph;
   <span class="kw">let</span> obj = Box::new(graph) <span class="kw">as</span> Box&lt;Graph&lt;N=Node, E=Edge&gt;&gt;;</code></pre></div>
   <p>The <code>N=Node</code> syntax allows us to provide a concrete type, <code>Node</code>, for the <code>N</code> type parameter. Same with <code>E=Edge</code>. If we didn’t provide this constraint, we couldn’t be sure which <code>impl</code> to match this trait object to.</p>
-  <h2 id="sec--unsized-types">Unsized Types</h2>
+  <h2 id="sec--unsized-types">Unsized Types 动态大小类型</h2>
   <p>Most types have a particular size, in bytes, that is knowable at compile time. For example, an <code>i32</code> is thirty-two bits big, or four bytes. However, there are some types which are useful to express, but do not have a defined size. These are called ‘unsized’ or ‘dynamically sized’ types. One example is <code>[T]</code>. This type represents a certain number of <code>T</code> in sequence. But we don’t know how many there are, so the size is not known.</p>
   <p>Rust understands a few of these types, but they have some restrictions. There are three:</p>
   <ol type="1">
@@ -7062,7 +7062,7 @@ code > span.er { font-weight: bold; }
       f: T,
   }</code></pre></div>
   <p>This <code>?</code>, read as “T may be <code>Sized</code>”, means that this bound is special: it lets us match more kinds, not less. It’s almost like every <code>T</code> implicitly has <code>T: Sized</code>, and the <code>?</code> undoes this default.</p>
-  <h2 id="sec--operators-and-overloading">Operators and Overloading</h2>
+  <h2 id="sec--operators-and-overloading">Operators and Overloading 运行和重载</h2>
   <p>Rust allows for a limited form of operator overloading. There are certain operators that are able to be overloaded. To support a particular operator between types, there’s a specific trait that you can implement, which then overloads the operator.</p>
   <p>For example, the <code>+</code> operator can be overloaded with the <code>Add</code> trait:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::ops::<span class="kw">Add</span>;
@@ -7108,7 +7108,7 @@ code > span.er { font-weight: bold; }
   <p>will let you do this:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> p: Point = <span class="co">// ...</span>
   <span class="kw">let</span> x: <span class="kw">f64</span> = p + <span class="dv">2i32</span>;</code></pre></div>
-  <h2 id="sec--deref-coercions">Deref coercions</h2>
+  <h2 id="sec--deref-coercions">Deref coercions 强制Deref</h2>
   <p>The standard library provides a special trait, <a href="http://doc.rust-lang.org/std/ops/trait.Deref.html"><code>Deref</code></a>. It’s normally used to overload <code>*</code>, the dereference operator:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::ops::Deref;
   
@@ -7180,7 +7180,7 @@ code > span.er { font-weight: bold; }
   (&amp;&amp;f).foo();
   (&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;f).foo();</code></pre></div>
   <p>A value of type <code>&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;Foo</code> can still have methods defined on <code>Foo</code> called, because the compiler will insert as many * operations as necessary to get it right. And since it’s inserting <code>*</code>s, that uses <code>Deref</code>.</p>
-  <h2 id="sec--macros">Macros</h2>
+  <h2 id="sec--macros">Macros 宏</h2>
   <p>By now you’ve learned about many of the tools Rust provides for abstracting and reusing code. These units of code reuse have a rich semantic structure. For example, functions have a type signature, type parameters have trait bounds, and overloaded functions must belong to a particular trait.</p>
   <p>This structure means that Rust’s core abstractions have powerful compile-time correctness checking. But this comes at the price of reduced flexibility. If you visually identify a pattern of repeated code, you may find it’s difficult or cumbersome to express that pattern as a generic function, a trait, or anything else within Rust’s semantics.</p>
   <p>Macros allow us to abstract at a syntactic level. A macro invocation is shorthand for an “expanded” syntactic form. This expansion happens early in compilation, before any static checking. As a result, macros can capture many patterns of code reuse that Rust’s core abstractions cannot.</p>
@@ -7578,7 +7578,7 @@ code > span.er { font-weight: bold; }
   <p>The <code>unimplemented!</code> macro can be used when you’re trying to get your functions to typecheck, and don’t want to worry about writing out the body of the function. One example of this situation is implementing a trait with multiple required methods, where you want to tackle one at a time. Define the others as <code>unimplemented!</code> until you’re ready to write them.</p>
   <h3 id="procedural-macros">Procedural macros</h3>
   <p>If Rust’s macro system can’t do what you need, you may want to write a <a href="#sec--compiler-plugins">compiler plugin</a> instead. Compared to <code>macro_rules!</code> macros, this is significantly more work, the interfaces are much less stable, and bugs can be much harder to track down. In exchange you get the flexibility of running arbitrary Rust code within the compiler. Syntax extension plugins are sometimes called ‘procedural macros’ for this reason.</p>
-  <h2 id="sec--raw-pointers">Raw Pointers</h2>
+  <h2 id="sec--raw-pointers">Raw Pointers 原始指针</h2>
   <p>Rust has a number of different smart pointer types in its standard library, but there are two types that are extra-special. Much of Rust’s safety comes from compile-time checks, but raw pointers don’t have such guarantees, and are <a href="#sec--unsafe">unsafe</a> to use.</p>
   <p><code>*const T</code> and <code>*mut T</code> are called ‘raw pointers’ in Rust. Sometimes, when writing certain kinds of libraries, you’ll need to get around Rust’s safety guarantees for some reason. In this case, you can use raw pointers to implement your library, while exposing a safe interface for your users. For example, <code>*</code> pointers are allowed to alias, allowing them to be used to write shared-ownership types, and even thread-safe shared memory types (the <code>Rc&lt;T&gt;</code> and <code>Arc&lt;T&gt;</code> types are both implemented entirely in Rust).</p>
   <p>Here are some things to remember about raw pointers that are different than other pointer types. They:</p>
@@ -7633,7 +7633,7 @@ code > span.er { font-weight: bold; }
       <span class="kw">let</span> ref_mut: &amp;<span class="kw">mut</span> <span class="kw">u32</span> = &amp;<span class="kw">mut</span> *p_mut;
   }</code></pre></div>
   <p>The <code>&amp;*x</code> dereferencing style is preferred to using a <code>transmute</code>. The latter is far more powerful than necessary, and the more restricted operation is harder to use incorrectly; for example, it requires that <code>x</code> is a pointer (unlike <code>transmute</code>).</p>
-  <h2 id="sec--unsafe"><code>unsafe</code></h2>
+  <h2 id="sec--unsafe"><code>unsafe</code> 不安全块</h2>
   <p>Rust’s main draw is its powerful static guarantees about behavior. But safety checks are conservative by nature: there are some programs that are actually safe, but the compiler is not able to verify this is true. To write these kinds of programs, we need to tell the compiler to relax its restrictions a bit. For this, Rust has a keyword, <code>unsafe</code>. Code using <code>unsafe</code> has less restrictions than normal code does.</p>
   <p>Let’s go over the syntax, and then we’ll talk semantics. <code>unsafe</code> is used in two contexts. The first one is to mark a function as unsafe:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">unsafe</span> <span class="kw">fn</span> danger_will_robinson() {
@@ -7693,7 +7693,7 @@ code > span.er { font-weight: bold; }
   <p>This last ability works with both aspects of <code>unsafe</code>: you can only call functions marked <code>unsafe</code> from inside an unsafe block.</p>
   <p>This ability is powerful and varied. Rust exposes some <a href="#sec--intrinsics">compiler intrinsics</a> as unsafe functions, and some unsafe functions bypass safety checks, trading safety for speed.</p>
   <p>I’ll repeat again: even though you <em>can</em> do arbitrary things in unsafe blocks and functions doesn’t mean you should. The compiler will act as though you’re upholding its invariants, so be careful!</p>
-  <h1 id="sec--nightly-rust">Nightly Rust</h1>
+  <h1 id="sec--nightly-rust">Nightly Rust 每日Rust版本</h1>
   <p>Rust provides three distribution channels for Rust: nightly, beta, and stable. Unstable features are only available on nightly Rust. For more details on this process, see ‘<a href="http://blog.rust-lang.org/2014/10/30/Stability.html">Stability as a deliverable</a>’.</p>
   <p>To install nightly Rust, you can use <code>rustup.sh</code>:</p>
   <pre><code>$ curl -s https://static.rust-lang.org/rustup.sh | sh -s -- --channel=nightly</code></pre>
@@ -7721,7 +7721,7 @@ code > span.er { font-weight: bold; }
   <p>If you did, Rust has been installed successfully! Congrats!</p>
   <p>This installer also installs a copy of the documentation locally, so you can read it offline. On UNIX systems, <code>/usr/local/share/doc/rust</code> is the location. On Windows, it’s in a <code>share/doc</code> directory, inside wherever you installed Rust to.</p>
   <p>If not, there are a number of places where you can get help. The easiest is <a href="irc://irc.mozilla.org/#rust">the #rust IRC channel on irc.mozilla.org</a>, which you can access through <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">Mibbit</a>. Click that link, and you’ll be chatting with other Rustaceans (a silly nickname we call ourselves), and we can help you out. Other great resources include <a href="http://users.rust-lang.org/">the user’s forum</a>, and <a href="http://stackoverflow.com/questions/tagged/rust">Stack Overflow</a>.</p>
-  <h2 id="sec--compiler-plugins">Compiler Plugins</h2>
+  <h2 id="sec--compiler-plugins">Compiler Plugins 编译插件</h2>
   <h3 id="introduction-2">Introduction</h3>
   <p><code>rustc</code> can load compiler plugins, which are user-provided libraries that extend the compiler’s behavior with new syntax extensions, lint checks, etc.</p>
   <p>A plugin is a dynamic library crate with a designated <em>registrar</em> function that registers extensions with <code>rustc</code>. Other crates can load these extensions using the crate attribute <code>#![plugin(...)]</code>. See the <a href="http://doc.rust-lang.org/rustc/plugin/index.html"><code>rustc::plugin</code></a> documentation for more about the mechanics of defining and loading a plugin.</p>
@@ -7852,7 +7852,7 @@ code > span.er { font-weight: bold; }
   <p>Lint passes are syntax traversals, but they run at a late stage of compilation where type information is available. <code>rustc</code>’s <a href="https://github.com/rust-lang/rust/blob/master/src/librustc/lint/builtin.rs">built-in lints</a> mostly use the same infrastructure as lint plugins, and provide examples of how to access type information.</p>
   <p>Lints defined by plugins are controlled by the usual <a href="http://doc.rust-lang.org/reference.html#lint-check-attributes">attributes and compiler flags</a>, e.g. <code>#[allow(test_lint)]</code> or <code>-A test-lint</code>. These identifiers are derived from the first argument to <code>declare_lint!</code>, with appropriate case and punctuation conversion.</p>
   <p>You can run <code>rustc -W help foo.rs</code> to see a list of lints known to <code>rustc</code>, including those provided by plugins loaded by <code>foo.rs</code>.</p>
-  <h2 id="sec--inline-assembly">Inline Assembly</h2>
+  <h2 id="sec--inline-assembly">Inline Assembly 内联汇编</h2>
   <p>For extremely low-level manipulations and performance reasons, one might wish to control the CPU directly. Rust supports using inline assembly to do this via the <code>asm!</code> macro. The syntax roughly matches that of GCC &amp; Clang:</p>
   <pre><code>asm!(assembly template
      : output operands
@@ -7957,7 +7957,7 @@ code > span.er { font-weight: bold; }
   }
   println!(&quot;eax is currently {}&quot;, result);
   # }</code></pre>
-  <h2 id="sec--no-stdlib">No stdlib</h2>
+  <h2 id="sec--no-stdlib">No stdlib 没有std库文件</h2>
   <p>By default, <code>std</code> is linked to every Rust crate. In some contexts, this is undesirable, and can be avoided with the <code>#![no_std]</code> attribute attached to the crate.</p>
   <pre><code>// a minimal library
   #![crate_type=&quot;lib&quot;]
@@ -8062,7 +8062,7 @@ code > span.er { font-weight: bold; }
   # fn main() {}</code></pre>
   <p>Note that there is one extra lang item here which differs from the examples above, <code>panic_fmt</code>. This must be defined by consumers of libcore because the core library declares panics, but it does not define it. The <code>panic_fmt</code> lang item is this crate’s definition of panic, and it must be guaranteed to never return.</p>
   <p>As can be seen in this example, the core library is intended to provide the power of Rust in all circumstances, regardless of platform requirements. Further libraries, such as liballoc, add functionality to libcore which make other platform-specific assumptions, but continue to be more portable than the standard library itself.</p>
-  <h2 id="sec--intrinsics">Intrinsics</h2>
+  <h2 id="sec--intrinsics">Intrinsics 内部函数</h2>
   <blockquote>
   <p><strong>Note</strong>: intrinsics will forever have an unstable interface, it is recommended to use the stable interfaces of libcore rather than intrinsics directly.</p>
   </blockquote>
@@ -8076,7 +8076,7 @@ code > span.er { font-weight: bold; }
       fn offset&lt;T&gt;(dst: *const T, offset: isize) -&gt; *const T;
   }</code></pre>
   <p>As with any other FFI functions, these are always <code>unsafe</code> to call.</p>
-  <h2 id="sec--lang-items">Lang items</h2>
+  <h2 id="sec--lang-items">Lang items 组件</h2>
   <blockquote>
   <p><strong>Note</strong>: lang items are often provided by crates in the Rust distribution, and lang items themselves have an unstable interface. It is recommended to use officially distributed crates instead of defining your own lang items.</p>
   </blockquote>
@@ -8129,7 +8129,7 @@ code > span.er { font-weight: bold; }
   <li>the marker types and variance indicators found in <code>std::marker</code>; lang items <code>covariant_type</code>, <code>contravariant_lifetime</code>, etc.</li>
   </ul>
   <p>Lang items are loaded lazily by the compiler; e.g. if one never uses <code>Box</code> then there is no need to define functions for <code>exchange_malloc</code> and <code>exchange_free</code>. <code>rustc</code> will emit an error when an item is needed but not found in the current crate or any that it depends on.</p>
-  <h2 id="sec--link-args">Link args</h2>
+  <h2 id="sec--link-args">Link args 连接属性</h2>
   <p>There is one other way to tell rustc how to customize linking, and that is via the <code>link_args</code> attribute. This attribute is applied to <code>extern</code> blocks and specifies raw flags which need to get passed to the linker when producing an artifact. An example usage would be:</p>
   <pre><code>#![feature(link_args)]
   
@@ -8138,7 +8138,7 @@ code > span.er { font-weight: bold; }
   # fn main() {}</code></pre>
   <p>Note that this feature is currently hidden behind the <code>feature(link_args)</code> gate because this is not a sanctioned way of performing linking. Right now rustc shells out to the system linker, so it makes sense to provide extra command line arguments, but this will not always be the case. In the future rustc may use LLVM directly to link native libraries in which case <code>link_args</code> will have no meaning.</p>
   <p>It is highly recommended to <em>not</em> use this attribute, and rather use the more formal <code>#[link(...)]</code> attribute on <code>extern</code> blocks instead.</p>
-  <h2 id="sec--benchmark-tests">Benchmark Tests</h2>
+  <h2 id="sec--benchmark-tests">Benchmark Tests 基准测试</h2>
   <p>Rust supports benchmark tests, which can test the performance of your code. Let’s make our <code>src/lib.rs</code> look like this (comments elided):</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">#![feature(test)]
   
@@ -8224,7 +8224,7 @@ code > span.er { font-weight: bold; }
   
   test result: ok. 0 passed; 0 failed; 0 ignored; 1 measured</code></pre>
   <p>However, the optimizer can still modify a testcase in an undesirable manner even when using either of the above.</p>
-  <h2 id="sec--box-syntax-and-patterns">Box Syntax and Patterns</h2>
+  <h2 id="sec--box-syntax-and-patterns">Box Syntax and Patterns Box语法和模式</h2>
   <p>Currently the only stable way to create a <code>Box</code> is via the <code>Box::new</code> method. Also it is not possible in stable Rust to destructure a <code>Box</code> in a match pattern. The unstable <code>box</code> keyword can be used to both create and destructure a <code>Box</code>. An example usage would be:</p>
   <pre><code>#![feature(box_syntax, box_patterns)]
   
@@ -8293,7 +8293,7 @@ code > span.er { font-weight: bold; }
   <p>This gives you flexibility without sacrificing performance.</p>
   <p>You may think that this gives us terrible performance: return a value and then immediately box it up ?! Isn’t this pattern the worst of both worlds? Rust is smarter than that. There is no copy in this code. <code>main</code> allocates enough room for the <code>box</code>, passes a pointer to that memory into <code>foo</code> as <code>x</code>, and then <code>foo</code> writes the value straight into the <code>Box&lt;T&gt;</code>.</p>
   <p>This is important enough that it bears repeating: pointers are not for optimizing returning values from your code. Allow the caller to choose how they want to use your output.</p>
-  <h2 id="sec--slice-patterns">Slice Patterns</h2>
+  <h2 id="sec--slice-patterns">Slice Patterns 分片模式</h2>
   <p>If you want to match against a slice or array, you can use <code>&amp;</code> with the <code>slice_patterns</code> feature:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">#![feature(slice_patterns)]
   
@@ -8323,7 +8323,7 @@ code > span.er { font-weight: bold; }
       <span class="kw">let</span> not_sym = &amp;[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">0</span>];
       <span class="ot">assert!</span>(!is_symmetric(not_sym));
   }</code></pre></div>
-  <h2 id="sec--associated-constants">Associated Constants</h2>
+  <h2 id="sec--associated-constants">Associated Constants 关联常量</h2>
   <p>With the <code>associated_consts</code> feature, you can define constants like this:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">#![feature(associated_consts)]
   
@@ -8378,7 +8378,7 @@ code > span.er { font-weight: bold; }
   <span class="kw">impl</span> Foo {
       <span class="kw">pub</span> const FOO: <span class="kw">u32</span> = <span class="dv">3</span>;
   }</code></pre></div>
-  <h1 id="sec--glossary">Glossary</h1>
+  <h1 id="sec--glossary">Glossary 专业术语</h1>
   <p>Not every Rustacean has a background in systems programming, nor in computer science, so we’ve added explanations of terms that might be unfamiliar.</p>
   <h5 id="arity">Arity</h5>
   <p>Arity refers to the number of arguments a function or operation takes.</p>
@@ -8397,7 +8397,7 @@ code > span.er { font-weight: bold; }
   2   *
      / \
     3   4</code></pre>
-  <h1 id="sec--academic-research">Academic Research</h1>
+  <h1 id="sec--academic-research">Academic Research 学术研究</h1>
   <p>An incomplete list of papers that have had some influence in Rust.</p>
   <p>Recommended for inspiration and a better understanding of Rust’s background.</p>
   <h5 id="type-system">Type system</h5>
