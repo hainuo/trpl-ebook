@@ -112,7 +112,7 @@ toc-depth: 2
 
 eos
 
-book << "# Introduction\n\n"
+book << "# Introduction 介绍说明\n\n"
 book << pandoc("src/README.md", 1)
 book << "\n\n"
 
