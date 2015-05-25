@@ -2,20 +2,21 @@
 
 Welcome! This book will teach you about the [Rust Programming Language][rust].Rust is a systems programming language focused on three goals: safety, speed,and concurrency. It maintains these goals without having a garbage collector,making it a useful language for a number of use cases other languages aren’t good at: embedding in other languages, programs with specific space and time requirements, and writing low-level code, like device drivers and operating systems. It improves on current languages targeting this space by having a number of compile-time safety checks that produce no runtime overhead, while eliminating all data races. Rust also aims to achieve ‘zero-cost abstractions’ even though some of these abstractions feel like those of a high-level language. Even then, Rust still allows precise control like a low-level language would.
 
-欢迎你了解Rust！这本书将教你关于[Rust编程语言][rust]的知识。Rust是一个系统编程语言，它的诞生是为了做到三个目标：安全、快速、和并发。它没有使用垃圾回收器，来实现这些目标；这使它变得非常有用，尤其是在其他语言并不擅长的用例上：
+欢迎你了解Rust！这本书将教你关于[Rust编程语言][rust]的知识。Rust是一个系统编程语言，它的诞生是为了做到三个目标：安全、快速、和并发。它没有使用垃圾回收器，来实现这些目标；这使它变得非常有用，尤其是在其他语言并不擅长的用例上：在特殊空间和时间要求嵌入到其他语言中，和编写底层代码，比如设陪驱动程序和操作系统。在清除了所有数据races的同时，通过没有任何运行时开销的多个编译时的安全检查操作改善当前语言的性能，Rust同样致力于实现“零成本抽象概念”，尽管有些抽象概念像是高级语言。然而及时这样，Rust仍然向一个低级语言一样允许精确控制。
 
 [rust]: http://rust-lang.org
 
-“The Rust Programming Language” is split into seven sections. This introduction
-is the first. After this:
+“The Rust Programming Language” is split into seven sections. This introduction is the first. After this:
 
-* [Getting started][gs] - Set up your computer for Rust development.
-* [Learn Rust][lr] - Learn Rust programming through small projects.
-* [Effective Rust][er] - Higher-level concepts for writing excellent Rust code.
-* [Syntax and Semantics][ss] - Each bit of Rust, broken down into small chunks.
-* [Nightly Rust][nr] - Cutting-edge features that aren’t in stable builds yet.
-* [Glossary][gl] - A reference of terms used in the book.
-* [Academic Research][ar] - Literature that influenced Rust.
+“Rust编程语言”分为7大部分，这个说明是第一部分，然后是：
+
+* [Getting started 开始使用][gs] - Set up your computer for Rust development.配置你的Rust开发环境。
+* [Learn Rust 学习Rust][lr] - Learn Rust programming through small projects.通过几个小例子来学习Rust编程。
+* [Effective Rust 高效的Rust][er] - Higher-level concepts for writing excellent Rust code.编写优质Rust代码的高级理论。
+* [Syntax and Semantics 语法与语义][ss] - Each bit of Rust, broken down into small chunks.Rust的每一部分，分解成一个个小块。
+* [Nightly Rust 每日Rust构建][nr] - Cutting-edge features that aren’t in stable builds yet. 尚未稳定构建的顶端特性。
+* [Glossary 术语表][gl] - A reference of terms used in the book. 本书中一些术语的引用
+* [Academic Research 学术研究][ar] - Literature that influenced Rust.影响了Rust的文献。
 
 [gs]: getting-started.html
 [lr]: learn-rust.html
@@ -28,21 +29,28 @@ is the first. After this:
 After reading this introduction, you’ll want to dive into either ‘Learn Rust’
 or ‘Syntax and Semantics’, depending on your preference: ‘Learn Rust’ if you
 want to dive in with a project, or ‘Syntax and Semantics’ if you prefer to
-start small, and learn a single concept thoroughly before moving onto the next.
-Copious cross-linking connects these parts together.
+start small, and learn a single concept thoroughly before moving onto the next.Copious cross-linking connects these parts together.
+
+在阅读完本介绍之后，你可以根据你的喜好，随意选择`Learn Rust 学习Rust`或者`Syntax and Semantics 语法与语义`章节：如果你想要从一个项目开始，那么选择`Learn Rust 学习Rust`，或者如果你喜欢从小事做起，通过移动到下一页，一个概念一个概念的学习，将这些广泛的关联的只是连接起来。
 
 ## Contributing 社区贡献
 
 The source files from which this book is generated can be found on Github:
 [github.com/rust-lang/rust/tree/master/src/doc/trpl](https://github.com/rust-lang/rust/tree/master/src/doc/trpl)
 
+生成本书的源代码的被放在github上：[github.com/rust-lang/rust/tree/master/src/doc/trpl](https://github.com/rust-lang/rust/tree/master/src/doc/trpl)
+
 ## A brief introduction to Rust Rust简单说明
 
 Is Rust a language you might be interested in? Let’s examine a few small code
 samples to show off a few of its strengths.
 
+Rust是你可能感兴趣的语言吗？让我们看着一些小的代码例子，展示它的一些优势。
+
 The main concept that makes Rust unique is called ‘ownership’. Consider this
 small example:
+
+使Rust独一无二的主要概念被称作“ownership 所有权”。参考如下例子：
 
 ```rust
 fn main() {
@@ -50,13 +58,9 @@ fn main() {
 }
 ```
 
-This program makes a [variable binding][var] named `x`. The value of this
-binding is a `Vec<T>`, a ‘vector’, that we create through a [macro][macro]
-defined in the standard library. This macro is called `vec`, and we invoke
-macros with a `!`. This follows a general principle of Rust: make things
-explicit. Macros can do significantly more complicated things than function
-calls, and so they’re visually distinct. The `!` also helps with parsing,
-making tooling easier to write, which is also important.
+This program makes a [variable binding][var] named `x`. The value of this binding is a `Vec<T>`, a ‘vector’, that we create through a [macro][macro] defined in the standard library. This macro is called `vec`, and we invoke macros with a `!`. This follows a general principle of Rust: make things explicit. Macros can do significantly more complicated things than function calls, and so they’re visually distinct. The `!` also helps with parsing, making tooling easier to write, which is also important.
+
+这段程序创建了一个叫做`x`的[variable binding变量绑定][var]。这个绑定的值是一个`Vec<T>`——一个向量`vector`,他是在标准库中通过一个[macro 宏][macro]来定义的。这个宏被称作`Vec`，我们使用`!`来强调宏。这遵循了Rust的一般原则：把事情明确。宏可以做比函数调用更加显著更加复杂的事情，这样使他们在视觉上区分开来。`!`同样帮助解析，是的工具更容易编写，所以也很重要。
 
 We used `mut` to make `x` mutable: bindings are immutable by default in Rust.
 We’ll be mutating this vector later in the example.
