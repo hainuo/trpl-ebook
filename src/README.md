@@ -62,20 +62,20 @@ This program makes a [variable binding][var] named `x`. The value of this bindin
 
 这段程序创建了一个叫做`x`的[variable binding变量绑定][var]。这个绑定的值是一个`Vec<T>`——一个向量`vector`,他是在标准库中通过一个[macro 宏][macro]来定义的。这个宏被称作`Vec`，我们使用`!`来强调宏。这遵循了Rust的一般原则：把事情明确。宏可以做比函数调用更加显著更加复杂的事情，这样使他们在视觉上区分开来。`!`同样帮助解析，是的工具更容易编写，所以也很重要。
 
-We used `mut` to make `x` mutable: bindings are immutable by default in Rust.
-We’ll be mutating this vector later in the example.
+We used `mut` to make `x` mutable: bindings are immutable by default in Rust.We’ll be mutating this vector later in the example.
 
-It’s also worth noting that we didn’t need a type annotation here: while Rust
-is statically typed, we didn’t need to explicitly annotate the type. Rust has
-type inference to balance out the power of static typing with the verbosity of
-annotating types.
+在Rust语言中，默认变量是不可变的，我们通过使用`mut`使得变量`x`能够被改变。在稍后的例子中，我们将改变这个向量 。
 
-Rust prefers stack allocation to heap allocation: `x` is placed directly on the
-stack. However, the `Vec<T>` type allocates space for the elements of the
-vector on the heap. If you’re not familiar with this distinction, you can
-ignore it for now, or check out [‘The Stack and the Heap’][heap]. As a systems
-programming language, Rust gives you the ability to control how your memory is
-allocated, but when we’re getting started, it’s less of a big deal.
+It’s also worth noting that we didn’t need a type annotation here: while Rust is statically typed, we didn’t need to explicitly annotate the type. Rust has
+type inference to balance out the power of static typing with the verbosity of annotating types.
+
+值得一提的是，我们不需要在这里声明一个类型，因为Rust是静态类型的，我们不需要明确声明一个类型。Rust拥有类型推断，能够平衡类型标记型静态类型的能量。
+
+Rust prefers stack allocation to heap allocation: `x` is placed directly on the stack. However, the `Vec<T>` type allocates space for the elements of the
+vector on the heap. If you’re not familiar with this distinction, you can ignore it for now, or check out [‘The Stack and the Heap’][heap]. As a systems
+programming language, Rust gives you the ability to control how your memory is allocated, but when we’re getting started, it’s less of a big deal.
+
+
 
 [var]: variable-bindings.html
 [macro]: macros.html
