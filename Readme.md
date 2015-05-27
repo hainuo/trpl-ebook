@@ -5,10 +5,12 @@
 Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有翻译，如果你想加入到翻译中来，请fork 并提交pull request
 
 ##翻译进度（已经完成章节列表）
++ 介绍说明
 + 第四章  高效的Rust
   - 第一节  内存管理
   - 第二节  测试用例
   - 第三节  条件编译
+  
 
   
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
