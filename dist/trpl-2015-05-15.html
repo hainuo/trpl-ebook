@@ -321,15 +321,20 @@ code > span.er { font-weight: bold; }
   <p>It’s also worth noting that we didn’t need a type annotation here: while Rust is statically typed, we didn’t need to explicitly annotate the type. Rust has type inference to balance out the power of static typing with the verbosity of annotating types.</p>
   <p>值得一提的是，我们不需要在这里声明一个类型，因为Rust是静态类型的，我们不需要明确声明一个类型。Rust拥有类型推断，能够平衡类型标记型静态类型的能量。</p>
   <p>Rust prefers stack allocation to heap allocation: <code>x</code> is placed directly on the stack. However, the <code>Vec&lt;T&gt;</code> type allocates space for the elements of the vector on the heap. If you’re not familiar with this distinction, you can ignore it for now, or check out <a href="#sec--the-stack-and-the-heap">‘The Stack and the Heap’</a>. As a systems programming language, Rust gives you the ability to control how your memory is allocated, but when we’re getting started, it’s less of a big deal.</p>
-  <p>Earlier, we mentioned that ‘ownership’ is the key new concept in Rust. In Rust parlance, <code>x</code> is said to ‘own’ the vector. This means that when <code>x</code> goes out of scope, the vector’s memory will be de-allocated. This is done deterministically by the Rust compiler, rather than through a mechanism such as a garbage collector. In other words, in Rust, you don’t call functions like <code>malloc</code> and <code>free</code> yourself: the compiler statically determines when you need to allocate or deallocate memory, and inserts those calls itself. To err is to be human, but compilers never forget.</p>
+  <p>比起堆内存管理，Rust语言更喜欢栈内存管理：<code>x</code>变量直接被分配在栈上，然而<code>Vec&lt;T&gt;</code>类型因为向量的元素组成被分配在堆上。如果你不熟悉这个地方，现在可以忽略它，或者点击链接<a href="#sec--the-stack-and-the-heap">‘The Stack and the Heap 栈和堆’</a>了解它。作为一门系统编程语言，Rust给我们控制内存分配的能力，但是，当我们开始使用Rust时，它不再是一个大麻烦。</p>
+  <p>Earlier, we mentioned that ‘ownership’ is the key new concept in Rust. In Rust parlance, <code>x</code> is said to ‘own’ the vector. This means that when <code>x</code> goes out of scope, the vector’s memory will be de-allocated. This is done deterministically by the Rust compiler, rather than through a mechanism such as a garbage collector. In other words, in Rust, you don’t call functions like <code>malloc</code> and <code>free</code> yourself: the compiler statically determines when you need to allocate or deallocate memory, and inserts those calls itself. To err is to be human,but compilers never forget.</p>
+  <p>前面我们说过<code>ownership 所有权</code>在Rust语言中是一个关键的新概念。在Rust语言中，<code>x</code>可以被说成是<code>自己</code>的向量。也就是说，当<code>x</code>超出作用域范围后，向量的内存空间将被释放。这是由Rust语言编译器决定的，而不是通过一个像垃圾回收器之类的机制来决定。换句话说，在Rust中，你不需要像<code>malloc</code>和<code>free</code>自己的方式来调用函数：编译器明确的决定了什么时候你需要分配或者释放内存，并且自动插入这些调用本身。人会忘记，但是编译器永远不会。</p>
   <p>Let’s add another line to our example:</p>
+  <p>让我们在例子中增加一行：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> <span class="kw">mut</span> x = <span class="ot">vec!</span>[<span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;world&quot;</span>];
   
       <span class="kw">let</span> y = &amp;x[<span class="dv">0</span>];
   }</code></pre></div>
   <p>We’ve introduced another binding, <code>y</code>. In this case, <code>y</code> is a ‘reference’ to the first element of the vector. Rust’s references are similar to pointers in other languages, but with additional compile-time safety checks. References interact with the ownership system by <a href="#sec--references-and-borrowing">‘borrowing’</a> what they point to, rather than owning it. The difference is, when the reference goes out of scope, it will not deallocate the underlying memory. If it did, we’d de-allocate twice, which is bad!</p>
+  <p>我们声明了另一个变量，<code>y</code>。在案例中，<code>y</code>是向量第一个元素的一个<code>reference 地址引用</code>。Rust的引用跟其他语言的指针比较相似，但是增加了编译时安全检查。地址引用通过他们指向的<a href="#sec--references-and-borrowing"><code>borrowing 引用</code></a>来影响所有权系统，而不是通过拥有它来影响。 不同的是，当地址引用超出了作用域范围，他不会释放原本的内存。如果他做了，我们就会释放两次，这是很坏的事情！</p>
   <p>Let’s add a third line. It looks innocent enough, but causes a compiler error:</p>
+  <p>现在增加第三行代码。他看起来很无辜，但是会引起编译错误：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> <span class="kw">mut</span> x = <span class="ot">vec!</span>[<span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;world&quot;</span>];
   
@@ -338,6 +343,7 @@ code > span.er { font-weight: bold; }
       x.push(<span class="st">&quot;foo&quot;</span>);
   }</code></pre></div>
   <p><code>push</code> is a method on vectors that appends another element to the end of the vector. When we try to compile this program, we get an error:</p>
+  <p><code>push</code> 是向量一个方法，向向量的末尾追加另一个元素。当我们试图编译程序时，我们得到错误信息：</p>
   <pre><code>error: cannot borrow `x` as mutable because it is also borrowed as immutable
       x.push(&quot;foo&quot;);
       ^
@@ -350,7 +356,8 @@ code > span.er { font-weight: bold; }
   
   }
   ^</code></pre>
-  <p>Whew! The Rust compiler gives quite detailed errors at times, and this is one of those times. As the error explains, while we made our binding mutable, we still cannot call <code>push</code>. This is because we already have a reference to an element of the vector, <code>y</code>. Mutating something while another reference exists is dangerous, because we may invalidate the reference. In this specific case, when we create the vector, we may have only allocated space for three elements. Adding a fourth would mean allocating a new chunk of memory for all those elements, copying the old values over, and updating the internal pointer to that memory. That all works just fine. The problem is that <code>y</code> wouldn’t get updated, and so we’d have a ‘dangling pointer’. That’s bad. Any use of <code>y</code> would be an error in this case, and so the compiler has caught this for us.</p>
+  <p>Whew! The Rust compiler gives quite detailed errors at times, and this is one of those times. As the error explains, while we made our binding mutable, we still cannot call <code>push</code>. This is because we already have a reference to an element of the vector, <code>y</code>. Mutating something while another reference exists is dangerous, because we may invalidate the reference. In this specific case, when we create the vector, we may have only allocated space for three elements.Adding a fourth would mean allocating a new chunk of memory for all those elements,copying the old values over, and updating the internal pointer to that memory.That all works just fine.The problem is that <code>y</code> wouldn’t get updated, and so we’d have a ‘dangling pointer’. That’s bad. Any use of <code>y</code> would be an error in this case, and so the compiler has caught this for us.</p>
+  <p>哦！Rust编译器有时会给出非常详细的错误信息，这就是那些情况中的一种。错误说明，当我们创建了一个可变的变量时，我们仍然不能够调用<code>push</code>方法。这是因为我们已经有了一个向量元素的地址引用——<code>y</code>。当有元素进行地址引用时，改变一些内容是非常危险的，因为我们可能会废止地址引用。在特殊情况下，我们创建一个向量，我们只给他分配了三个元素的空间。增加第四个元素，将意味着分配一个新的内存块给所有的元素，将旧的的内存覆盖，并更新内部指针到那部分内存。它们做的刚刚好。问题是，<code>y</code>没有被更新，所以我们就会哟一个’空指针’。这是很坏的。在本案例中，<code>y</code>的任何使用都是错误的，所以编译器抓取这个信息给我们。</p>
   <p>So how do we solve this problem? There are two approaches we can take. The first is making a copy rather than using a reference:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> <span class="kw">mut</span> x = <span class="ot">vec!</span>[<span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;world&quot;</span>];
@@ -360,7 +367,9 @@ code > span.er { font-weight: bold; }
       x.push(<span class="st">&quot;foo&quot;</span>);
   }</code></pre></div>
   <p>Rust has <a href="#move-semantics">move semantics</a> by default, so if we want to make a copy of some data, we call the <code>clone()</code> method. In this example, <code>y</code> is no longer a reference to the vector stored in <code>x</code>, but a copy of its first element, <code>&quot;Hello&quot;</code>. Now that we don’t have a reference, our <code>push()</code> works just fine.</p>
+  <p>Rust默认有<a href="#move-semantics">move语义</a>，所以我们想要复制一些数据，我们可以调用<code>clone()</code>方法。在上述例子中，<code>y</code>不再是在<code>x</code>中保存的向量的一个地址引用，而是他第一个元素<code>&quot;Hello&quot;</code>的复制品。现在我们使用地址引用，所以<code>push()</code>方法运行良好。</p>
   <p>If we truly want a reference, we need the other option: ensure that our reference goes out of scope before we try to do the mutation. That looks like this:</p>
+  <p>如果我们真的想使用一个地址引用，我们需要另一个方式：在试图改变变量之前确定地址引用不在当前作用域内。就像下面的例子：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> <span class="kw">mut</span> x = <span class="ot">vec!</span>[<span class="st">&quot;Hello&quot;</span>, <span class="st">&quot;world&quot;</span>];
   
@@ -371,7 +380,9 @@ code > span.er { font-weight: bold; }
       x.push(<span class="st">&quot;foo&quot;</span>);
   }</code></pre></div>
   <p>We created an inner scope with an additional set of curly braces. <code>y</code> will go out of scope before we call <code>push()</code>, and so we’re all good.</p>
+  <p>我们使用额外的一组花括号构建了一个内置作用域。在我们调用<code>push()</code>之前<code>y</code>已经超出了作用域范围，所以代码非常好。</p>
   <p>This concept of ownership isn’t just good for preventing dangling pointers, but an entire set of related problems, like iterator invalidation, concurrency, and more.</p>
+  <p>所有权的概念不止是能够很好的避免空指针，还有一整套的相关难点，比如迭代器失效、并发等等。</p>
   <h1 id="sec--getting-started">Getting Started 开始使用Rust</h1>
   <p>This first section of the book will get you going with Rust and its tooling. First, we’ll install Rust. Then, the classic ‘Hello World’ program. Finally, we’ll talk about Cargo, Rust’s build system and package manager.</p>
   <h2 id="sec--installing-rust">Installing Rust 安装Rust</h2>
