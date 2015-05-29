@@ -3301,32 +3301,38 @@ code > span.er { font-weight: bold; }
   # fn main() {}</code></pre>
   <p>You’ll note three things: we need to add our own <code>extern crate</code> line, so that we can add the <code>#[macro_use]</code> attribute. Second, we’ll need to add our own <code>main()</code> as well. Finally, a judicious use of <code>#</code> to comment out those two things, so they don’t show up in the output.</p>
   <p>你会注意到三点事情：因为我们需要手动增加我们自己的<code>extern crate</code>代码，所以我们能够使用<code>#[macro_use]</code>属性。第二点，我们同样需要增加自己的<code>main()</code>。最后，<code>#</code>用来注释以上两点内容，所以他们不会在输出中显示出来。</p>
-  <h5 id="running-documentation-tests">Running documentation tests</h5>
+  <h5 id="running-documentation-tests-运行文档测试">Running documentation tests 运行文档测试</h5>
   <p>To run the tests, either</p>
+  <p>现在运行测试。</p>
   <pre><code>$ rustdoc --test path/to/my/crate/root.rs
   # or
   $ cargo test</code></pre>
   <p>That’s right, <code>cargo test</code> tests embedded documentation too. However, <code>cargo test</code> will not test binary crates, only library ones. This is due to the way <code>rustdoc</code> works: it links against the library to be tested, but with a binary, there’s nothing to link to.</p>
+  <p>非常好，<code>cargo test</code>命令也测试了嵌入的文档。然而<code>cargo test</code>不会检测二进制文件，只会检测库中的那些。这取决于<code>rustdoc</code>的运行逻辑：它只测试连接到的库，但是二进制文件没有什么可以链接的。</p>
   <p>There are a few more annotations that are useful to help <code>rustdoc</code> do the right thing when testing your code:</p>
+  <p>有一些注释，在测试代码时，能够帮助<code>rustdoc</code>做这些应该的事情。</p>
   <pre><code>/// ```ignore
   /// fn foo() {
   /// ```
   # fn foo() {}</code></pre>
   <p>The <code>ignore</code> directive tells Rust to ignore your code. This is almost never what you want, as it’s the most generic. Instead, consider annotating it with <code>text</code> if it’s not code, or using <code>#</code>s to get a working example that only shows the part you care about.</p>
+  <p><code>ignore</code>指令是用来告诉Rust忽略掉你的代码。这在很多时候不是你想要的，因为他是最通用的。相反，如果他们不是代码你应该考虑使用欧冠<code>text</code>注释，或者使用<code>#</code>开始一个使用例子，用来只展示你关心的部分。</p>
   <pre><code>/// ```should_panic
   /// assert!(false);
   /// ```
   # fn foo() {}</code></pre>
-  <p><code>should_panic</code> tells <code>rustdoc</code> that the code should compile correctly, but not actually pass as a test.</p>
+  <p><code>should_panic</code> tells <code>rustdoc</code> that the code should compile correctly, but not actually pass as a test. <code>should_panic</code> 告诉<code>rustdoc</code> 代码应该立即被编译，而不是作为一个测试通过。</p>
   <pre><code>/// ```no_run
   /// loop {
   ///     println!(&quot;Hello, world&quot;);
   /// }
   /// ```
   # fn foo() {}</code></pre>
-  <p>The <code>no_run</code> attribute will compile your code, but not run it. This is important for examples such as “Here’s how to start up a network service,” which you would want to make sure compile, but might run in an infinite loop!</p>
-  <h5 id="documenting-modules">Documenting modules</h5>
+  <p>The <code>no_run</code> attribute will compile your code, but not run it. This is important for examples such as “Here’s how to start up a network service,” which you would want to make sure compile,but might run in an infinite loop!</p>
+  <p><code>no_run</code>属性只会编译你的代码，而不是运行它。 这是非常重要的，比如这样的例子“Here’s how to start up a network service,如何开启一个网络服务”是你确定要编译的，但是可能会进入死循环中。</p>
+  <h5 id="documenting-modules-文档模块">Documenting modules 文档模块</h5>
   <p>Rust has another kind of doc comment, <code>//!</code>. This comment doesn’t document the next item, but the enclosing item. In other words:</p>
+  <p>Rust语言有另外一种文档注释，<code>//!</code>这个注释不会文档化下一个部分，但是会封装项目。换句话说：</p>
   <pre><code>mod foo {
       //! This is documentation for the `foo` module.
       //!
@@ -3335,14 +3341,18 @@ code > span.er { font-weight: bold; }
       // ...
   }</code></pre>
   <p>This is where you’ll see <code>//!</code> used most often: for module documentation. If you have a module in <code>foo.rs</code>, you’ll often open its code and see this:</p>
+  <p>这是<code>//!</code>经常被使用到的地方：作为模块文档。如果你在<code>foo.rs</code>中有一个模块，只要你打开它，就能够看到像这样的代码：</p>
   <pre><code>//! A module for using `foo`s.
   //!
   //! The `foo` module contains a lot of useful functionality blah blah blah</code></pre>
-  <h5 id="documentation-comment-style">Documentation comment style</h5>
+  <h5 id="documentation-comment-style-文档注释的风格">Documentation comment style 文档注释的风格</h5>
   <p>Check out <a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC 505</a> for full conventions around the style and format of documentation.</p>
-  <h4 id="other-documentation">Other documentation</h4>
+  <p>打开<a href="https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md">RFC 505</a>可以看到关于文档的格式和风格的全部惯例。</p>
+  <h4 id="other-documentation-其他文档">Other documentation 其他文档</h4>
   <p>All of this behavior works in non-Rust source files too. Because comments are written in Markdown, they’re often <code>.md</code> files.</p>
+  <p>这种行为也应当在非Rust语言文档中使用。因为文档是使用Markdown格式来书写的，他们大多是<code>.md</code>后缀的文件。</p>
   <p>When you write documentation in Markdown files, you don’t need to prefix the documentation with comments. For example:</p>
+  <p>当你在Markdown文件中写文档时，你不需要给注释文档使用前缀。例如：</p>
   <pre><code>/// # Examples
   ///
   /// ```
@@ -3352,54 +3362,67 @@ code > span.er { font-weight: bold; }
   /// ```
   # fn foo() {}</code></pre>
   <p>is just</p>
+  <p>就是</p>
   <pre><code># Examples
   </code></pre>
   <p>use std::rc::Rc;</p>
   <p>let five = Rc::new(5);</p>
   <pre><code></code></pre>
-  <p>when it’s in a Markdown file. There is one wrinkle though: Markdown files need to have a title like this:</p>
+  <p>when it’s in a Markdown file，There is one wrinkle though: Markdown files need to have a title like this:</p>
+  <p>当它是一个markdown代码文件时。虽然有一个波浪符格式：Markdown文件需要有一个像这样的标题：</p>
   <pre><code>% The title
   
   This is the example documentation.</code></pre>
   <p>This <code>%</code> line needs to be the very first line of the file.</p>
-  <h4 id="doc-attributes"><code>doc</code> attributes</h4>
+  <p><code>%</code>必须在文件第一行的开头</p>
+  <h4 id="doc-attributes-doc属性"><code>doc</code> attributes <code>doc</code>属性</h4>
   <p>At a deeper level, documentation comments are sugar for documentation attributes:</p>
+  <p>更深层次，文档注释就是文档属性的糖：</p>
   <pre><code>/// this
   # fn foo() {}
   
   #[doc=&quot;this&quot;]
   # fn bar() {}</code></pre>
   <p>are the same, as are these:</p>
+  <p>他们是相同的，还有这个</p>
   <pre><code>//! this
   
   #![doc=&quot;/// this&quot;]</code></pre>
   <p>You won’t often see this attribute used for writing documentation, but it can be useful when changing some options, or when writing a macro.</p>
-  <h5 id="re-exports">Re-exports</h5>
+  <p>在撰写文档时，这个属性时不常见的，但是当更改某些选项，后者写一个宏的时候，他就会非常有用。</p>
+  <h5 id="re-exports-转口">Re-exports 转口</h5>
   <p><code>rustdoc</code> will show the documentation for a public re-export in both places:</p>
+  <p><code>rustdoc</code>在任何位置都会给文档一个输出口：</p>
   <pre><code>extern crate foo;
   
   pub use foo::bar;</code></pre>
   <p>This will create documentation for bar both inside the documentation for the crate <code>foo</code>, as well as the documentation for your crate. It will use the same documentation in both places.</p>
+  <p>这不仅会为bar创建文档，同样会为crate类型的<code>foo</code>创建文档。在两个地方它会使用相同的文档。</p>
   <p>This behavior can be suppressed with <code>no_inline</code>:</p>
+  <p>这种行为可以通过使用<code>on_inline</code>来取缔：</p>
   <pre><code>extern crate foo;
   
   #[doc(no_inline)]
   pub use foo::bar;</code></pre>
-  <h5 id="controlling-html">Controlling HTML</h5>
+  <h5 id="controlling-html-控制超文本文件">Controlling HTML 控制超文本文件</h5>
   <p>You can control a few aspects of the HTML that <code>rustdoc</code> generates through the <code>#![doc]</code> version of the attribute:</p>
+  <p>你可以控制<code>rustdoc</code>通过<code>#[doc]</code>版本属性生成的一部分HTML代码：</p>
   <pre><code>#![doc(html_logo_url = &quot;http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png&quot;,
          html_favicon_url = &quot;http://www.rust-lang.org/favicon.ico&quot;,
          html_root_url = &quot;http://doc.rust-lang.org/&quot;)];</code></pre>
   <p>This sets a few different options, with a logo, favicon, and a root URL.</p>
-  <h4 id="generation-options">Generation options</h4>
+  <p>这里对logo，图标和跟地址进行了一些不同的设置。</p>
+  <h4 id="generation-options-生成选项">Generation options 生成选项</h4>
   <p><code>rustdoc</code> also contains a few other options on the command line, for further customization:</p>
+  <p><code>rustdoc</code>同样内置了一些命令行选项，来应对定制：</p>
   <ul>
-  <li><code>--html-in-header FILE</code>: includes the contents of FILE at the end of the <code>&lt;head&gt;...&lt;/head&gt;</code> section.</li>
-  <li><code>--html-before-content FILE</code>: includes the contents of FILE directly after <code>&lt;body&gt;</code>, before the rendered content (including the search bar).</li>
-  <li><code>--html-after-content FILE</code>: includes the contents of FILE after all the rendered content.</li>
+  <li><code>--html-in-header FILE</code>: includes the contents of FILE at the end of the <code>&lt;head&gt;...&lt;/head&gt;</code> section.在<code>&lt;head&gt;...&lt;/head&gt;</code>标签的末尾引入一个文件的内容。</li>
+  <li><code>--html-before-content FILE</code>: includes the contents of FILE directly after <code>&lt;body&gt;</code>, before the rendered content (including the search bar).直接在<code>&lt;body&gt;</code>标签后面引入文件内容，在其他显示内容（包括搜索框）之前。</li>
+  <li><code>--html-after-content FILE</code>: includes the contents of FILE after all the rendered content.在所有显示内容之后，进入文件内容。</li>
   </ul>
-  <h4 id="security-note">Security note</h4>
+  <h4 id="security-note-安全事项">Security note 安全事项</h4>
   <p>The Markdown in documentation comments is placed without processing into the final webpage. Be careful with literal HTML:</p>
+  <p>不需要生成最后的web页面，注释中的markdown部分就会被替换。请小心使用HTML标记：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">/// &lt;script&gt;alert(document.cookie)&lt;/script&gt;</span></code></pre></div>
   <h2 id="sec--iterators">Iterators 迭代器</h2>
   <p>Let’s talk about loops.</p>

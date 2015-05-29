@@ -413,9 +413,11 @@ You’ll note three things: we need to add our own `extern crate` line, so that 
 
 你会注意到三点事情：因为我们需要手动增加我们自己的`extern crate`代码，所以我们能够使用`#[macro_use]`属性。第二点，我们同样需要增加自己的`main()`。最后，`#`用来注释以上两点内容，所以他们不会在输出中显示出来。
 
-### Running documentation tests
+### Running documentation tests   运行文档测试
 
 To run the tests, either
+
+现在运行测试。
 
 ```bash
 $ rustdoc --test path/to/my/crate/root.rs
@@ -428,8 +430,11 @@ That's right, `cargo test` tests embedded documentation too. However,
 due to the way `rustdoc` works: it links against the library to be tested,
 but with a binary, there’s nothing to link to.
 
-There are a few more annotations that are useful to help `rustdoc` do the right
-thing when testing your code:
+非常好，`cargo test`命令也测试了嵌入的文档。然而`cargo test`不会检测二进制文件，只会检测库中的那些。这取决于`rustdoc`的运行逻辑：它只测试连接到的库，但是二进制文件没有什么可以链接的。
+
+There are a few more annotations that are useful to help `rustdoc` do the right thing when testing your code:
+
+有一些注释，在测试代码时，能够帮助`rustdoc`做这些应该的事情。
 
 ```
 /// ```ignore
@@ -438,10 +443,9 @@ thing when testing your code:
 # fn foo() {}
 ```
 
-The `ignore` directive tells Rust to ignore your code. This is almost never
-what you want, as it's the most generic. Instead, consider annotating it
-with `text` if it's not code, or using `#`s to get a working example that
-only shows the part you care about.
+The `ignore` directive tells Rust to ignore your code. This is almost never what you want, as it's the most generic. Instead, consider annotating it with `text` if it's not code, or using `#`s to get a working example that only shows the part you care about.
+
+`ignore`指令是用来告诉Rust忽略掉你的代码。这在很多时候不是你想要的，因为他是最通用的。相反，如果他们不是代码你应该考虑使用欧冠`text`注释，或者使用`#`开始一个使用例子，用来只展示你关心的部分。
 
 ```
 /// ```should_panic
@@ -452,6 +456,7 @@ only shows the part you care about.
 
 `should_panic` tells `rustdoc` that the code should compile correctly, but
 not actually pass as a test.
+`should_panic` 告诉`rustdoc` 代码应该立即被编译，而不是作为一个测试通过。
 
 ```
 /// ```no_run
@@ -464,11 +469,15 @@ not actually pass as a test.
 
 The `no_run` attribute will compile your code, but not run it. This is
 important for examples such as "Here's how to start up a network service,"
-which you would want to make sure compile, but might run in an infinite loop!
+which you would want to make sure compile,but might run in an infinite loop!
 
-### Documenting modules
+`no_run`属性只会编译你的代码，而不是运行它。 这是非常重要的，比如这样的例子"Here's how to start up a network service,如何开启一个网络服务"是你确定要编译的，但是可能会进入死循环中。
+
+### Documenting modules  文档模块
 
 Rust has another kind of doc comment, `//!`. This comment doesn't document the next item, but the enclosing item. In other words:
+
+Rust语言有另外一种文档注释，`//!`这个注释不会文档化下一个部分，但是会封装项目。换句话说：
 
 ```
 mod foo {
@@ -480,8 +489,9 @@ mod foo {
 }
 ```
 
-This is where you'll see `//!` used most often: for module documentation. If
-you have a module in `foo.rs`, you'll often open its code and see this:
+This is where you'll see `//!` used most often: for module documentation. If you have a module in `foo.rs`, you'll often open its code and see this:
+
+这是`//!`经常被使用到的地方：作为模块文档。如果你在`foo.rs`中有一个模块，只要你打开它，就能够看到像这样的代码：
 
 ```
 //! A module for using `foo`s.
@@ -489,20 +499,25 @@ you have a module in `foo.rs`, you'll often open its code and see this:
 //! The `foo` module contains a lot of useful functionality blah blah blah
 ```
 
-### Documentation comment style
+### Documentation comment style  文档注释的风格
 
-Check out [RFC 505][rfc505] for full conventions around the style and format of
-documentation.
+Check out [RFC 505][rfc505] for full conventions around the style and format of documentation.
+
+打开[RFC 505][rfc505]可以看到关于文档的格式和风格的全部惯例。
 
 [rfc505]: https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md
 
-## Other documentation
+## Other documentation 其他文档
 
 All of this behavior works in non-Rust source files too. Because comments
 are written in Markdown, they're often `.md` files.
 
+这种行为也应当在非Rust语言文档中使用。因为文档是使用Markdown格式来书写的，他们大多是`.md`后缀的文件。
+
 When you write documentation in Markdown files, you don't need to prefix
 the documentation with comments. For example:
+
+当你在Markdown文件中写文档时，你不需要给注释文档使用前缀。例如：
 
 ```
 /// # Examples
@@ -517,6 +532,8 @@ the documentation with comments. For example:
 
 is just
 
+就是
+
 ~~~markdown
 # Examples
 
@@ -527,8 +544,9 @@ let five = Rc::new(5);
 ```
 ~~~
 
-when it's in a Markdown file. There is one wrinkle though: Markdown files need
-to have a title like this:
+when it's in a Markdown file，There is one wrinkle though: Markdown files need to have a title like this:
+
+当它是一个markdown代码文件时。虽然有一个波浪符格式：Markdown文件需要有一个像这样的标题：
 
 ```markdown
 % The title
@@ -538,9 +556,13 @@ This is the example documentation.
 
 This `%` line needs to be the very first line of the file.
 
-## `doc` attributes
+`%`必须在文件第一行的开头
+
+## `doc` attributes  `doc`属性
 
 At a deeper level, documentation comments are sugar for documentation attributes:
+
+更深层次，文档注释就是文档属性的糖：
 
 ```
 /// this
@@ -552,6 +574,8 @@ At a deeper level, documentation comments are sugar for documentation attributes
 
 are the same, as are these:
 
+他们是相同的，还有这个
+
 ```
 //! this
 
@@ -561,9 +585,13 @@ are the same, as are these:
 You won't often see this attribute used for writing documentation, but it
 can be useful when changing some options, or when writing a macro.
 
-### Re-exports
+在撰写文档时，这个属性时不常见的，但是当更改某些选项，后者写一个宏的时候，他就会非常有用。
+
+### Re-exports  转口
 
 `rustdoc` will show the documentation for a public re-export in both places:
+
+`rustdoc`在任何位置都会给文档一个输出口：
 
 ```ignore
 extern crate foo;
@@ -571,11 +599,13 @@ extern crate foo;
 pub use foo::bar;
 ```
 
-This will create documentation for bar both inside the documentation for the
-crate `foo`, as well as the documentation for your crate. It will use the same
-documentation in both places.
+This will create documentation for bar both inside the documentation for the crate `foo`, as well as the documentation for your crate. It will use the same documentation in both places.
+
+这不仅会为bar创建文档，同样会为crate类型的`foo`创建文档。在两个地方它会使用相同的文档。
 
 This behavior can be suppressed with `no_inline`:
+
+这种行为可以通过使用`on_inline`来取缔：
 
 ```ignore
 extern crate foo;
@@ -584,10 +614,11 @@ extern crate foo;
 pub use foo::bar;
 ```
 
-### Controlling HTML
+### Controlling HTML  控制超文本文件
 
-You can control a few aspects of the HTML that `rustdoc` generates through the
-`#![doc]` version of the attribute:
+You can control a few aspects of the HTML that `rustdoc` generates through the `#![doc]` version of the attribute:
+
+你可以控制`rustdoc`通过`#[doc]`版本属性生成的一部分HTML代码：
 
 ```
 #![doc(html_logo_url = "http://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png",
@@ -597,20 +628,24 @@ You can control a few aspects of the HTML that `rustdoc` generates through the
 
 This sets a few different options, with a logo, favicon, and a root URL.
 
-## Generation options
+这里对logo，图标和跟地址进行了一些不同的设置。
+
+## Generation options  生成选项
 
 `rustdoc` also contains a few other options on the command line, for further customization:
 
-- `--html-in-header FILE`: includes the contents of FILE at the end of the
-  `<head>...</head>` section.
-- `--html-before-content FILE`: includes the contents of FILE directly after
-  `<body>`, before the rendered content (including the search bar).
-- `--html-after-content FILE`: includes the contents of FILE after all the rendered content.
+`rustdoc`同样内置了一些命令行选项，来应对定制：
 
-## Security note
+- `--html-in-header FILE`: includes the contents of FILE at the end of the `<head>...</head>` section.在`<head>...</head>`标签的末尾引入一个文件的内容。
+- `--html-before-content FILE`: includes the contents of FILE directly after `<body>`, before the rendered content (including the search bar).直接在`<body>`标签后面引入文件内容，在其他显示内容（包括搜索框）之前。
+- `--html-after-content FILE`: includes the contents of FILE after all the rendered content.在所有显示内容之后，进入文件内容。
+
+## Security note  安全事项
 
 The Markdown in documentation comments is placed without processing into
 the final webpage. Be careful with literal HTML:
+
+不需要生成最后的web页面，注释中的markdown部分就会被替换。请小心使用HTML标记：
 
 ```rust
 /// <script>alert(document.cookie)</script>
