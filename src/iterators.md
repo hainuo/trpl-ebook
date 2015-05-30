@@ -1,8 +1,12 @@
-% Iterators
+% Iterators 迭代器
 
 Let's talk about loops.
 
+下面我们来说说循环。
+
 Remember Rust's `for` loop? Here's an example:
+
+还记得Rust语言的`for`循环吗？这里有个例子：
 
 ```rust
 for x in 0..10 {
@@ -10,11 +14,14 @@ for x in 0..10 {
 }
 ```
 
-Now that you know more Rust, we can talk in detail about how this works.
-Ranges (the `0..10`) are 'iterators'. An iterator is something that we can
+Now that you know more Rust, we can talk in detail about how this works.Ranges (the `0..10`) are 'iterators'. An iterator is something that we can
 call the `.next()` method on repeatedly, and it gives us a sequence of things.
 
+现在你了解到更多的Rust知识，我们可以讨论一下循环是怎么运行的了。`0..10`就是`iterators 迭代器`。迭代器就是我们能够不断重复代用的`.next()`，并且它给了我们一个事物的序列。
+
 Like this:
+
+就像这样：
 
 ```rust
 let mut range = 0..10;
@@ -29,25 +36,22 @@ loop {
 }
 ```
 
-We make a mutable binding to the range, which is our iterator. We then `loop`,
-with an inner `match`. This `match` is used on the result of `range.next()`,
-which gives us a reference to the next value of the iterator. `next` returns an
-`Option<i32>`, in this case, which will be `Some(i32)` when we have a value and
-`None` once we run out. If we get `Some(i32)`, we print it out, and if we get
-`None`, we `break` out of the loop.
+We make a mutable binding to the range, which is our iterator. We then `loop`,with an inner `match`. This `match` is used on the result of `range.next()`,which gives us a reference to the next value of the iterator. `next` returns an `Option<i32>`, in this case, which will be `Some(i32)` when we have a value and `None` once we run out. If we get `Some(i32)`, we print it out, and if we get `None`, we `break` out of the loop.
 
-This code sample is basically the same as our `for` loop version. The `for`
-loop is just a handy way to write this `loop`/`match`/`break` construct.
+我们设置了一个范围的变量，它就是我们的迭代器。使用一个内置的`match`方法进行循环.`match`被用在`range.next()`的值上，他给我们迭代器下一个值的地址引用。`netx`返回一个`Option<i32>`（译者：就是整型值），在本案例中，当我们有一个值时，他就是`Some(i32)`,或者运行一次`None`。如果我们的匹配值是`Some(u=i32)`，我们就打印出来，如果我们匹配的值是`None`，我们`break打断`这个循环，跳出来。
 
-`for` loops aren't the only thing that uses iterators, however. Writing your
-own iterator involves implementing the `Iterator` trait. While doing that is
-outside of the scope of this guide, Rust provides a number of useful iterators
-to accomplish various tasks. Before we talk about those, we should talk about a
-Rust anti-pattern. And that's using ranges like this.
+This code sample is basically the same as our `for` loop version. The `for` loop is just a handy way to write this `loop`/`match`/`break` construct.
+
+这段代码基本与我们的`for`循环相同。该`for`循环只是用了一个方便的方式来写这个`loop 循环`/`match匹配`/`break跳出`结构。
+
+`for` loops aren't the only thing that uses iterators, however. Writing your own iterator involves implementing the `Iterator` trait. While doing that is outside of the scope of this guide, Rust provides a number of useful iterators to accomplish various tasks. Before we talk about those, we should talk about a Rust anti-pattern. And that's using ranges like this.
+
+然而，`for`循环并不是使用迭代器的唯一方式。编写你自己的的迭代器，涉及到了`Iterator`特性。然而这样做超出了本教程的范围，Rust 提供了许多有用的迭代器来完成歌中任务。在我们谈论这些之前，我们来讨论下Rust语言的反射模式。它们行这样使用序列。
 
 Yes, we just talked about how ranges are cool. But ranges are also very
-primitive. For example, if you needed to iterate over the contents of a vector,
-you may be tempted to write this:
+primitive. For example, if you needed to iterate over the contents of a vector,you may be tempted to write this:
+
+是的，我们只谈论下为什么序列是非常酷的。但是，他同样是很原始的。举个例子，如果遍历一个响亮的内容，你可能会这样写：
 
 ```rust
 let nums = vec![1, 2, 3];
