@@ -112,34 +112,35 @@ Let's talk about consumers first, since you've already seen an iterator, ranges.
 
 A *consumer* operates on an iterator, returning some kind of value or values.The most common consumer is `collect()`. This code doesn't quite compile,but it shows the intention:
 
-一个*consumer*操作一个迭代器时，返回某种值或者所有值。最通常使用的消费者是`collect()`.这段代码并不能够完全编译，只是为了表明某种意图。
+一个*consumer*操作一个迭代器时，返回某种值或者所有值。最通常使用的消费者是`collect()`.这段代码无法被编译，只是为了表明某种意图。
 
 ```{rust,ignore}
 let one_to_one_hundred = (1..101).collect();
 ```
 
-As you can see, we call `collect()` on our iterator. `collect()` takes as many values as the iterator will give it, and returns a collection of the results. So why won't this compile? Rust can't determine what
-type of things you want to collect, and so you need to let it know.
-Here's the version that does compile:
+As you can see, we call `collect()` on our iterator. `collect()` takes as many values as the iterator will give it, and returns a collection of the results. So why won't this compile? Rust can't determine what type of things you want to collect, and so you need to let it know.Here's the version that does compile:
+
+曾如你所见，我们在迭代器上调用了`collect()`。`collect()`收集尽可能躲得迭代器的值，并返回结果集。那么为什么这个代码不能够被编译呢？Rust语言无法决定你想要收集何种类型的内容，所以你需要让它知道。这是那段代码的编译版本：
 
 ```rust
 let one_to_one_hundred = (1..101).collect::<Vec<i32>>();
 ```
 
-If you remember, the `::<>` syntax allows us to give a type hint,
-and so we tell it that we want a vector of integers. You don't always
-need to use the whole type, though. Using a `_` will let you provide
-a partial hint:
+If you remember, the `::<>` syntax allows us to give a type hint,and so we tell it that we want a vector of integers. You don't always need to use the whole type, though. Using a `_` will let you provide a partial hint:
+
+如果你还记得，`::<>`语法允许我们给出一个类型提示，那么我们可以告诉它，我们需要一个整型的向量。然而你并不需要使用所有的类型。你可以通过使用`_`来给出部分提示：
 
 ```rust
 let one_to_one_hundred = (1..101).collect::<Vec<_>>();
 ```
 
-This says "Collect into a `Vec<T>`, please, but infer what the `T` is for me."
-`_` is sometimes called a "type placeholder" for this reason.
+This says "Collect into a `Vec<T>`, please, but infer what the `T` is for me."`_` is sometimes called a "type placeholder" for this reason.
 
-`collect()` is the most common consumer, but there are others too. `find()`
-is one:
+这是说“收集成一个`向量Vec<T>`,拜托，不要为我推断`T`。”因为这个原因，`_`有时候被称作占位符。
+
+`collect()` is the most common consumer, but there are others too. `find()` is one:
+
+`collect()`是最常用的消费者，还有一些其他方法也是。`find()`也是其中一个：
 
 ```rust
 let greater_than_forty_two = (0..100)
@@ -151,27 +152,25 @@ match greater_than_forty_two {
 }
 ```
 
-`find` takes a closure, and works on a reference to each element of an
-iterator. This closure returns `true` if the element is the element we're
-looking for, and `false` otherwise. Because we might not find a matching
-element, `find` returns an `Option` rather than the element itself.
+`find` takes a closure, and works on a reference to each element of an iterator. This closure returns `true` if the element is the element we're looking for, and `false` otherwise. Because we might not find a matching element, `find` returns an `Option` rather than the element itself.
+
+`find`使用一个闭包，运行是建立在迭代器每一个元素的地址引用基础上的。当元素时我们寻找的时，这段代码中的闭包会返回`true`,反之，返回`false`。因为我们可能不会找到匹配的元素，`find`会返回一个`Option` 而不是元素本身。
 
 Another important consumer is `fold`. Here's what it looks like:
+
+另一个重要的消费者是`fold`。这是它看起来的样子：
 
 ```rust
 let sum = (1..4).fold(0, |sum, x| sum + x);
 ```
 
-`fold()` is a consumer that looks like this:
-`fold(base, |accumulator, element| ...)`. It takes two arguments: the first
-is an element called the *base*. The second is a closure that itself takes two
-arguments: the first is called the *accumulator*, and the second is an
-*element*. Upon each iteration, the closure is called, and the result is the
-value of the accumulator on the next iteration. On the first iteration, the
-base is the value of the accumulator.
+`fold()` is a consumer that looks like this:`fold(base, |accumulator, element| ...)`. It takes two arguments: the first is an element called the *base*. The second is a closure that itself takes two arguments: the first is called the *accumulator*, and the second is an *element*. Upon each iteration, the closure is called, and the result is the value of the accumulator on the next iteration. On the first iteration, the base is the value of the accumulator.
 
-Okay, that's a bit confusing. Let's examine the values of all of these things
-in this iterator:
+`fold()`是一个想这样子的消费者：`fold(base, |accumulator,element| ...)`。它有两个参数：一个是叫做*base*的元素，另一个是一个拥有两个参数的闭包（其中一个参数被叫做*accumulator*，另一个是*element*）。在每一次迭代中，闭包都被调用，结果是对下一个迭代累加器的值。在第一个迭代中，`base`是累加器的值。
+
+Okay, that's a bit confusing. Let's examine the values of all of these things in this iterator:
+
+好吧，这里有点混乱。让我们来看看在迭代器中，所有这些内容的值：
 
 | base | accumulator | element | closure result |
 |------|-------------|---------|----------------|
@@ -181,54 +180,51 @@ in this iterator:
 
 We called `fold()` with these arguments:
 
+我们调用`fold()`使用这些参数：
+
 ```rust
 # (1..4)
 .fold(0, |sum, x| sum + x);
 ```
 
-So, `0` is our base, `sum` is our accumulator, and `x` is our element.  On the
-first iteration, we set `sum` to `0`, and `x` is the first element of `nums`,
-`1`. We then add `sum` and `x`, which gives us `0 + 1 = 1`. On the second
-iteration, that value becomes our accumulator, `sum`, and the element is
-the second element of the array, `2`. `1 + 2 = 3`, and so that becomes
-the value of the accumulator for the last iteration. On that iteration,
-`x` is the last element, `3`, and `3 + 3 = 6`, which is our final
-result for our sum. `1 + 2 + 3 = 6`, and that's the result we got.
+So, `0` is our base, `sum` is our accumulator, and `x` is our element.  On the first iteration, we set `sum` to `0`, and `x` is the first element of `nums`,`1`. We then add `sum` and `x`, which gives us `0 + 1 = 1`. On the second iteration, that value becomes our accumulator, `sum`, and the element is the second element of the array, `2`. `1 + 2 = 3`, and so that becomes the value of the accumulator for the last iteration. On that iteration,`x` is the last element, `3`, and `3 + 3 = 6`, which is our final result for our sum. `1 + 2 + 3 = 6`, and that's the result we got.
 
-Whew. `fold` can be a bit strange the first few times you see it, but once it
-clicks, you can use it all over the place. Any time you have a list of things,
-and you want a single result, `fold` is appropriate.
+所以，`0`就是base，`num`是accumulator,`x`是element。在第一次迭代时，我们设置`sum`的值为0，`x`是`nums`的第一个元素——`1`.然后我们将`sum`和`x`相加，得到`0+1=1`。在第二次迭代中，这个值变成了accumulator——`sum`的值，element是数组的第二个元素——`2`.`1+2=3`，他有成为最后一个迭代时accumulator的值。在最后一次迭代时，`x`是最后一个元素——`3`，`3+3=6`,这也是最后的`sum`的值。`1+2+3=6`,这就是我们得到最终结果。
 
-Consumers are important due to one additional property of iterators we haven't
-talked about yet: laziness. Let's talk some more about iterators, and you'll
-see why consumers matter.
+Whew. `fold` can be a bit strange the first few times you see it, but once it clicks, you can use it all over the place. Any time you have a list of things,and you want a single result, `fold` is appropriate.
 
-## Iterators
+`fold`在你最初看他的几回时可能是有点奇怪的，但是一旦它被激活，你可以用在所有的地方。任何时候，你有一个清单，需要返回单一结果时，`fold`是最合适的。
 
-As we've said before, an iterator is something that we can call the
-`.next()` method on repeatedly, and it gives us a sequence of things.
-Because you need to call the method, this means that iterators
-can be *lazy* and not generate all of the values upfront. This code,
-for example, does not actually generate the numbers `1-100`, instead
-creating a value that merely represents the sequence:
+Consumers are important due to one additional property of iterators we haven't talked about yet: laziness. Let's talk some more about iterators, and you'll see why consumers matter.
+
+消费者的重要性取决于我们还没有讨论的，迭代器的一个附加属性：laziness。让我们多讨论些迭代器，你讲明白消费者关系。
+
+## Iterators  迭代器
+
+As we've said before, an iterator is something that we can call the `.next()` method on repeatedly, and it gives us a sequence of things.Because you need to call the method, this means that iterators can be *lazy* and not generate all of the values upfront. This code,
+for example, does not actually generate the numbers `1-100`, instead creating a value that merely represents the sequence:
+
+正如我们之前所说，迭代器就是一个能够重复调用`.next()`方法的事物，它给我们一个事物的序列。因为我们需要调用这个方法，这意味着迭代器是*lazy*，而不是生成前期所有的值。例如，这段代码并不是直接生成`1-100`,而是，创建一个仅仅表示一个序列的值，
 
 ```rust
 let nums = 1..100;
 ```
 
-Since we didn't do anything with the range, it didn't generate the sequence.
-Let's add the consumer:
+Since we didn't do anything with the range, it didn't generate the sequence.Let's add the consumer:
+
+因为我们使用这个范围什么都不能做，他不能够生成序列。让我们加入一个消费者：
 
 ```rust
 let nums = (1..100).collect::<Vec<i32>>();
 ```
 
-Now, `collect()` will require that the range gives it some numbers, and so
-it will do the work of generating the sequence.
+Now, `collect()` will require that the range gives it some numbers, and so it will do the work of generating the sequence.
 
-Ranges are one of two basic iterators that you'll see. The other is `iter()`.
-`iter()` can turn a vector into a simple iterator that gives you each element
-in turn:
+现在`collect()`将请求范围给它的一些数，所以，它能够做生成序列这个事情。
+
+Ranges are one of two basic iterators that you'll see. The other is `iter()`.`iter()` can turn a vector into a simple iterator that gives you each element in turn:
+
+Ranges是你即将看到的两个基本迭代器之一。另一个是`iter()`。`iter`能够将向量转换成一个简单的迭代器，依次给你每一个元素：
 
 ```rust
 let nums = vec![1, 2, 3];
@@ -238,25 +234,28 @@ for num in nums.iter() {
 }
 ```
 
-These two basic iterators should serve you well. There are some more
-advanced iterators, including ones that are infinite.
+These two basic iterators should serve you well. There are some more advanced iterators, including ones that are infinite.
 
-That's enough about iterators. Iterator adapters are the last concept
-we need to talk about with regards to iterators. Let's get to it!
+这两个基本的迭代器将很好的服务你。还有一些高级迭代器，包括哪些无穷大的。
 
-## Iterator adapters
+That's enough about iterators. Iterator adapters are the last concept we need to talk about with regards to iterators. Let's get to it!
 
-*Iterator adapters* take an iterator and modify it somehow, producing
-a new iterator. The simplest one is called `map`:
+迭代器的东西已经足够多了。迭代器适配器是我们需要讨论的最后一个概念，让我们开始吧！
+
+## Iterator adapters 迭代器适配器
+
+*Iterator adapters* take an iterator and modify it somehow, producing a new iterator. The simplest one is called `map`:
+
+*Iterator adapters* 获取一个迭代器，并在某些时候修改它，生成一个新的迭代器。最基本的一个叫做`map`:
 
 ```{rust,ignore}
 (1..100).map(|x| x + 1);
 ```
 
-`map` is called upon another iterator, and produces a new iterator where each
-element reference has the closure it's been given as an argument called on it.
-So this would give us the numbers from `2-100`. Well, almost! If you
-compile the example, you'll get a warning:
+`map` is called upon another iterator, and produces a new iterator where each element reference has the closure it's been given as an argument called on it.So this would give us the numbers from `2-100`. Well, almost! If you compile the example, you'll get a warning:
+
+`map`被另一个迭代器调用，并生成一个新的迭代器，在每一个元素引用 拥有一个闭包座位参数被他调用的地方。所以，这将给我们从`2-100`的数字。好了，差不多了！如果你编译这个例子，你会收到一个敬告：
+
 
 ```text
 warning: unused result which must be used: iterator adaptors are lazy and
@@ -265,20 +264,22 @@ warning: unused result which must be used: iterator adaptors are lazy and
  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
 
-Laziness strikes again! That closure will never execute. This example
-doesn't print any numbers:
+Laziness strikes again! That closure will never execute. This example doesn't print any numbers:
+
+laziness再次罢工了！闭包讲不会被执行。这个例子没有输出任何数字：
+
 
 ```{rust,ignore}
 (1..100).map(|x| println!("{}", x));
 ```
 
-If you are trying to execute a closure on an iterator for its side effects,
-just use `for` instead.
+If you are trying to execute a closure on an iterator for its side effects,just use `for` instead.
 
-There are tons of interesting iterator adapters. `take(n)` will return an
-iterator over the next `n` elements of the original iterator. Note that this
-has no side effect on the original iterator. Let's try it out with our infinite
-iterator from before:
+如果你想自一个迭代器的副本上执行一个闭包，请使用`for`。
+
+There are tons of interesting iterator adapters. `take(n)` will return an iterator over the next `n` elements of the original iterator. Note that this has no side effect on the original iterator. Let's try it out with our infinite iterator from before:
+
+有成千上万的迭代器适配器。`take(n)`将反悔一个覆盖了原来第n个元素迭代器的迭代器。注意，这对原来的迭代器无副作用。让我们尝试一下之前说过的无限迭代器：
 
 ```rust
 # #![feature(step_by)]
@@ -289,6 +290,8 @@ for i in (1..).step_by(5).take(5) {
 
 This will print
 
+这将会打印
+
 ```text
 1
 6
@@ -297,9 +300,9 @@ This will print
 21
 ```
 
-`filter()` is an adapter that takes a closure as an argument. This closure
-returns `true` or `false`. The new iterator `filter()` produces
-only the elements that that closure returns `true` for:
+`filter()` is an adapter that takes a closure as an argument. This closure returns `true` or `false`. The new iterator `filter()` produces only the elements that that closure returns `true` for:
+
+`filter()` 是一个适配器，它使用一个闭包座位参数。这个闭包反悔`true`或者`false`。新的迭代器`filter()`只生成一个在闭包返回`true`时的元素：
 
 ```rust
 for i in (1..100).filter(|&x| x % 2 == 0) {
@@ -307,14 +310,14 @@ for i in (1..100).filter(|&x| x % 2 == 0) {
 }
 ```
 
-This will print all of the even numbers between one and a hundred.
-(Note that because `filter` doesn't consume the elements that are
-being iterated over, it is passed a reference to each element, and
-thus the filter predicate uses the `&x` pattern to extract the integer
+This will print all of the even numbers between one and a hundred.(Note that because `filter` doesn't consume the elements that are being iterated over, it is passed a reference to each element, and thus the filter predicate uses the `&x` pattern to extract the integer
 itself.)
 
-You can chain all three things together: start with an iterator, adapt it
-a few times, and then consume the result. Check it out:
+这将打印0到100的所有的每一个偶数。（注意，`filter`并不消耗正在迭代的元素，他只是传递一个美格元素的地址引用，并且filter 使用`&x`方式来提取整数本身。）
+
+You can chain all three things together: start with an iterator, adapt it a few times, and then consume the result. Check it out:
+
+你可以将三个事物关联在一起了，首先是迭代器，适应它一段时间，然后是产生一个结果。看看下面的代码
 
 ```rust
 (1..1000)
@@ -326,9 +329,8 @@ a few times, and then consume the result. Check it out:
 
 This will give you a vector containing `6`, `12`, `18`, `24`, and `30`.
 
-This is just a small taste of what iterators, iterator adapters, and consumers
-can help you with. There are a number of really useful iterators, and you can
-write your own as well. Iterators provide a safe, efficient way to manipulate
-all kinds of lists. They're a little unusual at first, but if you play with
-them, you'll get hooked. For a full list of the different iterators and
-consumers, check out the [iterator module documentation](../std/iter/index.html).
+这将给我们一个包含有`6`，`12`，`18`，`24`和`30`的向量。
+
+This is just a small taste of what iterators, iterator adapters, and consumers can help you with. There are a number of really useful iterators, and you can write your own as well. Iterators provide a safe, efficient way to manipulate all kinds of lists. They're a little unusual at first, but if you play with them, you'll get hooked. For a full list of the different iterators and consumers, check out the [iterator module documentation](../std/iter/index.html).
+
+这只是一个关于迭代器，迭代器适配器和消费者能够帮你什么忙的小尝试。有太多有用的迭代器，同样，你可以写你自己的迭代器。迭代器提供一个安全、高效的方式来操纵各种各样的清单列表。起先，它们是有点不寻常，当你多使用他们，你就会上瘾。对于一个完整的迭代器和消费者之间不同之处，可以点击链接[iterator module documentation 迭代器模块文档](../std/iter/index.html)查看。
