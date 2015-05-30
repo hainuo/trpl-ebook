@@ -100,7 +100,7 @@ code > span.er { font-weight: bold; }
   <li><a href="#cfg_attr">cfg_attr</a></li>
   <li><a href="#cfg">cfg!</a></li>
   </ul></li>
-  <li><a href="#sec--documentation">Documentation 文件</a></li>
+  <li><a href="#sec--documentation">Documentation 文档</a></li>
   <li><a href="#sec--iterators">Iterators 迭代器</a></li>
   <li><a href="#sec--concurrency">Concurrency 并发</a></li>
   <li><a href="#sec--error-handling">Error Handling 错误处理</a><ul>
@@ -3072,7 +3072,7 @@ code > span.er { font-weight: bold; }
   }</code></pre></div>
   <p>These will be replaced by a <code>true</code> or <code>false</code> at compile-time, depending on the configuration settings.</p>
   <p>根据不同的配置设置，在编译时，这些标记被<code>true</code>或者<code>false</code>替代。</p>
-  <h2 id="sec--documentation">Documentation 文件</h2>
+  <h2 id="sec--documentation">Documentation 文档</h2>
   <p>Documentation is an important part of any software project, and it’s first-class in Rust. Let’s talk about the tooling Rust gives you to document your project.</p>
   <p>文档在任何软件项目中都是一个很重要的部分，在Rust语言中，他是第一等级的。</p>
   <h4 id="about-rustdoc-关于rustdoc">About <code>rustdoc</code> 关于<code>rustdoc</code></h4>
@@ -3426,12 +3426,16 @@ code > span.er { font-weight: bold; }
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">/// &lt;script&gt;alert(document.cookie)&lt;/script&gt;</span></code></pre></div>
   <h2 id="sec--iterators">Iterators 迭代器</h2>
   <p>Let’s talk about loops.</p>
+  <p>下面我们来说说循环。</p>
   <p>Remember Rust’s <code>for</code> loop? Here’s an example:</p>
+  <p>还记得Rust语言的<code>for</code>循环吗？这里有个例子：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> x in <span class="dv">0.</span>.<span class="dv">10</span> {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, x);
   }</code></pre></div>
-  <p>Now that you know more Rust, we can talk in detail about how this works. Ranges (the <code>0..10</code>) are ‘iterators’. An iterator is something that we can call the <code>.next()</code> method on repeatedly, and it gives us a sequence of things.</p>
+  <p>Now that you know more Rust, we can talk in detail about how this works.Ranges (the <code>0..10</code>) are ‘iterators’. An iterator is something that we can call the <code>.next()</code> method on repeatedly, and it gives us a sequence of things.</p>
+  <p>现在你了解到更多的Rust知识，我们可以讨论一下循环是怎么运行的了。<code>0..10</code>就是<code>iterators 迭代器</code>。迭代器就是我们能够不断重复代用的<code>.next()</code>，并且它给了我们一个事物的序列。</p>
   <p>Like this:</p>
+  <p>就像这样：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> range = <span class="dv">0.</span>.<span class="dv">10</span>;
   
   <span class="kw">loop</span> {
@@ -3442,46 +3446,62 @@ code > span.er { font-weight: bold; }
           <span class="kw">None</span> =&gt; { <span class="kw">break</span> }
       }
   }</code></pre></div>
-  <p>We make a mutable binding to the range, which is our iterator. We then <code>loop</code>, with an inner <code>match</code>. This <code>match</code> is used on the result of <code>range.next()</code>, which gives us a reference to the next value of the iterator. <code>next</code> returns an <code>Option&lt;i32&gt;</code>, in this case, which will be <code>Some(i32)</code> when we have a value and <code>None</code> once we run out. If we get <code>Some(i32)</code>, we print it out, and if we get <code>None</code>, we <code>break</code> out of the loop.</p>
+  <p>We make a mutable binding to the range, which is our iterator. We then <code>loop</code>,with an inner <code>match</code>. This <code>match</code> is used on the result of <code>range.next()</code>,which gives us a reference to the next value of the iterator. <code>next</code> returns an <code>Option&lt;i32&gt;</code>, in this case, which will be <code>Some(i32)</code> when we have a value and <code>None</code> once we run out. If we get <code>Some(i32)</code>, we print it out, and if we get <code>None</code>, we <code>break</code> out of the loop.</p>
+  <p>我们设置了一个范围的变量，它就是我们的迭代器。使用一个内置的<code>match</code>方法进行循环.<code>match</code>被用在<code>range.next()</code>的值上，他给我们迭代器下一个值的地址引用。<code>netx</code>返回一个<code>Option&lt;i32&gt;</code>（译者：就是整型值），在本案例中，当我们有一个值时，他就是<code>Some(i32)</code>,或者运行一次<code>None</code>。如果我们的匹配值是<code>Some(u=i32)</code>，我们就打印出来，如果我们匹配的值是<code>None</code>，我们<code>break打断</code>这个循环，跳出来。</p>
   <p>This code sample is basically the same as our <code>for</code> loop version. The <code>for</code> loop is just a handy way to write this <code>loop</code>/<code>match</code>/<code>break</code> construct.</p>
+  <p>这段代码基本与我们的<code>for</code>循环相同。该<code>for</code>循环只是用了一个方便的方式来写这个<code>loop 循环</code>/<code>match匹配</code>/<code>break跳出</code>结构。</p>
   <p><code>for</code> loops aren’t the only thing that uses iterators, however. Writing your own iterator involves implementing the <code>Iterator</code> trait. While doing that is outside of the scope of this guide, Rust provides a number of useful iterators to accomplish various tasks. Before we talk about those, we should talk about a Rust anti-pattern. And that’s using ranges like this.</p>
-  <p>Yes, we just talked about how ranges are cool. But ranges are also very primitive. For example, if you needed to iterate over the contents of a vector, you may be tempted to write this:</p>
+  <p>然而，<code>for</code>循环并不是使用迭代器的唯一方式。编写你自己的的迭代器，涉及到了<code>Iterator</code>特性。然而这样做超出了本教程的范围，Rust 提供了许多有用的迭代器来完成歌中任务。在我们谈论这些之前，我们来讨论下Rust语言的反射模式。它们行这样使用序列。</p>
+  <p>Yes, we just talked about how ranges are cool. But ranges are also very primitive. For example, if you needed to iterate over the contents of a vector,you may be tempted to write this:</p>
+  <p>是的，我们只谈论下为什么序列是非常酷的。但是，他同样是很原始的。举个例子，如果遍历一个响亮的内容，你可能会这样写：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> nums = <span class="ot">vec!</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>];
   
   <span class="kw">for</span> i in <span class="dv">0.</span>.nums.len() {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, nums[i]);
   }</code></pre></div>
   <p>This is strictly worse than using an actual iterator. You can iterate over vectors directly, so write this:</p>
+  <p>这比使用实际的迭代器都要糟糕。你可以直接遍历向量，所以应该这么写：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> nums = <span class="ot">vec!</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>];
   
   <span class="kw">for</span> num in &amp;nums {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, num);
   }</code></pre></div>
-  <p>There are two reasons for this. First, this more directly expresses what we mean. We iterate through the entire vector, rather than iterating through indexes, and then indexing the vector. Second, this version is more efficient: the first version will have extra bounds checking because it used indexing, <code>nums[i]</code>. But since we yield a reference to each element of the vector in turn with the iterator, there’s no bounds checking in the second example. This is very common with iterators: we can ignore unnecessary bounds checks, but still know that we’re safe.</p>
-  <p>There’s another detail here that’s not 100% clear because of how <code>println!</code> works. <code>num</code> is actually of type <code>&amp;i32</code>. That is, it’s a reference to an <code>i32</code>, not an <code>i32</code> itself. <code>println!</code> handles the dereferencing for us, so we don’t see it. This code works fine too:</p>
+  <p>There are two reasons for this. First, this more directly expresses what we mean. We iterate through the entire vector, rather than iterating through indexes, and then indexing the vector. Second, this version is more efficient:the first version will have extra bounds checking because it used indexing,<code>nums[i]</code>. But since we yield a reference to each element of the vector in turn with the iterator, there’s no bounds checking in the second example. This is very common with iterators: we can ignore unnecessary bounds checks, but still know that we’re safe.</p>
+  <p>这样做有两个原因。首先，这更能直接表达处我们的意思。我们遍历整个向量，并且索引向量，而不是遍历索引。第二点原因就是这样做更加高效：第一版的代码需要额外的边界检查，因为他用的是索引-<code>nums[i]</code>。但是由于我们使用迭代器时得到了向量循环的每一个元素的索引，所以在第二版的代码中不需要边界检查。这是迭代器的通用做法：我们忽略不必要的边界检查，却仍然保持边界安全。</p>
+  <p>There’s another detail here that’s not 100% clear because of how <code>println!</code> works. <code>num</code> is actually of type <code>&amp;i32</code>. That is, it’s a reference to an <code>i32</code>,not an <code>i32</code> itself. <code>println!</code> handles the dereferencing for us, so we don’t see it. This code works fine too:</p>
+  <p>这里有另一个细节，因为<code>println!</code>的执行方式，不是100%的清楚。<code>num</code>是真实的<code>&amp;i32</code>类型。这是说，他是一个<code>i32</code>的地址引用，而不是<code>i32</code>自身。<code>println!</code>自动为我们处理了这个引用，所以，我们看不到它。也因为这样，代码能够很好的运行：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> nums = <span class="ot">vec!</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>];
   
   <span class="kw">for</span> num in &amp;nums {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, *num);
   }</code></pre></div>
-  <p>Now we’re explicitly dereferencing <code>num</code>. Why does <code>&amp;nums</code> give us references? Firstly, because we explicitly asked it to with <code>&amp;</code>. Secondly, if it gave us the data itself, we would have to be its owner, which would involve making a copy of the data and giving us the copy. With references, we’re just borrowing a reference to the data, and so it’s just passing a reference, without needing to do the move.</p>
+  <p>Now we’re explicitly dereferencing <code>num</code>. Why does <code>&amp;nums</code> give us references?Firstly, because we explicitly asked it to with <code>&amp;</code>. Secondly, if it gave us the data itself, we would have to be its owner, which would involve making a copy of the data and giving us the copy. With references, we’re just borrowing a reference to the data, and so it’s just passing a reference, without needing to do the move.</p>
+  <p>现在我们明确解除<code>num</code>的地址引用。为什么<code>&amp;nums</code>给我们的是一个地址引用呢？首先，因为我们使用<code>&amp;</code>来明确的请求它。第二如果他给我们他们身的数据，我们不得不程伟他的拥有者，这将涉及到制作数据副本，并给我们这个副本。使用地址引用，我们只需要引用数据的一个地址，并且他只是传递一个地址，不需要做其他事情。</p>
   <p>So, now that we’ve established that ranges are often not what you want, let’s talk about what you do want instead.</p>
-  <p>There are three broad classes of things that are relevant here: iterators, <em>iterator adapters</em>, and <em>consumers</em>. Here’s some definitions:</p>
+  <p>所以，现在我们已经确定了序列常常不是我们所需要的，让我们讨论下，你想要的是什么吧。</p>
+  <p>There are three broad classes of things that are relevant here: iterators,<em>iterator adapters</em>, and <em>consumers</em>. Here’s some definitions:</p>
+  <p>一共有三大种类：迭代器，<em>迭代器适配器</em>和<em>消费者</em>。这是他们的定义：</p>
   <ul>
-  <li><em>iterators</em> give you a sequence of values.</li>
-  <li><em>iterator adapters</em> operate on an iterator, producing a new iterator with a different output sequence.</li>
-  <li><em>consumers</em> operate on an iterator, producing some final set of values.</li>
+  <li><em>iterators</em> give you a sequence of values. <em>迭代器</em> 给你有一些值的序列。</li>
+  <li><em>iterator adapters</em> operate on an iterator, producing a new iterator with a different output sequence. <em>迭代器适配器</em> 操作一个迭代器，生成一个新的不同序列的迭代器。</li>
+  <li><em>consumers</em> operate on an iterator, producing some final set of values.<em>消费者</em> 操作一个迭代器，生成最后的一组值。</li>
   </ul>
   <p>Let’s talk about consumers first, since you’ve already seen an iterator, ranges.</p>
-  <h4 id="consumers">Consumers</h4>
-  <p>A <em>consumer</em> operates on an iterator, returning some kind of value or values. The most common consumer is <code>collect()</code>. This code doesn’t quite compile, but it shows the intention:</p>
+  <p>让我们首先讨论消费者，因为你已经见过一个迭代器——序列。</p>
+  <h4 id="consumers-消费者">Consumers 消费者</h4>
+  <p>A <em>consumer</em> operates on an iterator, returning some kind of value or values.The most common consumer is <code>collect()</code>. This code doesn’t quite compile,but it shows the intention:</p>
+  <p>一个<em>consumer</em>操作一个迭代器时，返回某种值或者所有值。最通常使用的消费者是<code>collect()</code>.这段代码无法被编译，只是为了表明某种意图。</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> one_to_one_hundred = (<span class="dv">1.</span>.<span class="dv">101</span>).collect();</code></pre></div>
-  <p>As you can see, we call <code>collect()</code> on our iterator. <code>collect()</code> takes as many values as the iterator will give it, and returns a collection of the results. So why won’t this compile? Rust can’t determine what type of things you want to collect, and so you need to let it know. Here’s the version that does compile:</p>
+  <p>As you can see, we call <code>collect()</code> on our iterator. <code>collect()</code> takes as many values as the iterator will give it, and returns a collection of the results. So why won’t this compile? Rust can’t determine what type of things you want to collect, and so you need to let it know.Here’s the version that does compile:</p>
+  <p>曾如你所见，我们在迭代器上调用了<code>collect()</code>。<code>collect()</code>收集尽可能躲得迭代器的值，并返回结果集。那么为什么这个代码不能够被编译呢？Rust语言无法决定你想要收集何种类型的内容，所以你需要让它知道。这是那段代码的编译版本：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> one_to_one_hundred = (<span class="dv">1.</span>.<span class="dv">101</span>).collect::&lt;Vec&lt;<span class="kw">i32</span>&gt;&gt;();</code></pre></div>
-  <p>If you remember, the <code>::&lt;&gt;</code> syntax allows us to give a type hint, and so we tell it that we want a vector of integers. You don’t always need to use the whole type, though. Using a <code>_</code> will let you provide a partial hint:</p>
+  <p>If you remember, the <code>::&lt;&gt;</code> syntax allows us to give a type hint,and so we tell it that we want a vector of integers. You don’t always need to use the whole type, though. Using a <code>_</code> will let you provide a partial hint:</p>
+  <p>如果你还记得，<code>::&lt;&gt;</code>语法允许我们给出一个类型提示，那么我们可以告诉它，我们需要一个整型的向量。然而你并不需要使用所有的类型。你可以通过使用<code>_</code>来给出部分提示：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> one_to_one_hundred = (<span class="dv">1.</span>.<span class="dv">101</span>).collect::&lt;Vec&lt;_&gt;&gt;();</code></pre></div>
-  <p>This says “Collect into a <code>Vec&lt;T&gt;</code>, please, but infer what the <code>T</code> is for me.” <code>_</code> is sometimes called a “type placeholder” for this reason.</p>
+  <p>This says “Collect into a <code>Vec&lt;T&gt;</code>, please, but infer what the <code>T</code> is for me.”<code>_</code> is sometimes called a “type placeholder” for this reason.</p>
+  <p>这是说“收集成一个<code>向量Vec&lt;T&gt;</code>,拜托，不要为我推断<code>T</code>。”因为这个原因，<code>_</code>有时候被称作占位符。</p>
   <p><code>collect()</code> is the most common consumer, but there are others too. <code>find()</code> is one:</p>
+  <p><code>collect()</code>是最常用的消费者，还有一些其他方法也是。<code>find()</code>也是其中一个：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> greater_than_forty_two = (<span class="dv">0.</span>.<span class="dv">100</span>)
                                .find(|x| *x &gt; <span class="dv">42</span>);
   
@@ -3490,10 +3510,14 @@ code > span.er { font-weight: bold; }
       <span class="kw">None</span> =&gt; <span class="ot">println!</span>(<span class="st">&quot;No numbers found :(&quot;</span>),
   }</code></pre></div>
   <p><code>find</code> takes a closure, and works on a reference to each element of an iterator. This closure returns <code>true</code> if the element is the element we’re looking for, and <code>false</code> otherwise. Because we might not find a matching element, <code>find</code> returns an <code>Option</code> rather than the element itself.</p>
+  <p><code>find</code>使用一个闭包，运行是建立在迭代器每一个元素的地址引用基础上的。当元素时我们寻找的时，这段代码中的闭包会返回<code>true</code>,反之，返回<code>false</code>。因为我们可能不会找到匹配的元素，<code>find</code>会返回一个<code>Option</code> 而不是元素本身。</p>
   <p>Another important consumer is <code>fold</code>. Here’s what it looks like:</p>
+  <p>另一个重要的消费者是<code>fold</code>。这是它看起来的样子：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> sum = (<span class="dv">1.</span>.<span class="dv">4</span>).fold(<span class="dv">0</span>, |sum, x| sum + x);</code></pre></div>
-  <p><code>fold()</code> is a consumer that looks like this: <code>fold(base, |accumulator, element| ...)</code>. It takes two arguments: the first is an element called the <em>base</em>. The second is a closure that itself takes two arguments: the first is called the <em>accumulator</em>, and the second is an <em>element</em>. Upon each iteration, the closure is called, and the result is the value of the accumulator on the next iteration. On the first iteration, the base is the value of the accumulator.</p>
+  <p><code>fold()</code> is a consumer that looks like this:<code>fold(base, |accumulator, element| ...)</code>. It takes two arguments: the first is an element called the <em>base</em>. The second is a closure that itself takes two arguments: the first is called the <em>accumulator</em>, and the second is an <em>element</em>. Upon each iteration, the closure is called, and the result is the value of the accumulator on the next iteration. On the first iteration, the base is the value of the accumulator.</p>
+  <p><code>fold()</code>是一个想这样子的消费者：<code>fold(base, |accumulator,element| ...)</code>。它有两个参数：一个是叫做<em>base</em>的元素，另一个是一个拥有两个参数的闭包（其中一个参数被叫做<em>accumulator</em>，另一个是<em>element</em>）。在每一次迭代中，闭包都被调用，结果是对下一个迭代累加器的值。在第一个迭代中，<code>base</code>是累加器的值。</p>
   <p>Okay, that’s a bit confusing. Let’s examine the values of all of these things in this iterator:</p>
+  <p>好吧，这里有点混乱。让我们来看看在迭代器中，所有这些内容的值：</p>
   <table>
   <thead>
   <tr class="header">
@@ -3525,58 +3549,79 @@ code > span.er { font-weight: bold; }
   </tbody>
   </table>
   <p>We called <code>fold()</code> with these arguments:</p>
+  <p>我们调用<code>fold()</code>使用这些参数：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">.fold(<span class="dv">0</span>, |sum, x| sum + x);</code></pre></div>
-  <p>So, <code>0</code> is our base, <code>sum</code> is our accumulator, and <code>x</code> is our element. On the first iteration, we set <code>sum</code> to <code>0</code>, and <code>x</code> is the first element of <code>nums</code>, <code>1</code>. We then add <code>sum</code> and <code>x</code>, which gives us <code>0 + 1 = 1</code>. On the second iteration, that value becomes our accumulator, <code>sum</code>, and the element is the second element of the array, <code>2</code>. <code>1 + 2 = 3</code>, and so that becomes the value of the accumulator for the last iteration. On that iteration, <code>x</code> is the last element, <code>3</code>, and <code>3 + 3 = 6</code>, which is our final result for our sum. <code>1 + 2 + 3 = 6</code>, and that’s the result we got.</p>
-  <p>Whew. <code>fold</code> can be a bit strange the first few times you see it, but once it clicks, you can use it all over the place. Any time you have a list of things, and you want a single result, <code>fold</code> is appropriate.</p>
+  <p>So, <code>0</code> is our base, <code>sum</code> is our accumulator, and <code>x</code> is our element. On the first iteration, we set <code>sum</code> to <code>0</code>, and <code>x</code> is the first element of <code>nums</code>,<code>1</code>. We then add <code>sum</code> and <code>x</code>, which gives us <code>0 + 1 = 1</code>. On the second iteration, that value becomes our accumulator, <code>sum</code>, and the element is the second element of the array, <code>2</code>. <code>1 + 2 = 3</code>, and so that becomes the value of the accumulator for the last iteration. On that iteration,<code>x</code> is the last element, <code>3</code>, and <code>3 + 3 = 6</code>, which is our final result for our sum. <code>1 + 2 + 3 = 6</code>, and that’s the result we got.</p>
+  <p>所以，<code>0</code>就是base，<code>num</code>是accumulator,<code>x</code>是element。在第一次迭代时，我们设置<code>sum</code>的值为0，<code>x</code>是<code>nums</code>的第一个元素——<code>1</code>.然后我们将<code>sum</code>和<code>x</code>相加，得到<code>0+1=1</code>。在第二次迭代中，这个值变成了accumulator——<code>sum</code>的值，element是数组的第二个元素——<code>2</code>.<code>1+2=3</code>，他有成为最后一个迭代时accumulator的值。在最后一次迭代时，<code>x</code>是最后一个元素——<code>3</code>，<code>3+3=6</code>,这也是最后的<code>sum</code>的值。<code>1+2+3=6</code>,这就是我们得到最终结果。</p>
+  <p>Whew. <code>fold</code> can be a bit strange the first few times you see it, but once it clicks, you can use it all over the place. Any time you have a list of things,and you want a single result, <code>fold</code> is appropriate.</p>
+  <p><code>fold</code>在你最初看他的几回时可能是有点奇怪的，但是一旦它被激活，你可以用在所有的地方。任何时候，你有一个清单，需要返回单一结果时，<code>fold</code>是最合适的。</p>
   <p>Consumers are important due to one additional property of iterators we haven’t talked about yet: laziness. Let’s talk some more about iterators, and you’ll see why consumers matter.</p>
-  <h4 id="iterators">Iterators</h4>
-  <p>As we’ve said before, an iterator is something that we can call the <code>.next()</code> method on repeatedly, and it gives us a sequence of things. Because you need to call the method, this means that iterators can be <em>lazy</em> and not generate all of the values upfront. This code, for example, does not actually generate the numbers <code>1-100</code>, instead creating a value that merely represents the sequence:</p>
+  <p>消费者的重要性取决于我们还没有讨论的，迭代器的一个附加属性：laziness。让我们多讨论些迭代器，你讲明白消费者关系。</p>
+  <h4 id="iterators-迭代器">Iterators 迭代器</h4>
+  <p>As we’ve said before, an iterator is something that we can call the <code>.next()</code> method on repeatedly, and it gives us a sequence of things.Because you need to call the method, this means that iterators can be <em>lazy</em> and not generate all of the values upfront. This code, for example, does not actually generate the numbers <code>1-100</code>, instead creating a value that merely represents the sequence:</p>
+  <p>正如我们之前所说，迭代器就是一个能够重复调用<code>.next()</code>方法的事物，它给我们一个事物的序列。因为我们需要调用这个方法，这意味着迭代器是<em>lazy</em>，而不是生成前期所有的值。例如，这段代码并不是直接生成<code>1-100</code>,而是，创建一个仅仅表示一个序列的值，</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> nums = <span class="dv">1.</span>.<span class="dv">100</span>;</code></pre></div>
-  <p>Since we didn’t do anything with the range, it didn’t generate the sequence. Let’s add the consumer:</p>
+  <p>Since we didn’t do anything with the range, it didn’t generate the sequence.Let’s add the consumer:</p>
+  <p>因为我们使用这个范围什么都不能做，他不能够生成序列。让我们加入一个消费者：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> nums = (<span class="dv">1.</span>.<span class="dv">100</span>).collect::&lt;Vec&lt;<span class="kw">i32</span>&gt;&gt;();</code></pre></div>
   <p>Now, <code>collect()</code> will require that the range gives it some numbers, and so it will do the work of generating the sequence.</p>
-  <p>Ranges are one of two basic iterators that you’ll see. The other is <code>iter()</code>. <code>iter()</code> can turn a vector into a simple iterator that gives you each element in turn:</p>
+  <p>现在<code>collect()</code>将请求范围给它的一些数，所以，它能够做生成序列这个事情。</p>
+  <p>Ranges are one of two basic iterators that you’ll see. The other is <code>iter()</code>.<code>iter()</code> can turn a vector into a simple iterator that gives you each element in turn:</p>
+  <p>Ranges是你即将看到的两个基本迭代器之一。另一个是<code>iter()</code>。<code>iter</code>能够将向量转换成一个简单的迭代器，依次给你每一个元素：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> nums = <span class="ot">vec!</span>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>];
   
   <span class="kw">for</span> num in nums.iter() {
      <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, num);
   }</code></pre></div>
   <p>These two basic iterators should serve you well. There are some more advanced iterators, including ones that are infinite.</p>
+  <p>这两个基本的迭代器将很好的服务你。还有一些高级迭代器，包括哪些无穷大的。</p>
   <p>That’s enough about iterators. Iterator adapters are the last concept we need to talk about with regards to iterators. Let’s get to it!</p>
-  <h4 id="iterator-adapters">Iterator adapters</h4>
+  <p>迭代器的东西已经足够多了。迭代器适配器是我们需要讨论的最后一个概念，让我们开始吧！</p>
+  <h4 id="iterator-adapters-迭代器适配器">Iterator adapters 迭代器适配器</h4>
   <p><em>Iterator adapters</em> take an iterator and modify it somehow, producing a new iterator. The simplest one is called <code>map</code>:</p>
+  <p><em>Iterator adapters</em> 获取一个迭代器，并在某些时候修改它，生成一个新的迭代器。最基本的一个叫做<code>map</code>:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">(<span class="dv">1.</span>.<span class="dv">100</span>).map(|x| x + <span class="dv">1</span>);</code></pre></div>
-  <p><code>map</code> is called upon another iterator, and produces a new iterator where each element reference has the closure it’s been given as an argument called on it. So this would give us the numbers from <code>2-100</code>. Well, almost! If you compile the example, you’ll get a warning:</p>
+  <p><code>map</code> is called upon another iterator, and produces a new iterator where each element reference has the closure it’s been given as an argument called on it.So this would give us the numbers from <code>2-100</code>. Well, almost! If you compile the example, you’ll get a warning:</p>
+  <p><code>map</code>被另一个迭代器调用，并生成一个新的迭代器，在每一个元素引用 拥有一个闭包座位参数被他调用的地方。所以，这将给我们从<code>2-100</code>的数字。好了，差不多了！如果你编译这个例子，你会收到一个敬告：</p>
   <pre><code>warning: unused result which must be used: iterator adaptors are lazy and
            do nothing unless consumed, #[warn(unused_must_use)] on by default
   (1..100).map(|x| x + 1);
    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</code></pre>
   <p>Laziness strikes again! That closure will never execute. This example doesn’t print any numbers:</p>
+  <p>laziness再次罢工了！闭包讲不会被执行。这个例子没有输出任何数字：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">(<span class="dv">1.</span>.<span class="dv">100</span>).map(|x| <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, x));</code></pre></div>
-  <p>If you are trying to execute a closure on an iterator for its side effects, just use <code>for</code> instead.</p>
+  <p>If you are trying to execute a closure on an iterator for its side effects,just use <code>for</code> instead.</p>
+  <p>如果你想自一个迭代器的副本上执行一个闭包，请使用<code>for</code>。</p>
   <p>There are tons of interesting iterator adapters. <code>take(n)</code> will return an iterator over the next <code>n</code> elements of the original iterator. Note that this has no side effect on the original iterator. Let’s try it out with our infinite iterator from before:</p>
+  <p>有成千上万的迭代器适配器。<code>take(n)</code>将反悔一个覆盖了原来第n个元素迭代器的迭代器。注意，这对原来的迭代器无副作用。让我们尝试一下之前说过的无限迭代器：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> i in (<span class="dv">1.</span>.).step_by(<span class="dv">5</span>).take(<span class="dv">5</span>) {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, i);
   }</code></pre></div>
   <p>This will print</p>
+  <p>这将会打印</p>
   <pre><code>1
   6
   11
   16
   21</code></pre>
   <p><code>filter()</code> is an adapter that takes a closure as an argument. This closure returns <code>true</code> or <code>false</code>. The new iterator <code>filter()</code> produces only the elements that that closure returns <code>true</code> for:</p>
+  <p><code>filter()</code> 是一个适配器，它使用一个闭包座位参数。这个闭包反悔<code>true</code>或者<code>false</code>。新的迭代器<code>filter()</code>只生成一个在闭包返回<code>true</code>时的元素：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> i in (<span class="dv">1.</span>.<span class="dv">100</span>).filter(|&amp;x| x % <span class="dv">2</span> == <span class="dv">0</span>) {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, i);
   }</code></pre></div>
-  <p>This will print all of the even numbers between one and a hundred. (Note that because <code>filter</code> doesn’t consume the elements that are being iterated over, it is passed a reference to each element, and thus the filter predicate uses the <code>&amp;x</code> pattern to extract the integer itself.)</p>
+  <p>This will print all of the even numbers between one and a hundred.(Note that because <code>filter</code> doesn’t consume the elements that are being iterated over, it is passed a reference to each element, and thus the filter predicate uses the <code>&amp;x</code> pattern to extract the integer itself.)</p>
+  <p>这将打印0到100的所有的每一个偶数。（注意，<code>filter</code>并不消耗正在迭代的元素，他只是传递一个美格元素的地址引用，并且filter 使用<code>&amp;x</code>方式来提取整数本身。）</p>
   <p>You can chain all three things together: start with an iterator, adapt it a few times, and then consume the result. Check it out:</p>
+  <p>你可以将三个事物关联在一起了，首先是迭代器，适应它一段时间，然后是产生一个结果。看看下面的代码</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">(<span class="dv">1.</span>.<span class="dv">1000</span>)
       .filter(|&amp;x| x % <span class="dv">2</span> == <span class="dv">0</span>)
       .filter(|&amp;x| x % <span class="dv">3</span> == <span class="dv">0</span>)
       .take(<span class="dv">5</span>)
       .collect::&lt;Vec&lt;<span class="kw">i32</span>&gt;&gt;();</code></pre></div>
   <p>This will give you a vector containing <code>6</code>, <code>12</code>, <code>18</code>, <code>24</code>, and <code>30</code>.</p>
+  <p>这将给我们一个包含有<code>6</code>，<code>12</code>，<code>18</code>，<code>24</code>和<code>30</code>的向量。</p>
   <p>This is just a small taste of what iterators, iterator adapters, and consumers can help you with. There are a number of really useful iterators, and you can write your own as well. Iterators provide a safe, efficient way to manipulate all kinds of lists. They’re a little unusual at first, but if you play with them, you’ll get hooked. For a full list of the different iterators and consumers, check out the <a href="http://doc.rust-lang.org/std/iter/index.html">iterator module documentation</a>.</p>
+  <p>这只是一个关于迭代器，迭代器适配器和消费者能够帮你什么忙的小尝试。有太多有用的迭代器，同样，你可以写你自己的迭代器。迭代器提供一个安全、高效的方式来操纵各种各样的清单列表。起先，它们是有点不寻常，当你多使用他们，你就会上瘾。对于一个完整的迭代器和消费者之间不同之处，可以点击链接<a href="http://doc.rust-lang.org/std/iter/index.html">iterator module documentation 迭代器模块文档</a>查看。</p>
   <h2 id="sec--concurrency">Concurrency 并发</h2>
   <p>Concurrency and parallelism are incredibly important topics in computer science, and are also a hot topic in industry today. Computers are gaining more and more cores, yet many programmers aren’t prepared to fully utilize them.</p>
   <p>Rust’s memory safety features also apply to its concurrency story too. Even concurrent Rust programs must be memory safe, having no data races. Rust’s type system is up to the task, and gives you powerful ways to reason about concurrent code at compile time.</p>
