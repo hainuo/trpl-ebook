@@ -1,38 +1,30 @@
-% Concurrency
+% Concurrency 并发
 
-Concurrency and parallelism are incredibly important topics in computer
-science, and are also a hot topic in industry today. Computers are gaining more
-and more cores, yet many programmers aren't prepared to fully utilize them.
+Concurrency and parallelism are incredibly important topics in computer science, and are also a hot topic in industry today. Computers are gaining more and more cores, yet many programmers aren't prepared to fully utilize them.
 
-Rust's memory safety features also apply to its concurrency story too. Even
-concurrent Rust programs must be memory safe, having no data races. Rust's type
-system is up to the task, and gives you powerful ways to reason about
-concurrent code at compile time.
+并发和并行是计算机科学的非常重要课题，也是当今社会行业的一个热门话题。计算机正获得越来越多的内核，然而，大多数的程序员都没有做好充分利用他们的准备。
 
-Before we talk about the concurrency features that come with Rust, it's important
-to understand something: Rust is low-level enough that all of this is provided
-by the standard library, not by the language. This means that if you don't like
-some aspect of the way Rust handles concurrency, you can implement an alternative
-way of doing things. [mio](https://github.com/carllerche/mio) is a real-world
-example of this principle in action.
+Rust's memory safety features also apply to its concurrency story too. Even concurrent Rust programs must be memory safe, having no data races. Rust's type system is up to the task, and gives you powerful ways to reason about concurrent code at compile time.
 
-## Background: `Send` and `Sync`
+Rust的内存安全特性同样也允许它适用于并发。甚至并发的Rust程序也必须是内存安全的，没有数据溢出。Rust的类型体系能够胜任这一工作，并能够提供给你在编译时推断并发代码的强大的方式。
 
-Concurrency is difficult to reason about. In Rust, we have a strong, static
-type system to help us reason about our code. As such, Rust gives us two traits
-to help us make sense of code that can possibly be concurrent.
+Before we talk about the concurrency features that come with Rust, it's important to understand something: Rust is low-level enough that all of this is provided by the standard library, not by the language. This means that if you don't like some aspect of the way Rust handles concurrency, you can implement an alternative way of doing things. [mio](https://github.com/carllerche/mio) is a real-world example of this principle in action.
 
-### `Send`
+在我们谈论Rust语言的并发之前，理解一些概念是非常重要的：Rust语言是非常底层的语言，所有的一切都是由标准库来提供的，而不是由语言本身。这意味着，如果你不喜欢Rust语言处理并发方式的某些部分时，你可以使用另一种方式来做同样的事情。[mio](https://github.com/carllerche/mio) 是一个践行这一原则的真实的例子。
 
-The first trait we're going to talk about is
-[`Send`](../std/marker/trait.Send.html). When a type `T` implements `Send`, it indicates
-to the compiler that something of this type is able to have ownership transferred
-safely between threads.
+## Background: `Send` and `Sync` 后台`发送`和`同步`
 
-This is important to enforce certain restrictions. For example, if we have a
-channel connecting two threads, we would want to be able to send some data
-down the channel and to the other thread. Therefore, we'd ensure that `Send` was
-implemented for that type.
+Concurrency is difficult to reason about. In Rust, we have a strong, static type system to help us reason about our code. As such, Rust gives us two traits to help us make sense of code that can possibly be concurrent.
+
+并发是很难推理的。在Rust语言中，我们有一个强大的静态类型体系来帮助我们推断代码。正因此，Rust提供给我们两个显著特性帮助我们写出感觉上不可能并发的代码。
+
+### `Send` `发送`
+
+The first trait we're going to talk about is [`Send`](../std/marker/trait.Send.html). When a type `T` implements `Send`, it indicates to the compiler that something of this type is able to have ownership transferred safely between threads.
+
+我们要讲的第一个特性就是[`send发送`](../std/marker/trait.Send.html)。当一个类型`T`继承了`Send`时，它表示着，编译器有权在线程间安全传递这个类型的内容。
+
+This is important to enforce certain restrictions. For example, if we have a channel connecting two threads, we would want to be able to send some data down the channel and to the other thread. Therefore, we'd ensure that `Send` was implemented for that type.
 
 In the opposite way, if we were wrapping a library with FFI that isn't
 threadsafe, we wouldn't want to implement `Send`, and so the compiler will help
