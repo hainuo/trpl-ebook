@@ -12,8 +12,7 @@ Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有
   - 第三节  条件编译
   - 第四节  文档
   - 第五节  迭代器
-  
-
+  - 第六节  错误处理
   
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
 
