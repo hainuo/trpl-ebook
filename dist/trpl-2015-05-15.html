@@ -104,11 +104,11 @@ code > span.er { font-weight: bold; }
   <li><a href="#sec--iterators">Iterators 迭代器</a></li>
   <li><a href="#sec--concurrency">Concurrency 并发</a></li>
   <li><a href="#sec--error-handling">Error Handling 错误处理</a><ul>
-  <li><a href="#failure-vs.panic">Failure vs. Panic</a></li>
-  <li><a href="#handling-errors-with-option-and-result">Handling errors with <code>Option</code> and <code>Result</code></a></li>
-  <li><a href="#non-recoverable-errors-with-panic">Non-recoverable errors with <code>panic!</code></a></li>
-  <li><a href="#upgrading-failures-to-panics">Upgrading failures to panics</a></li>
-  <li><a href="#using-try">Using <code>try!</code></a></li>
+  <li><a href="#failure-vs.panic-失败-和-panic">Failure vs. Panic 失败 和 panic</a></li>
+  <li><a href="#handling-errors-with-option-and-result-使用option选项和result结果来处理错误信息">Handling errors with <code>Option</code> and <code>Result</code> 使用<code>option选项</code>和<code>Result结果</code>来处理错误信息</a></li>
+  <li><a href="#non-recoverable-errors-with-panic-无法恢复的错误panic">Non-recoverable errors with <code>panic!</code> 无法恢复的错误<code>panic</code></a></li>
+  <li><a href="#upgrading-failures-to-panics-将失败升级为panic">Upgrading failures to panics 将失败升级为panic</a></li>
+  <li><a href="#using-try-使用try">Using <code>try!</code> 使用<code>try!</code></a></li>
   </ul></li>
   <li><a href="#sec--ffi">FFI 对外函数接口</a><ul>
   <li><a href="#introduction">Introduction</a></li>
@@ -3624,20 +3624,31 @@ code > span.er { font-weight: bold; }
   <p>这只是一个关于迭代器，迭代器适配器和消费者能够帮你什么忙的小尝试。有太多有用的迭代器，同样，你可以写你自己的迭代器。迭代器提供一个安全、高效的方式来操纵各种各样的清单列表。起先，它们是有点不寻常，当你多使用他们，你就会上瘾。对于一个完整的迭代器和消费者之间不同之处，可以点击链接<a href="http://doc.rust-lang.org/std/iter/index.html">iterator module documentation 迭代器模块文档</a>查看。</p>
   <h2 id="sec--concurrency">Concurrency 并发</h2>
   <p>Concurrency and parallelism are incredibly important topics in computer science, and are also a hot topic in industry today. Computers are gaining more and more cores, yet many programmers aren’t prepared to fully utilize them.</p>
+  <p>并发和并行是计算机科学的非常重要课题，也是当今社会行业的一个热门话题。计算机正获得越来越多的内核，然而，大多数的程序员都没有做好充分利用他们的准备。</p>
   <p>Rust’s memory safety features also apply to its concurrency story too. Even concurrent Rust programs must be memory safe, having no data races. Rust’s type system is up to the task, and gives you powerful ways to reason about concurrent code at compile time.</p>
+  <p>Rust的内存安全特性同样也允许它适用于并发。甚至并发的Rust程序也必须是内存安全的，没有数据溢出。Rust的类型体系能够胜任这一工作，并能够提供给你在编译时推断并发代码的强大的方式。</p>
   <p>Before we talk about the concurrency features that come with Rust, it’s important to understand something: Rust is low-level enough that all of this is provided by the standard library, not by the language. This means that if you don’t like some aspect of the way Rust handles concurrency, you can implement an alternative way of doing things. <a href="https://github.com/carllerche/mio">mio</a> is a real-world example of this principle in action.</p>
-  <h4 id="background-send-and-sync">Background: <code>Send</code> and <code>Sync</code></h4>
+  <p>在我们谈论Rust语言的并发之前，理解一些概念是非常重要的：Rust语言是非常底层的语言，所有的一切都是由标准库来提供的，而不是由语言本身。这意味着，如果你不喜欢Rust语言处理并发方式的某些部分时，你可以使用另一种方式来做同样的事情。<a href="https://github.com/carllerche/mio">mio</a> 是一个践行这一原则的真实的例子。</p>
+  <h4 id="background-send-and-sync-后台发送和同步">Background: <code>Send</code> and <code>Sync</code> 后台<code>发送</code>和<code>同步</code></h4>
   <p>Concurrency is difficult to reason about. In Rust, we have a strong, static type system to help us reason about our code. As such, Rust gives us two traits to help us make sense of code that can possibly be concurrent.</p>
-  <h5 id="send"><code>Send</code></h5>
+  <p>并发是很难推理的。在Rust语言中，我们有一个强大的静态类型体系来帮助我们推断代码。正因此，Rust提供给我们两个显著特性帮助我们写出感觉上不可能并发的代码。</p>
+  <h5 id="send-发送"><code>Send</code> <code>发送</code></h5>
   <p>The first trait we’re going to talk about is <a href="http://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>. When a type <code>T</code> implements <code>Send</code>, it indicates to the compiler that something of this type is able to have ownership transferred safely between threads.</p>
+  <p>我们要讲的第一个特性就是<a href="http://doc.rust-lang.org/std/marker/trait.Send.html"><code>send发送</code></a>。当一个类型<code>T</code>实现了<code>Send</code>时，它表示着，编译器有权在线程间安全传递这个类型的内容。</p>
   <p>This is important to enforce certain restrictions. For example, if we have a channel connecting two threads, we would want to be able to send some data down the channel and to the other thread. Therefore, we’d ensure that <code>Send</code> was implemented for that type.</p>
+  <p>强制执行一定的限制是非常必要的。例如，我们有一个包含两个线程的信道，我们想要能够发送一些数据到其他的线程中。所以我们需要确定<code>Send</code>是那个类型的实现方式。</p>
   <p>In the opposite way, if we were wrapping a library with FFI that isn’t threadsafe, we wouldn’t want to implement <code>Send</code>, and so the compiler will help us enforce that it can’t leave the current thread.</p>
-  <h5 id="sync"><code>Sync</code></h5>
-  <p>The second of these traits is called <a href="http://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>. When a type <code>T</code> implements <code>Sync</code>, it indicates to the compiler that something of this type has no possibility of introducing memory unsafety when used from multiple threads concurrently.</p>
-  <p>For example, sharing immutable data with an atomic reference count is threadsafe. Rust provides a type like this, <code>Arc&lt;T&gt;</code>, and it implements <code>Sync</code>, so it is safe to share between threads.</p>
+  <p>反过来，如果我们正在封装一个不是线程安全的，使用了外部函数接口的库，我们不需要实现<code>send</code>，所以编译器需要帮助我们限制它不能够离开当前的线程。</p>
+  <h5 id="sync-同步"><code>Sync</code> <code>同步</code></h5>
+  <p>The second of these traits is called <a href="http://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>.When a type <code>T</code> implements <code>Sync</code>, it indicates to the compiler that something of this type has no possibility of introducing memory unsafety when used from multiple threads concurrently.</p>
+  <p>第二个显著特性叫做<a href="http://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync同步</code></a>。当一个类型<code>T</code>实现了<code>sync</code>时，他表示着，在使用多个并发线程时，编译器没有可能引入不安全内存类型的内容。</p>
+  <p>For example, sharing immutable data with an atomic reference count is threadsafe. Rust provides a type like this, <code>Arc&lt;T&gt;</code>, and it implements <code>Sync</code>,so it is safe to share between threads.</p>
+  <p>例如，使用一个原子级引用计数共享不可变数据室线程安全的。Rust语言提供了一个像这样的类型——<code>Arc&lt;T&gt;</code>,它实现了<code>Sync</code>,所以它是安全的在线程之间共享内容。</p>
   <p>These two traits allow you to use the type system to make strong guarantees about the properties of your code under concurrency. Before we demonstrate why, we need to learn how to create a concurrent Rust program in the first place!</p>
-  <h4 id="threads">Threads</h4>
+  <p>这两个显著特性允许你使用类型体系，从而在并发时给你代码属性的一个强大的保障。。在我们解释原因之前，我们需要学习，如何在一开始便创建一个并发的Rust程序。</p>
+  <h4 id="threads-线程">Threads 线程</h4>
   <p>Rust’s standard library provides a library for threads, which allow you to run Rust code in parallel. Here’s a basic example of using <code>std::thread</code>:</p>
+  <p>Rust标准库提供一个线程库，这个库允许你并行运行Rust代码。这是一个使用<code>std::thread</code>的基本的例子：</p>
   <pre><code>use std::thread;
   
   fn main() {
@@ -3646,6 +3657,7 @@ code > span.er { font-weight: bold; }
       });
   }</code></pre>
   <p>The <code>thread::spawn()</code> method accepts a closure, which is executed in a new thread. It returns a handle to the thread, that can be used to wait for the child thread to finish and extract its result:</p>
+  <p><code>thread::spawn()</code>方法接受一个闭包，这个闭包被执行在一个新的线程上。它返回一个线程的句柄，这个句柄可以用来等待子线程结束并提取结果：</p>
   <pre><code>use std::thread;
   
   fn main() {
@@ -3655,15 +3667,20 @@ code > span.er { font-weight: bold; }
   
       println!(&quot;{}&quot;, handle.join().unwrap());
   }</code></pre>
-  <p>Many languages have the ability to execute threads, but it’s wildly unsafe. There are entire books about how to prevent errors that occur from shared mutable state. Rust helps out with its type system here as well, by preventing data races at compile time. Let’s talk about how you actually share things between threads.</p>
-  <h4 id="safe-shared-mutable-state">Safe Shared Mutable State</h4>
+  <p>Many languages have the ability to execute threads, but it’s wildly unsafe.There are entire books about how to prevent errors that occur from shared mutable state. Rust helps out with its type system here as well, by preventing data races at compile time. Let’s talk about how you actually share things between threads.</p>
+  <p>许多语言具有执行多线程的能力，然而，大部分都不安全。有很多正本都是关于如何在共享可变状态时避免产生错的的书籍。同样，Rust用它的类型体系通过避免在编译时产生数据溢出来帮助我们。让我们讨论一下如何真正的在线程间共享内容。</p>
+  <h4 id="safe-shared-mutable-state-安全共享的可变状态">Safe Shared Mutable State 安全共享的可变状态</h4>
   <p>Due to Rust’s type system, we have a concept that sounds like a lie: “safe shared mutable state.” Many programmers agree that shared mutable state is very, very bad.</p>
+  <p>因为Rust的类型体系，我们有了一个概念，听起来这像是一个谎言：“安全共享的可变状态”。很多程序员都认为 共享可变状态时非常非常可怕的。</p>
   <p>Someone once said this:</p>
+  <p>有些人曾经这样说过：</p>
   <blockquote>
-  <p>Shared mutable state is the root of all evil. Most languages attempt to deal with this problem through the ‘mutable’ part, but Rust deals with it by solving the ‘shared’ part.</p>
+  <p>Shared mutable state is the root of all evil. Most languages attempt to deal with this problem through the ‘mutable’ part, but Rust deals with it by solving the ‘shared’ part. 共享可变状态时所有罪恶的根源。大多数语言试图通过<code>可变</code>部分来处理这个问题，然而Rust是通过解决<code>共享</code>部分来处理它的。</p>
   </blockquote>
   <p>The same <a href="#sec--ownership">ownership system</a> that helps prevent using pointers incorrectly also helps rule out data races, one of the worst kinds of concurrency bugs.</p>
+  <p>同样，<a href="#sec--ownership">ownership system所有权体系</a> 也是帮助避免使用错误的指针，同样帮助排除数据溢出——最坏情况下的并发错误。</p>
   <p>As an example, here is a Rust program that would have a data race in many languages. It will not compile:</p>
+  <p>这里有一个例子，是一个Rust程序，在很多语言它会产生数据溢出。它不能编译：</p>
   <pre><code>use std::thread;
   
   fn main() {
@@ -3678,11 +3695,14 @@ code > span.er { font-weight: bold; }
       thread::sleep_ms(50);
   }</code></pre>
   <p>This gives us an error:</p>
+  <p>这个会给出一个错误信息：</p>
   <pre><code>8:17 error: capture of moved value: `data`
           data[i] += 1;
           ^~~~</code></pre>
   <p>In this case, we know that our code <em>should</em> be safe, but Rust isn’t sure. And it’s actually not safe: if we had a reference to <code>data</code> in each thread, and the thread takes ownership of the reference, we have three owners! That’s bad. We can fix this by using the <code>Arc&lt;T&gt;</code> type, which is an atomic reference counted pointer. The ‘atomic’ part means that it’s safe to share across threads.</p>
-  <p><code>Arc&lt;T&gt;</code> assumes one more property about its contents to ensure that it is safe to share across threads: it assumes its contents are <code>Sync</code>. But in our case, we want to be able to mutate the value. We need a type that can ensure only one person at a time can mutate what’s inside. For that, we can use the <code>Mutex&lt;T&gt;</code> type. Here’s the second version of our code. It still doesn’t work, but for a different reason:</p>
+  <p>在这个案例中，我们知道我们的代码 <em>应当</em> 是安全的，然而，Rust无法确定。事实上，它并不安全：如果我们有一个<code>data</code>的地址因为在每一个线程中，线程获得了地址引用的所有权，我们就有了三个拥有者！这是很可怕的。我们可以通过使用一个原子引用计数指针的<code>Arc&lt;T&gt;</code>类型来修复这个问题。<code>原子</code>部分意味着，他是安全跨线程共享的。</p>
+  <p><code>Arc&lt;T&gt;</code> assumes one more property about its contents to ensure that it is safe to share across threads: it assumes its contents are <code>Sync</code>. But in our case, we want to be able to mutate the value. We need a type that can ensure only one person at a time can mutate what’s inside. For that, we can use the <code>Mutex&lt;T&gt;</code> type. Here’s the second version of our code. It still doesn’t work,but for a different reason:</p>
+  <p><code>Arc&lt;T&gt;</code>假定其内容多了一部分，一次来确定，他是跨线程安全共享的：它假定它的内容是<code>Sync</code>。然而在我们的例子中，我们想要的是能够改变这个值。我们需要一个能够确定在同一时间只有一个人能够改变内部内容。为此我们可以使用<code>Mutex&lt;t&gt;</code>类型。这是第二版的代码。因为另一个原因，它仍然不能够运行：</p>
   <pre><code>use std::thread;
   use std::sync::Mutex;
   
@@ -3699,6 +3719,7 @@ code > span.er { font-weight: bold; }
       thread::sleep_ms(50);
   }</code></pre>
   <p>Here’s the error:</p>
+  <p>这是错误信息：</p>
   <pre><code>&lt;anon&gt;:9:9: 9:22 error: the trait `core::marker::Send` is not implemented for the type `std::sync::mutex::MutexGuard&lt;'_, collections::vec::Vec&lt;u32&gt;&gt;` [E0277]
   &lt;anon&gt;:11         thread::spawn(move || {
                     ^~~~~~~~~~~~~
@@ -3706,9 +3727,12 @@ code > span.er { font-weight: bold; }
   &lt;anon&gt;:11         thread::spawn(move || {
                     ^~~~~~~~~~~~~</code></pre>
   <p>You see, <a href="http://doc.rust-lang.org/std/sync/struct.Mutex.html"><code>Mutex</code></a> has a <a href="http://doc.rust-lang.org/std/sync/struct.Mutex.html#method.lock"><code>lock</code></a> method which has this signature:</p>
+  <p>看明白了<a href="http://doc.rust-lang.org/std/sync/struct.Mutex.html"><code>Meutex</code></a>有一个<a href="http://doc.rust-lang.org/std/sync/struct.Mutex.html#method.lock"><code>lock锁方法</code></a>，该方法拥有这个签名：</p>
   <pre><code>fn lock(&amp;self) -&gt; LockResult&lt;MutexGuard&lt;T&gt;&gt;</code></pre>
   <p>Because <code>Send</code> is not implemented for <code>MutexGuard&lt;T&gt;</code>, we can’t transfer the guard across thread boundaries, which gives us our error.</p>
+  <p>因为<code>Send</code>不能够实现<code>MutexGuard&lt;T&gt;</code>，所以我们无法跨线程边界进行防护，这给我们错误信息。</p>
   <p>We can use <code>Arc&lt;T&gt;</code> to fix this. Here’s the working version:</p>
+  <p>我们可以使用<code>Arc&lt;T&gt;</code>来修复它。这是可以正常运行的版本代码：</p>
   <pre><code>use std::sync::{Arc, Mutex};
   use std::thread;
   
@@ -3726,15 +3750,20 @@ code > span.er { font-weight: bold; }
       thread::sleep_ms(50);
   }</code></pre>
   <p>We now call <code>clone()</code> on our <code>Arc</code>, which increases the internal count. This handle is then moved into the new thread. Let’s examine the body of the thread more closely:</p>
+  <p>我们现在在<code>Arc</code>上调用<code>clone()</code>，它能够增加内部计数。这个句柄将移动新的线程。让我们更加密切地检查下线程内部信息：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">thread::spawn(move || {
       <span class="kw">let</span> <span class="kw">mut</span> data = data.lock().unwrap();
       data[i] += <span class="dv">1</span>;
   });</code></pre></div>
-  <p>First, we call <code>lock()</code>, which acquires the mutex’s lock. Because this may fail, it returns an <code>Result&lt;T, E&gt;</code>, and because this is just an example, we <code>unwrap()</code> it to get a reference to the data. Real code would have more robust error handling here. We’re then free to mutate it, since we have the lock.</p>
+  <p>First, we call <code>lock()</code>, which acquires the mutex’s lock. Because this may fail,it returns an <code>Result&lt;T, E&gt;</code>, and because this is just an example, we <code>unwrap()</code> it to get a reference to the data. Real code would have more robust error handling here. We’re then free to mutate it, since we have the lock.</p>
+  <p>首先我们调用<code>lock()</code>,它获取互斥的锁状态。因为这个可能会失败，所以他返回一个<code>Result&lt;T,E&gt;</code>的信息，并且由于这只是一个例子，我们打开它，获取内部数据的引用。在这个地方，真正的代码将有更多的错误处理。一旦我们拥有了这个锁，我们随意地改变它，</p>
   <p>Lastly, while the threads are running, we wait on a short timer. But this is not ideal: we may have picked a reasonable amount of time to wait but it’s more likely we’ll either be waiting longer than necessary or not long enough, depending on just how much time the threads actually take to finish computing when the program runs.</p>
+  <p>最后，当线程运行时，我们需要等待一小段时间。然而，这并不够理想：我们可能选择了一个合理的得带时间，但是取决于在程序运行时，线程真正结束计算小号的时间多少，它可能比我们的等待时间还长，或者比如等待时间长。</p>
   <p>A more precise alternative to the timer would be to use one of the mechanisms provided by the Rust standard library for synchronizing threads with each other. Let’s talk about one of them: channels.</p>
-  <h4 id="channels">Channels</h4>
+  <p>一个更精准的替代计时器是使用一个由Rust标准库提供的，用于同步每一个线程的机制。下面让我们来讨论下他们中的一个：信道。</p>
+  <h4 id="channels-信道">Channels 信道</h4>
   <p>Here’s a version of our code that uses channels for synchronization, rather than waiting for a specific time:</p>
+  <p>这是代码使用信道同步的一个版本，而不是等待一个特定时间：</p>
   <pre><code>use std::sync::{Arc, Mutex};
   use std::thread;
   use std::sync::mpsc;
@@ -3760,7 +3789,9 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre>
   <p>We use the <code>mpsc::channel()</code> method to construct a new channel. We just <code>send</code> a simple <code>()</code> down the channel, and then wait for ten of them to come back.</p>
+  <p>我们使用<code>mpsc::channel()</code>方式来构造一个新的信道。我们只是<code>send</code>一个简单地<code>()</code>给信道，然后等待他们十个回来。</p>
   <p>While this channel is just sending a generic signal, we can send any data that is <code>Send</code> over the channel!</p>
+  <p>然而，这个信道只是发送了一个通用的信号，我们可以通过信道发送任意数据！</p>
   <pre><code>use std::thread;
   use std::sync::mpsc;
   
@@ -3780,8 +3811,10 @@ code > span.er { font-weight: bold; }
      rx.recv().ok().expect(&quot;Could not receive answer&quot;);
   }</code></pre>
   <p>A <code>u32</code> is <code>Send</code> because we can make a copy. So we create a thread, ask it to calculate the answer, and then it <code>send()</code>s us the answer over the channel.</p>
+  <p><code>u32</code>被<code>Send</code> 因为我们制造了一个副本。因此，我们创建了一个新的线程，请求他计算答案，然后它通过信道将答案<code>send()</code>回来。</p>
   <h4 id="panics">Panics</h4>
   <p>A <code>panic!</code> will crash the currently executing thread. You can use Rust’s threads as a simple isolation mechanism:</p>
+  <p><code>pannic!</code>会使当前正在执行的线程崩溃。你可以使用Rust的线程作为一个简单地隔离机制：</p>
   <pre><code>use std::thread;
   
   let result = thread::spawn(move || {
@@ -3790,23 +3823,32 @@ code > span.er { font-weight: bold; }
   
   assert!(result.is_err());</code></pre>
   <p>Our <code>Thread</code> gives us a <code>Result</code> back, which allows us to check if the thread has panicked or not.</p>
+  <p><code>Thread线程</code>返回来一个<code>Result结果</code>以便我们能够检查线程是否崩溃。</p>
   <h2 id="sec--error-handling">Error Handling 错误处理</h2>
   <blockquote>
-  <p>The best-laid plans of mice and men<br />Often go awry</p>
-  <p>“Tae a Moose”, Robert Burns</p>
+  <p>The best-laid plans of mice and men Often go awry</p>
+  <p>“Tae a Moose”, Robert Burns “不管是人是鼠，即使最如意的安排设计，结局也往往会出其不意。” 致老鼠，罗伯特·彭斯</p>
   </blockquote>
   <p>Sometimes, things just go wrong. It’s important to have a plan for when the inevitable happens. Rust has rich support for handling errors that may (let’s be honest: will) occur in your programs.</p>
-  <p>There are two main kinds of errors that can occur in your programs: failures, and panics. Let’s talk about the difference between the two, and then discuss how to handle each. Then, we’ll discuss upgrading failures to panics.</p>
-  <h3 id="failure-vs.panic">Failure vs. Panic</h3>
+  <p>有些时候，程序就是出错。所以当事情不可避免的发生时，有一个计划是非常重要的。Rust拥有丰富的错误处理机制，或许就会（说实话，应该将会）在你的程序中出现。</p>
+  <p>There are two main kinds of errors that can occur in your programs: failures,and panics. Let’s talk about the difference between the two, and then discuss how to handle each. Then, we’ll discuss upgrading failures to panics.</p>
+  <p>在程序中发生的错误主要有两大主要错误：失败和panics。让我们先谈谈两者的区别，然后再讨论如何处理他们。最后我们将讨论将失败升级为panics。</p>
+  <h3 id="failure-vs.panic-失败-和-panic">Failure vs. Panic 失败 和 panic</h3>
   <p>Rust uses two terms to differentiate between two forms of error: failure, and panic. A <em>failure</em> is an error that can be recovered from in some way. A <em>panic</em> is an error that cannot be recovered from.</p>
+  <p>Rust语言有两种术语来区分两种形式的错误：失败和panic。<em>failure</em> 是能够以某种方式恢复的错误。而<em>panic</em>则是不能够恢复的错误。</p>
   <p>What do we mean by “recover”? Well, in most cases, the possibility of an error is expected. For example, consider the <code>parse</code> function:</p>
+  <p>那么恢复对我们来说意味着什么？好吧，在大多数情况下，错误是能够被预见到的。例如，参考一下<code>parse</code>函数：</p>
   <pre><code>&quot;5&quot;.parse();</code></pre>
   <p>This method converts a string into another type. But because it’s a string, you can’t be sure that the conversion actually works. For example, what should this convert to?</p>
+  <p>这个方法是转换字符串到另一个类型。但是因为他是一个字符串，我们不能够确定转换能够实际发生。例如这个应该转换成什么？</p>
   <pre><code>&quot;hello5world&quot;.parse();</code></pre>
   <p>This won’t work. So we know that this function will only work properly for some inputs. It’s expected behavior. We call this kind of error a <em>failure</em>.</p>
+  <p>这是无法运行的。尽管我们知道，这个方法只对某些输入正常解析。他是预期行为。我们成这种错误叫做<em>failure</em>。</p>
   <p>On the other hand, sometimes, there are errors that are unexpected, or which we cannot recover from. A classic example is an <code>assert!</code>:</p>
+  <p>另一方面，有时候，有些错误是无法预见的，或者是我们无法进行转换的。一个经典的例子是一个<code>assert!</code>:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">assert!</span>(x == <span class="dv">5</span>);</code></pre></div>
   <p>We use <code>assert!</code> to declare that something is true. If it’s not true, something is very wrong. Wrong enough that we can’t continue with things in the current state. Another example is using the <code>unreachable!()</code> macro:</p>
+  <p>我们使用<code>assert!</code>来声明某些事情是正确的。如果它不是正确的，事情就会非常糟糕。错误以致我们在当前状态下无法继续。另一个例子是使用<code>unreachable!()</code>宏：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Event {
       NewRelease,
   }
@@ -3831,8 +3873,10 @@ code > span.er { font-weight: bold; }
       std::io::println(descriptive_probability(NewRelease));
   }</code></pre></div>
   <p>This will give us an error:</p>
+  <p>这将如下显示错误：</p>
   <pre><code>error: non-exhaustive patterns: `_` not covered [E0004]</code></pre>
   <p>While we know that we’ve covered all possible cases, Rust can’t tell. It doesn’t know that probability is between 0.0 and 1.0. So we add another case:</p>
+  <p>尽管我们知道我们已经涵盖了所有可能的情况，Rust不能。他不知道的概率在0.0到1.0。所以我们又举出了另一个例子：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> Event::NewRelease;
   
   <span class="kw">enum</span> Event {
@@ -3859,20 +3903,25 @@ code > span.er { font-weight: bold; }
   <span class="kw">fn</span> main() {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, descriptive_probability(NewRelease));
   }</code></pre></div>
-  <p>We shouldn’t ever hit the <code>_</code> case, so we use the <code>unreachable!()</code> macro to indicate this. <code>unreachable!()</code> gives a different kind of error than <code>Result</code>. Rust calls these sorts of errors <em>panics</em>.</p>
-  <h3 id="handling-errors-with-option-and-result">Handling errors with <code>Option</code> and <code>Result</code></h3>
+  <p>We shouldn’t ever hit the <code>_</code> case, so we use the <code>unreachable!()</code> macro to indicate this. <code>unreachable!()</code> gives a different kind of error than <code>Result</code>.Rust calls these sorts of errors <em>panics</em>.</p>
+  <p>我们永远无法命中<code>_</code>情况，所以我们使用了<code>unreachable!()</code>宏来表明这一点。<code>unreachable!()</code>产生了一个不同的错误 而不是<code>Result</code>。Rust语言中，这些类型的错误统称为<code>panics</code>。</p>
+  <h3 id="handling-errors-with-option-and-result-使用option选项和result结果来处理错误信息">Handling errors with <code>Option</code> and <code>Result</code> 使用<code>option选项</code>和<code>Result结果</code>来处理错误信息</h3>
   <p>The simplest way to indicate that a function may fail is to use the <code>Option&lt;T&gt;</code> type. For example, the <code>find</code> method on strings attempts to find a pattern in a string, and returns an <code>Option</code>:</p>
+  <p>表示一个函数可能失败的最简单方式是使用<code>Option&lt;T&gt;</code>类型。举个栗子，基于字符串的<code>find</code>方法，试图在一个字符串中找到一个模式，并返回一个<code>Option</code>:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> s = <span class="st">&quot;foo&quot;</span>;
   
   <span class="ot">assert_eq!</span>(s.find(<span class="ch">'f'</span>), <span class="kw">Some</span>(<span class="dv">0</span>));
   <span class="ot">assert_eq!</span>(s.find(<span class="ch">'z'</span>), <span class="kw">None</span>);</code></pre></div>
   <p>This is appropriate for the simplest of cases, but doesn’t give us a lot of information in the failure case. What if we wanted to know <em>why</em> the function failed? For this, we can use the <code>Result&lt;T, E&gt;</code> type. It looks like this:</p>
+  <p>这个只能适用于最简单的情况，也无法给我提供在失败情况下更多的信息。如果我们想知道， <em>为什么</em> 这个方法会失败？为此，我们可以使用<code>Result&lt;T,E&gt;</code>类型。它看起来是这样子的：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> <span class="kw">Result</span>&lt;T, E&gt; {
      <span class="kw">Ok</span>(T),
      <span class="kw">Err</span>(E)
   }</code></pre></div>
-  <p>This enum is provided by Rust itself, so you don’t need to define it to use it in your code. The <code>Ok(T)</code> variant represents a success, and the <code>Err(E)</code> variant represents a failure. Returning a <code>Result</code> instead of an <code>Option</code> is recommended for all but the most trivial of situations.</p>
+  <p>This lumen is provided by Rust itself, so you don’t need to define it to use it in your code. The <code>Ok(T)</code> variant represents a success, and the <code>Err(E)</code> variant represents a failure. Returning a <code>Result</code> instead of an <code>Option</code> is recommended for all but the most trivial of situations.</p>
+  <p>枚举类型是由Rust本身提供的，所以我们在代码中，不需要定义它即可使用。<code>Ok&lt;T&gt;</code>变量代表着成功，<code>Err&lt;T&gt;</code>变量代表着失败。除了最简单的情况，我们推荐你使用返回一个<code>Return</code>而不是使用一个<code>Option</code>。</p>
   <p>Here’s an example of using <code>Result</code>:</p>
+  <p>这里有一个使用<code>Result</code>的例子：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">#[</span>derive<span class="ot">(</span>Debug<span class="ot">)]</span>
   <span class="kw">enum</span> Version { Version1, Version2 }
   
@@ -3900,28 +3949,40 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre></div>
   <p>This function makes use of an enum, <code>ParseError</code>, to enumerate the various errors that can occur.</p>
+  <p>这个方法使用了一个枚举类型的变量<code>ParsError</code>，来列举可能发生的各种错误。</p>
   <p>The <a href="http://doc.rust-lang.org/std/fmt/trait.Debug.html"><code>Debug</code></a> trait is what lets us print the enum value using the <code>{:?}</code> format operation.</p>
-  <h3 id="non-recoverable-errors-with-panic">Non-recoverable errors with <code>panic!</code></h3>
+  <p><a href="http://doc.rust-lang.org/std/fmt/trait.Debug.html"><code>Debug</code></a>特性使用<code>{:?}</code>格式化操作打印枚举值。</p>
+  <h3 id="non-recoverable-errors-with-panic-无法恢复的错误panic">Non-recoverable errors with <code>panic!</code> 无法恢复的错误<code>panic</code></h3>
   <p>In the case of an error that is unexpected and not recoverable, the <code>panic!</code> macro will induce a panic. This will crash the current thread, and give an error:</p>
+  <p>在这个错误的案例中，错误是不能够预见的，且无法恢复的，<code>panic</code>宏将引发一个panic。这将会导致当前线程崩溃，并给出如下错误：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="ot">panic!</span>(<span class="st">&quot;boom&quot;</span>);</code></pre></div>
   <p>gives</p>
   <pre><code>thread '&lt;main&gt;' panicked at 'boom', hello.rs:2</code></pre>
   <p>when you run it.</p>
+  <p>当你运行它时，会给出如上信息。</p>
   <p>Because these kinds of situations are relatively rare, use panics sparingly.</p>
-  <h3 id="upgrading-failures-to-panics">Upgrading failures to panics</h3>
+  <p>由于这种情况那个是很少见的，所以应该尽量避免使用panics。</p>
+  <h3 id="upgrading-failures-to-panics-将失败升级为panic">Upgrading failures to panics 将失败升级为panic</h3>
   <p>In certain circumstances, even though a function may fail, we may want to treat it as a panic instead. For example, <code>io::stdin().read_line(&amp;mut buffer)</code> returns a <code>Result&lt;usize&gt;</code>, when there is an error reading the line. This allows us to handle and possibly recover from error.</p>
-  <p>If we don’t want to handle this error, and would rather just abort the program, we can use the <code>unwrap()</code> method:</p>
+  <p>在某些确定的情况下，即使一个函数可能会失败，我们可能要将它当作panic对待。例如，当有一行内容读取错误时，<code>io::stdin().read_line(&amp;mut buffer)</code> 返回一个<code>Result&lt;usize&gt;</code>。这允许我们处理，并且可能恢复错误。</p>
+  <p>If we don’t want to handle this error, and would rather just abort the program,we can use the <code>unwrap()</code> method:</p>
+  <p>如果我们不希望处理此错误，宁愿退出程序，我们可以使用<code>unwrap()</code>方法：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust">io::stdin().read_line(&amp;<span class="kw">mut</span> buffer).unwrap();</code></pre></div>
   <p><code>unwrap()</code> will <code>panic!</code> if the <code>Result</code> is <code>Err</code>. This basically says “Give me the value, and if something goes wrong, just crash.” This is less reliable than matching the error and attempting to recover, but is also significantly shorter. Sometimes, just crashing is appropriate.</p>
+  <p>如果<code>Result</code>是<code>Err</code>类型，<code>unwrap()</code>将引起<code>panic!</code>。基本上来就是“给我那个值，如果出错，只管崩溃！”比起匹配错误，并且试图恢复它，这是更不可靠的，然而这样做明显的简短。</p>
   <p>There’s another way of doing this that’s a bit nicer than <code>unwrap()</code>:</p>
+  <p>还有另一种方式的做法要比<code>unwrap()</code>要好：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> buffer = String::new();
   <span class="kw">let</span> input = io::stdin().read_line(&amp;<span class="kw">mut</span> buffer)
                          .ok()
                          .expect(<span class="st">&quot;Failed to read line&quot;</span>);</code></pre></div>
   <p><code>ok()</code> converts the <code>Result</code> into an <code>Option</code>, and <code>expect()</code> does the same thing as <code>unwrap()</code>, but takes a message. This message is passed along to the underlying <code>panic!</code>, providing a better error message if the code errors.</p>
-  <h3 id="using-try">Using <code>try!</code></h3>
+  <p><code>ok()</code>将<code>Result</code>转换成<code>Option</code>，<code>expect()</code>对<code>unwrap()</code>做同样的事情，但是会返回一个消息。这个消息被传递给底层的<code>panic!</code>，如果代码出错了，这个底层的<code>panic!</code>会提供了一个更好的错误消息</p>
+  <h3 id="using-try-使用try">Using <code>try!</code> 使用<code>try!</code></h3>
   <p>When writing code that calls many functions that return the <code>Result</code> type, the error handling can be tedious. The <code>try!</code> macro hides some of the boilerplate of propagating errors up the call stack.</p>
+  <p>当编写的代码调用了很多返回<code>Result</code>类型的方法时，错误处理变得枯燥乏味。<code>try!</code>宏隐藏了一些会传播错误信息到调用堆栈上的模板。</p>
   <p>It replaces this:</p>
+  <p>它取代了这一点</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::fs::File;
   <span class="kw">use</span> std::io;
   <span class="kw">use</span> std::io::prelude::*;
@@ -3948,6 +4009,7 @@ code > span.er { font-weight: bold; }
       <span class="kw">return</span> <span class="kw">Ok</span>(());
   }</code></pre></div>
   <p>With this:</p>
+  <p>使用这个</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::fs::File;
   <span class="kw">use</span> std::io;
   <span class="kw">use</span> std::io::prelude::*;
@@ -3968,8 +4030,11 @@ code > span.er { font-weight: bold; }
       <span class="kw">return</span> <span class="kw">Ok</span>(());
   }</code></pre></div>
   <p>Wrapping an expression in <code>try!</code> will result in the unwrapped success (<code>Ok</code>) value, unless the result is <code>Err</code>, in which case <code>Err</code> is returned early from the enclosing function.</p>
+  <p>在<code>try!</code>中包裹一个表达式，将可以得到一个成功的(<code>Ok</code>)值，除非结果是<code>Err</code>,在每一种情况下，<code>Err</code>总是从封闭的函数中及早返回。</p>
   <p>It’s worth noting that you can only use <code>try!</code> from a function that returns a <code>Result</code>, which means that you cannot use <code>try!</code> inside of <code>main()</code>, because <code>main()</code> doesn’t return anything.</p>
+  <p>值得一提的是，你只能够对能够返回<code>Result</code>值的函数使用<code>try!</code>类型，这意味着，你不能够在<code>main()</code>方法中使用，因为<code>main()</code>不会返回任何内容。</p>
   <p><code>try!</code> makes use of <a href="http://doc.rust-lang.org/std/convert/trait.From.html"><code>From&lt;Error&gt;</code></a> to determine what to return in the error case.</p>
+  <p><code>try!</code>是使用<a href="http://doc.rust-lang.org/std/convert/trait.From.html"><code>from&lt;Error&gt;</code></a>来决定在错误情况下返回什么内容。</p>
   <h2 id="sec--ffi">FFI 对外函数接口</h2>
   <h3 id="introduction">Introduction</h3>
   <p>This guide will use the <a href="https://github.com/google/snappy">snappy</a> compression/decompression library as an introduction to writing bindings for foreign code. Rust is currently unable to call directly into a C++ library, but snappy includes a C interface (documented in <a href="https://github.com/google/snappy/blob/master/snappy-c.h"><code>snappy-c.h</code></a>).</p>
