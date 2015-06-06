@@ -324,59 +324,58 @@ If an asynchronous callback targets a special object in the Rust address space i
 
 # Linking
 
-The `link` attribute on `extern` blocks provides the basic building block for
-instructing rustc how it will link to native libraries. There are two accepted
-forms of the link attribute today:
+The `link` attribute on `extern` blocks provides the basic building block for instructing rustc how it will link to native libraries. There are two accepted forms of the link attribute today:
+
+在`extern`代码块的`link`属性提供了一个基本的构建块来告诉rustc如何连接到一个本地库文件。有两种可以被接受的link属性：
 
 * `#[link(name = "foo")]`
 * `#[link(name = "foo", kind = "bar")]`
 
 In both of these cases, `foo` is the name of the native library that we're
-linking to, and in the second case `bar` is the type of native library that the
-compiler is linking to. There are currently three known types of native
-libraries:
+linking to, and in the second case `bar` is the type of native library that the compiler is linking to. There are currently three known types of native libraries:
+在这两种形式中，`foo`是我们要连接到的本地库文件的名字，在第二种形式中，`bar`是编译器正在连接的本地库文件的类型。一共有三种已知的本地库类型：
 
-* Dynamic - `#[link(name = "readline")]`
-* Static - `#[link(name = "my_build_dependency", kind = "static")]`
-* Frameworks - `#[link(name = "CoreFoundation", kind = "framework")]`
+* Dynamic 动态- `#[link(name = "readline")]`
+* Static  静态- `#[link(name = "my_build_dependency", kind = "static")]`
+* Frameworks 框架- `#[link(name = "CoreFoundation", kind = "framework")]`
 
 Note that frameworks are only available on OSX targets.
 
-The different `kind` values are meant to differentiate how the native library
-participates in linkage. From a linkage perspective, the rust compiler creates
-two flavors of artifacts: partial (rlib/staticlib) and final (dylib/binary).
-Native dynamic libraries and frameworks are propagated to the final artifact
-boundary, while static libraries are not propagated at all.
+请注意，框架类型仅仅适用于osx系统。
+
+The different `kind` values are meant to differentiate how the native library participates in linkage. From a linkage perspective, the rust compiler creates two flavors of artifacts: partial (rlib/staticlib) and final (dylib/binary).Native dynamic libraries and frameworks are propagated to the final artifact boundary, while static libraries are not propagated at all.
+
+不同的`kind类型`值旨在区分本地库文件是何种方式参与到连接中的。通过链接方式来看，Rust语言编译器创建了两种形式的东西：局部的（rlib/staticlib）和最终的(dylib/binary)。本地动态库和框架被传播给最终编译文件，静态库文件则根本不会被传播。
 
 A few examples of how this model can be used are:
 
-* A native build dependency. Sometimes some C/C++ glue is needed when writing
-  some rust code, but distribution of the C/C++ code in a library format is just
-  a burden. In this case, the code will be archived into `libfoo.a` and then the
-  rust crate would declare a dependency via `#[link(name = "foo", kind =
-  "static")]`.
+下面是介绍如何使用这个模型的一些例子：
+
+* A native build dependency. Sometimes some C/C++ glue is needed when writing  some rust code, but distribution of the C/C++ code in a library format is just  a burden. In this case, the code will be archived into `libfoo.a` and then the  rust crate would declare a dependency via `#[link(name = "foo", kind ="static")]`.
+* 一个原生构建依赖。写一些Rust代码时，有时需要一些C/C++,然而，在库文件中C/C++的分发正式一个麻烦。在这种情况下，该代码被归档进`libfoo.a`，然后后Rust Crate将通过`#[link(name="foo",kind="static)]`来声明一个依赖。
 
   Regardless of the flavor of output for the crate, the native static library
-  will be included in the output, meaning that distribution of the native static
-  library is not necessary.
+  will be included in the output, meaning that distribution of the native static  library is not necessary.
 
-* A normal dynamic dependency. Common system libraries (like `readline`) are
-  available on a large number of systems, and often a static copy of these
-  libraries cannot be found. When this dependency is included in a rust crate,
-  partial targets (like rlibs) will not link to the library, but when the rlib
-  is included in a final target (like a binary), the native library will be
-  linked in.
+  无论为crate输出何种形式，本地静态库将被包含进输出中，这意味本地静态库的分发不是必须的。
+
+* A normal dynamic dependency. Common system libraries (like `readline`) are  available on a large number of systems, and often a static copy of these  libraries cannot be found. When this dependency is included in a rust crate,partial targets (like rlibs) will not link to the library, but when the rlib  is included in a final target (like a binary), the native library will be  linked in.
+
+一个正常的动态依赖。在大多数系统中，普通的系统库文件(比如 `readline`)是可用的，然而，这些苦文件的静态副本确实常常无法找到。当这种依赖被包含在rust crate中时，部分目标(比如rlibs)将不会连接到这个库文件，然而，当rlib会被包含进最终的目标（比如二进制文件），本地库文件也将被包含进来。
 
 On OSX, frameworks behave with the same semantics as a dynamic library.
 
+在OSX系统中，框架作为动态库表现相同的语境。
+
 # Unsafe blocks  不安全代码块
 
-Some operations, like dereferencing unsafe pointers or calling functions that have been marked
-unsafe are only allowed inside unsafe blocks. Unsafe blocks isolate unsafety and are a promise to
-the compiler that the unsafety does not leak out of the block.
+Some operations, like dereferencing unsafe pointers or calling functions that have been marked unsafe are only allowed inside unsafe blocks. Unsafe blocks isolate unsafety and are a promise to the compiler that the unsafety does not leak out of the block.
 
-Unsafe functions, on the other hand, advertise it to the world. An unsafe function is written like
-this:
+有些操作，比如取消不安全的指针引用或者已经被标记为不安全的调用函数只在不安全代码块中才被允许。不安全代码块隔离了不安全，并且向编译器承诺，不安全代码不会泄露。
+
+Unsafe functions, on the other hand, advertise it to the world. An unsafe function is written like this:
+
+另一方面，不安全的函数，宣扬他给所有的代码。一个不安全函数应该这样写：
 
 ```
 unsafe fn kaboom(ptr: *const i32) -> i32 { *ptr }
@@ -384,11 +383,13 @@ unsafe fn kaboom(ptr: *const i32) -> i32 { *ptr }
 
 This function can only be called from an `unsafe` block or another `unsafe` function.
 
-# Accessing foreign globals
+这个函数只能够从一个`unsafe不安全`代码块或者另一个`不安全`函数中条用。
 
-Foreign APIs often export a global variable which could do something like track
-global state. In order to access these variables, you declare them in `extern`
-blocks with the `static` keyword:
+# Accessing foreign globals  全局外部访问
+
+Foreign APIs often export a global variable which could do something like track global state. In order to access these variables, you declare them in `extern` blocks with the `static` keyword:
+
+外部API接口常常暴露一个全局变量，他可以做一些像跟踪全局状态类的事情。为了访问这些变来那个，你需要在`extern`代码块中使用`static`关键词来声明他们：
 
 ```no_run
 # #![feature(libc)]
@@ -405,9 +406,9 @@ fn main() {
 }
 ```
 
-Alternatively, you may need to alter global state provided by a foreign
-interface. To do this, statics can be declared with `mut` so we can mutate
-them.
+Alternatively, you may need to alter global state provided by a foreign interface. To do this, statics can be declared with `mut` so we can mutate them.
+
+或者，你可能需要同意一个外部接口来修改全局状态。为此，可以使用`mut`来声明这些静态变量，以便我们可以改变他们。
 
 ```no_run
 # #![feature(libc)]
@@ -433,14 +434,15 @@ fn main() {
 }
 ```
 
-Note that all interaction with a `static mut` is unsafe, both reading and
-writing. Dealing with global mutable state requires a great deal of care.
+Note that all interaction with a `static mut` is unsafe, both reading and writing. Dealing with global mutable state requires a great deal of care.
 
-# Foreign calling conventions
+需要注意的是，所有使用`static mut`的接口，无论读写，都是不安全的。处理全局可变状态需要非常非常细心关照。
 
-Most foreign code exposes a C ABI, and Rust uses the platform's C calling convention by default when
-calling foreign functions. Some foreign functions, most notably the Windows API, use other calling
-conventions. Rust provides a way to tell the compiler which convention to use:
+# Foreign calling conventions  外部调用约定
+
+Most foreign code exposes a C ABI, and Rust uses the platform's C calling convention by default when calling foreign functions. Some foreign functions, most notably the Windows API, use other calling conventions. Rust provides a way to tell the compiler which convention to use:
+
+大多数外部代码暴露一个C ABI，当调用外部函数时，Rust默认使用C平台的调用协议。一些外部函数，特别是Windows API，使用另外一些调用约定。Rust语言提供了一种方式，来告诉编译器使用哪一种约定：
 
 ```
 # #![feature(libc)]
@@ -455,8 +457,9 @@ extern "stdcall" {
 # fn main() { }
 ```
 
-This applies to the entire `extern` block. The list of supported ABI constraints
-are:
+This applies to the entire `extern` block. The list of supported ABI constraints are:
+
+这适用于全部的`extern`代码块。支持ABI约定的列表如下：
 
 * `stdcall`
 * `aapcs`
@@ -468,56 +471,40 @@ are:
 * `C`
 * `win64`
 
-Most of the abis in this list are self-explanatory, but the `system` abi may
-seem a little odd. This constraint selects whatever the appropriate ABI is for
-interoperating with the target's libraries. For example, on win32 with a x86
-architecture, this means that the abi used would be `stdcall`. On x86_64,
-however, windows uses the `C` calling convention, so `C` would be used. This
-means that in our previous example, we could have used `extern "system" { ... }`
-to define a block for all windows systems, not just x86 ones.
+Most of the abis in this list are self-explanatory, but the `system` abi may seem a little odd. This constraint selects whatever the appropriate ABI is for interoperating with the target's libraries. For example, on win32 with a x86 architecture, this means that the abi used would be `stdcall`. On x86_64, however, windows uses the `C` calling convention, so `C` would be used. This means that in our previous example, we could have used `extern "system" { ... }` to define a block for all windows systems, not just x86 ones.
+
+大多数在次列表中的ABI是不言自明的，但是，`system`ABI可能显得有些奇怪。此约束选择任何适用的SPI来与目标库文件进行相互操作。比如，在使用X86架构的win32系统上，这意味着ABI使用的将是`stdcall`。然而，在x86_64架构上，windows系统使用`C`调用约定，所有`C`将被使用。这意味着，在我们之前的例子中，我们可以使用`Extern "system" {...}`来为所有的windows系统来定义一个代码块，而不仅仅是x86系统，
 
 # Interoperability with foreign code
 
-Rust guarantees that the layout of a `struct` is compatible with the platform's
-representation in C only if the `#[repr(C)]` attribute is applied to it.
-`#[repr(C, packed)]` can be used to lay out struct members without padding.
-`#[repr(C)]` can also be applied to an enum.
+Rust guarantees that the layout of a `struct` is compatible with the platform's representation in C only if the `#[repr(C)]` attribute is applied to it. `#[repr(C, packed)]` can be used to lay out struct members without padding. `#[repr(C)]` can also be applied to an enum.
 
-Rust's owned boxes (`Box<T>`) use non-nullable pointers as handles which point
-to the contained object. However, they should not be manually created because
-they are managed by internal allocators. References can safely be assumed to be
-non-nullable pointers directly to the type.  However, breaking the borrow
-checking or mutability rules is not guaranteed to be safe, so prefer using raw
-pointers (`*`) if that's needed because the compiler can't make as many
-assumptions about them.
+Rust语言保证`struct`布局是在C中是适用于平台级别的表现，除非`#[repr(C)]`属性被用来适用它。 `#[repr(C, packed)]` 能够被用来布局结构成员而不是填充。 `#[repr(C)]`同样可应用于一个枚举。
 
-Vectors and strings share the same basic memory layout, and utilities are
-available in the `vec` and `str` modules for working with C APIs. However,
-strings are not terminated with `\0`. If you need a NUL-terminated string for
-interoperability with C, you should use the `CString` type in the `std::ffi`
-module.
+Rust's owned boxes (`Box<T>`) use non-nullable pointers as handles which point to the contained object. However, they should not be manually created because they are managed by internal allocators. References can safely be assumed to be non-nullable pointers directly to the type.  However, breaking the borrow checking or mutability rules is not guaranteed to be safe, so prefer using raw pointers (`*`) if that's needed because the compiler can't make as many assumptions about them.
+
+Rust自有的boxes（`Box<T>`）使用一个非空指针作为指向包含对象的句柄。然而，它们不应该被手动创建，因为他们有内部分配器进行管理。地址引用可以安全的假定为指向这种类型的非空指针。然而打断引用检测后者可变规则是不能够保证安全的，因此如果非必要请尽量使用原始指针（`*`），因为编译器不能够对他们进行尽可能多的推断。
+
+Vectors and strings share the same basic memory layout, and utilities are available in the `vec` and `str` modules for working with C APIs. However, strings are not terminated with `\0`. If you need a NUL-terminated string for interoperability with C, you should use the `CString` type in the `std::ffi` module.
+
+向量和字符串共享同一个基本的内存布局，utilities在使用C API时，适用于`Vec`和`str`模块。然而，字符串不会以`\0`终止。如果你需要一个与C相互操作的没有结尾的字符串，你需要在`std::ffi`模块中使用`CSting`类型。
 
 The standard library includes type aliases and function definitions for the C
 standard library in the `libc` module, and Rust links against `libc` and `libm`
 by default.
 
-# The "nullable pointer optimization"
+# The "nullable pointer optimization"  空指针的优化
 
-Certain types are defined to not be `null`. This includes references (`&T`,
-`&mut T`), boxes (`Box<T>`), and function pointers (`extern "abi" fn()`).
-When interfacing with C, pointers that might be null are often used.
-As a special case, a generic `enum` that contains exactly two variants, one of
-which contains no data and the other containing a single field, is eligible
-for the "nullable pointer optimization". When such an enum is instantiated
-with one of the non-nullable types, it is represented as a single pointer,
-and the non-data variant is represented as the null pointer. So
-`Option<extern "C" fn(c_int) -> c_int>` is how one represents a nullable
-function pointer using the C ABI.
+Certain types are defined to not be `null`. This includes references (`&T`,`&mut T`), boxes (`Box<T>`), and function pointers (`extern "abi" fn()`).When interfacing with C, pointers that might be null are often used.As a special case, a generic `enum` that contains exactly two variants, one of which contains no data and the other containing a single field, is eligible for the "nullable pointer optimization". When such an enum is instantiated with one of the non-nullable types, it is represented as a single pointer,
+and the non-data variant is represented as the null pointer. So `Option<extern "C" fn(c_int) -> c_int>` is how one represents a nullable function pointer using the C ABI.
+
+某些类型被定义为非`null`。这包括地址引用（`&T`,`&mut T`），boxes（`Box<T>`），和函数指针（`extern "abi" fn()`）。当使用C接口时，可能为空的指针式常常被使用的。作为一种特殊情况，一个通用的包括确定的两个变量体的`enum`，一个没有包含任何数据，另一个包含一个单独的字段，很可能就是一个“空指针优化”。当这样的枚举类型使用一个非空类型数据实例化之后，它被认为是一个单一指针，空数据变量被认为是一个空指针。所以 `Option<extern "C" fn(c_int) -> c_int>`就是如何认定一个使用C ABI的空函数指针。
 
 # Calling Rust code from C
 
-You may wish to compile Rust code in a way so that it can be called from C. This is
-fairly easy, but requires a few things:
+You may wish to compile Rust code in a way so that it can be called from C. This is fairly easy, but requires a few things:
+
+你可能希望用另一种方式编译Rust代码，那样，他就能够被C语言调用掉。这个是相当容易的，但是需要几个前提：
 
 ```
 #[no_mangle]
@@ -527,7 +514,6 @@ pub extern fn hello_rust() -> *const u8 {
 # fn main() {}
 ```
 
-The `extern` makes this function adhere to the C calling convention, as
-discussed above in "[Foreign Calling
-Conventions](ffi.html#foreign-calling-conventions)". The `no_mangle`
-attribute turns off Rust's name mangling, so that it is easier to link to.
+The `extern` makes this function adhere to the C calling convention, as discussed above in "[Foreign Calling Conventions](ffi.html#foreign-calling-conventions)". The `no_mangle` attribute turns off Rust's name mangling, so that it is easier to link to.
+
+`extern`使得这个函数如上面讨论的[外部调用约定](ffi.html#foreign-calling-conventions)附加在C调用约定上。`no_mangle`属性关闭了Rust语言的名称重编，所以它可以很容易的被连接到。
