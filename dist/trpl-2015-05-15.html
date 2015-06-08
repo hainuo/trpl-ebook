@@ -117,16 +117,16 @@ code > span.er { font-weight: bold; }
   <li><a href="#callbacks-from-c-code-to-rust-functions-从c代码到rust函数的回调方法">Callbacks from C code to Rust functions 从C代码到Rust函数的回调方法</a></li>
   <li><a href="#linking">Linking</a></li>
   <li><a href="#unsafe-blocks-不安全代码块">Unsafe blocks 不安全代码块</a></li>
-  <li><a href="#accessing-foreign-globals">Accessing foreign globals</a></li>
-  <li><a href="#foreign-calling-conventions">Foreign calling conventions</a></li>
+  <li><a href="#accessing-foreign-globals-全局外部访问">Accessing foreign globals 全局外部访问</a></li>
+  <li><a href="#foreign-calling-conventions-外部调用约定">Foreign calling conventions 外部调用约定</a></li>
   <li><a href="#interoperability-with-foreign-code">Interoperability with foreign code</a></li>
-  <li><a href="#the-nullable-pointer-optimization">The “nullable pointer optimization”</a></li>
+  <li><a href="#the-nullable-pointer-optimization-空指针的优化">The “nullable pointer optimization” 空指针的优化</a></li>
   <li><a href="#calling-rust-code-from-c">Calling Rust code from C</a></li>
   </ul></li>
   <li><a href="#sec--borrow-and-asref">Borrow and AsRef 借用和引用</a><ul>
-  <li><a href="#borrow">Borrow</a></li>
-  <li><a href="#asref">AsRef</a></li>
-  <li><a href="#which-should-i-use">Which should I use?</a></li>
+  <li><a href="#borrow-借用">Borrow 借用</a></li>
+  <li><a href="#asref-地址引用">AsRef 地址引用</a></li>
+  <li><a href="#which-should-i-use-我应该用哪一个">Which should I use? 我应该用哪一个？</a></li>
   </ul></li>
   <li><a href="#sec--release-channels">Release Channels 释放通道</a><ul>
   <li><a href="#overview">Overview</a></li>
@@ -4266,34 +4266,46 @@ code > span.er { font-weight: bold; }
   <p>如果一个异步回调针对着Rust地址空间中的一个特殊对象，各自的Rust对象被销毁之后没有C库中不会执行任何回调时绝对必要的。这可以通过在对象析构函数中反注册回调 并将库设计为一种能够确保在反注册后没有任何回调会被执行的方式来实现。</p>
   <h3 id="linking">Linking</h3>
   <p>The <code>link</code> attribute on <code>extern</code> blocks provides the basic building block for instructing rustc how it will link to native libraries. There are two accepted forms of the link attribute today:</p>
+  <p>在<code>extern</code>代码块的<code>link</code>属性提供了一个基本的构建块来告诉rustc如何连接到一个本地库文件。有两种可以被接受的link属性：</p>
   <ul>
   <li><code>#[link(name = &quot;foo&quot;)]</code></li>
   <li><code>#[link(name = &quot;foo&quot;, kind = &quot;bar&quot;)]</code></li>
   </ul>
-  <p>In both of these cases, <code>foo</code> is the name of the native library that we’re linking to, and in the second case <code>bar</code> is the type of native library that the compiler is linking to. There are currently three known types of native libraries:</p>
+  <p>In both of these cases, <code>foo</code> is the name of the native library that we’re linking to, and in the second case <code>bar</code> is the type of native library that the compiler is linking to. There are currently three known types of native libraries: 在这两种形式中，<code>foo</code>是我们要连接到的本地库文件的名字，在第二种形式中，<code>bar</code>是编译器正在连接的本地库文件的类型。一共有三种已知的本地库类型：</p>
   <ul>
-  <li>Dynamic - <code>#[link(name = &quot;readline&quot;)]</code></li>
-  <li>Static - <code>#[link(name = &quot;my_build_dependency&quot;, kind = &quot;static&quot;)]</code></li>
-  <li>Frameworks - <code>#[link(name = &quot;CoreFoundation&quot;, kind = &quot;framework&quot;)]</code></li>
+  <li>Dynamic 动态- <code>#[link(name = &quot;readline&quot;)]</code></li>
+  <li>Static 静态- <code>#[link(name = &quot;my_build_dependency&quot;, kind = &quot;static&quot;)]</code></li>
+  <li>Frameworks 框架- <code>#[link(name = &quot;CoreFoundation&quot;, kind = &quot;framework&quot;)]</code></li>
   </ul>
   <p>Note that frameworks are only available on OSX targets.</p>
-  <p>The different <code>kind</code> values are meant to differentiate how the native library participates in linkage. From a linkage perspective, the rust compiler creates two flavors of artifacts: partial (rlib/staticlib) and final (dylib/binary). Native dynamic libraries and frameworks are propagated to the final artifact boundary, while static libraries are not propagated at all.</p>
+  <p>请注意，框架类型仅仅适用于osx系统。</p>
+  <p>The different <code>kind</code> values are meant to differentiate how the native library participates in linkage. From a linkage perspective, the rust compiler creates two flavors of artifacts: partial (rlib/staticlib) and final (dylib/binary).Native dynamic libraries and frameworks are propagated to the final artifact boundary, while static libraries are not propagated at all.</p>
+  <p>不同的<code>kind类型</code>值旨在区分本地库文件是何种方式参与到连接中的。通过链接方式来看，Rust语言编译器创建了两种形式的东西：局部的（rlib/staticlib）和最终的(dylib/binary)。本地动态库和框架被传播给最终编译文件，静态库文件则根本不会被传播。</p>
   <p>A few examples of how this model can be used are:</p>
+  <p>下面是介绍如何使用这个模型的一些例子：</p>
   <ul>
-  <li>A native build dependency. Sometimes some C/C++ glue is needed when writing some rust code, but distribution of the C/C++ code in a library format is just a burden. In this case, the code will be archived into <code>libfoo.a</code> and then the rust crate would declare a dependency via <code>#[link(name = &quot;foo&quot;, kind =   &quot;static&quot;)]</code>.</li>
+  <li>A native build dependency. Sometimes some C/C++ glue is needed when writing some rust code, but distribution of the C/C++ code in a library format is just a burden. In this case, the code will be archived into <code>libfoo.a</code> and then the rust crate would declare a dependency via <code>#[link(name = &quot;foo&quot;, kind =&quot;static&quot;)]</code>.</li>
+  <li>一个原生构建依赖。写一些Rust代码时，有时需要一些C/C++,然而，在库文件中C/C++的分发正式一个麻烦。在这种情况下，该代码被归档进<code>libfoo.a</code>，然后后Rust Crate将通过<code>#[link(name=&quot;foo&quot;,kind=&quot;static)]</code>来声明一个依赖。</li>
   </ul>
   <p>Regardless of the flavor of output for the crate, the native static library will be included in the output, meaning that distribution of the native static library is not necessary.</p>
+  <p>无论为crate输出何种形式，本地静态库将被包含进输出中，这意味本地静态库的分发不是必须的。</p>
   <ul>
-  <li>A normal dynamic dependency. Common system libraries (like <code>readline</code>) are available on a large number of systems, and often a static copy of these libraries cannot be found. When this dependency is included in a rust crate, partial targets (like rlibs) will not link to the library, but when the rlib is included in a final target (like a binary), the native library will be linked in.</li>
+  <li>A normal dynamic dependency. Common system libraries (like <code>readline</code>) are available on a large number of systems, and often a static copy of these libraries cannot be found. When this dependency is included in a rust crate,partial targets (like rlibs) will not link to the library, but when the rlib is included in a final target (like a binary), the native library will be linked in.</li>
   </ul>
+  <p>一个正常的动态依赖。在大多数系统中，普通的系统库文件(比如 <code>readline</code>)是可用的，然而，这些苦文件的静态副本确实常常无法找到。当这种依赖被包含在rust crate中时，部分目标(比如rlibs)将不会连接到这个库文件，然而，当rlib会被包含进最终的目标（比如二进制文件），本地库文件也将被包含进来。</p>
   <p>On OSX, frameworks behave with the same semantics as a dynamic library.</p>
+  <p>在OSX系统中，框架作为动态库表现相同的语境。</p>
   <h3 id="unsafe-blocks-不安全代码块">Unsafe blocks 不安全代码块</h3>
   <p>Some operations, like dereferencing unsafe pointers or calling functions that have been marked unsafe are only allowed inside unsafe blocks. Unsafe blocks isolate unsafety and are a promise to the compiler that the unsafety does not leak out of the block.</p>
+  <p>有些操作，比如取消不安全的指针引用或者已经被标记为不安全的调用函数只在不安全代码块中才被允许。不安全代码块隔离了不安全，并且向编译器承诺，不安全代码不会泄露。</p>
   <p>Unsafe functions, on the other hand, advertise it to the world. An unsafe function is written like this:</p>
+  <p>另一方面，不安全的函数，宣扬他给所有的代码。一个不安全函数应该这样写：</p>
   <pre><code>unsafe fn kaboom(ptr: *const i32) -&gt; i32 { *ptr }</code></pre>
   <p>This function can only be called from an <code>unsafe</code> block or another <code>unsafe</code> function.</p>
-  <h3 id="accessing-foreign-globals">Accessing foreign globals</h3>
+  <p>这个函数只能够从一个<code>unsafe不安全</code>代码块或者另一个<code>不安全</code>函数中条用。</p>
+  <h3 id="accessing-foreign-globals-全局外部访问">Accessing foreign globals 全局外部访问</h3>
   <p>Foreign APIs often export a global variable which could do something like track global state. In order to access these variables, you declare them in <code>extern</code> blocks with the <code>static</code> keyword:</p>
+  <p>外部API接口常常暴露一个全局变量，他可以做一些像跟踪全局状态类的事情。为了访问这些变来那个，你需要在<code>extern</code>代码块中使用<code>static</code>关键词来声明他们：</p>
   <pre><code># #![feature(libc)]
   extern crate libc;
   
@@ -4307,6 +4319,7 @@ code > span.er { font-weight: bold; }
                rl_readline_version as i32);
   }</code></pre>
   <p>Alternatively, you may need to alter global state provided by a foreign interface. To do this, statics can be declared with <code>mut</code> so we can mutate them.</p>
+  <p>或者，你可能需要同意一个外部接口来修改全局状态。为此，可以使用<code>mut</code>来声明这些静态变量，以便我们可以改变他们。</p>
   <pre><code># #![feature(libc)]
   extern crate libc;
   
@@ -4329,8 +4342,10 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre>
   <p>Note that all interaction with a <code>static mut</code> is unsafe, both reading and writing. Dealing with global mutable state requires a great deal of care.</p>
-  <h3 id="foreign-calling-conventions">Foreign calling conventions</h3>
+  <p>需要注意的是，所有使用<code>static mut</code>的接口，无论读写，都是不安全的。处理全局可变状态需要非常非常细心关照。</p>
+  <h3 id="foreign-calling-conventions-外部调用约定">Foreign calling conventions 外部调用约定</h3>
   <p>Most foreign code exposes a C ABI, and Rust uses the platform’s C calling convention by default when calling foreign functions. Some foreign functions, most notably the Windows API, use other calling conventions. Rust provides a way to tell the compiler which convention to use:</p>
+  <p>大多数外部代码暴露一个C ABI，当调用外部函数时，Rust默认使用C平台的调用协议。一些外部函数，特别是Windows API，使用另外一些调用约定。Rust语言提供了一种方式，来告诉编译器使用哪一种约定：</p>
   <pre><code># #![feature(libc)]
   extern crate libc;
   
@@ -4342,6 +4357,7 @@ code > span.er { font-weight: bold; }
   }
   # fn main() { }</code></pre>
   <p>This applies to the entire <code>extern</code> block. The list of supported ABI constraints are:</p>
+  <p>这适用于全部的<code>extern</code>代码块。支持ABI约定的列表如下：</p>
   <ul>
   <li><code>stdcall</code></li>
   <li><code>aapcs</code></li>
@@ -4354,32 +4370,44 @@ code > span.er { font-weight: bold; }
   <li><code>win64</code></li>
   </ul>
   <p>Most of the abis in this list are self-explanatory, but the <code>system</code> abi may seem a little odd. This constraint selects whatever the appropriate ABI is for interoperating with the target’s libraries. For example, on win32 with a x86 architecture, this means that the abi used would be <code>stdcall</code>. On x86_64, however, windows uses the <code>C</code> calling convention, so <code>C</code> would be used. This means that in our previous example, we could have used <code>extern &quot;system&quot; { ... }</code> to define a block for all windows systems, not just x86 ones.</p>
+  <p>大多数在次列表中的ABI是不言自明的，但是，<code>system</code>ABI可能显得有些奇怪。此约束选择任何适用的SPI来与目标库文件进行相互操作。比如，在使用X86架构的win32系统上，这意味着ABI使用的将是<code>stdcall</code>。然而，在x86_64架构上，windows系统使用<code>C</code>调用约定，所有<code>C</code>将被使用。这意味着，在我们之前的例子中，我们可以使用<code>Extern &quot;system&quot; {...}</code>来为所有的windows系统来定义一个代码块，而不仅仅是x86系统，</p>
   <h3 id="interoperability-with-foreign-code">Interoperability with foreign code</h3>
   <p>Rust guarantees that the layout of a <code>struct</code> is compatible with the platform’s representation in C only if the <code>#[repr(C)]</code> attribute is applied to it. <code>#[repr(C, packed)]</code> can be used to lay out struct members without padding. <code>#[repr(C)]</code> can also be applied to an enum.</p>
+  <p>Rust语言保证<code>struct</code>布局是在C中是适用于平台级别的表现，除非<code>#[repr(C)]</code>属性被用来适用它。 <code>#[repr(C, packed)]</code> 能够被用来布局结构成员而不是填充。 <code>#[repr(C)]</code>同样可应用于一个枚举。</p>
   <p>Rust’s owned boxes (<code>Box&lt;T&gt;</code>) use non-nullable pointers as handles which point to the contained object. However, they should not be manually created because they are managed by internal allocators. References can safely be assumed to be non-nullable pointers directly to the type. However, breaking the borrow checking or mutability rules is not guaranteed to be safe, so prefer using raw pointers (<code>*</code>) if that’s needed because the compiler can’t make as many assumptions about them.</p>
+  <p>Rust自有的boxes（<code>Box&lt;T&gt;</code>）使用一个非空指针作为指向包含对象的句柄。然而，它们不应该被手动创建，因为他们有内部分配器进行管理。地址引用可以安全的假定为指向这种类型的非空指针。然而打断引用检测后者可变规则是不能够保证安全的，因此如果非必要请尽量使用原始指针（<code>*</code>），因为编译器不能够对他们进行尽可能多的推断。</p>
   <p>Vectors and strings share the same basic memory layout, and utilities are available in the <code>vec</code> and <code>str</code> modules for working with C APIs. However, strings are not terminated with <code>\0</code>. If you need a NUL-terminated string for interoperability with C, you should use the <code>CString</code> type in the <code>std::ffi</code> module.</p>
+  <p>向量和字符串共享同一个基本的内存布局，utilities在使用C API时，适用于<code>Vec</code>和<code>str</code>模块。然而，字符串不会以<code>\0</code>终止。如果你需要一个与C相互操作的没有结尾的字符串，你需要在<code>std::ffi</code>模块中使用<code>CSting</code>类型。</p>
   <p>The standard library includes type aliases and function definitions for the C standard library in the <code>libc</code> module, and Rust links against <code>libc</code> and <code>libm</code> by default.</p>
-  <h3 id="the-nullable-pointer-optimization">The “nullable pointer optimization”</h3>
-  <p>Certain types are defined to not be <code>null</code>. This includes references (<code>&amp;T</code>, <code>&amp;mut T</code>), boxes (<code>Box&lt;T&gt;</code>), and function pointers (<code>extern &quot;abi&quot; fn()</code>). When interfacing with C, pointers that might be null are often used. As a special case, a generic <code>enum</code> that contains exactly two variants, one of which contains no data and the other containing a single field, is eligible for the “nullable pointer optimization”. When such an enum is instantiated with one of the non-nullable types, it is represented as a single pointer, and the non-data variant is represented as the null pointer. So <code>Option&lt;extern &quot;C&quot; fn(c_int) -&gt; c_int&gt;</code> is how one represents a nullable function pointer using the C ABI.</p>
+  <h3 id="the-nullable-pointer-optimization-空指针的优化">The “nullable pointer optimization” 空指针的优化</h3>
+  <p>Certain types are defined to not be <code>null</code>. This includes references (<code>&amp;T</code>,<code>&amp;mut T</code>), boxes (<code>Box&lt;T&gt;</code>), and function pointers (<code>extern &quot;abi&quot; fn()</code>).When interfacing with C, pointers that might be null are often used.As a special case, a generic <code>enum</code> that contains exactly two variants, one of which contains no data and the other containing a single field, is eligible for the “nullable pointer optimization”. When such an enum is instantiated with one of the non-nullable types, it is represented as a single pointer, and the non-data variant is represented as the null pointer. So <code>Option&lt;extern &quot;C&quot; fn(c_int) -&gt; c_int&gt;</code> is how one represents a nullable function pointer using the C ABI.</p>
+  <p>某些类型被定义为非<code>null</code>。这包括地址引用（<code>&amp;T</code>,<code>&amp;mut T</code>），boxes（<code>Box&lt;T&gt;</code>），和函数指针（<code>extern &quot;abi&quot; fn()</code>）。当使用C接口时，可能为空的指针式常常被使用的。作为一种特殊情况，一个通用的包括确定的两个变量体的<code>enum</code>，一个没有包含任何数据，另一个包含一个单独的字段，很可能就是一个“空指针优化”。当这样的枚举类型使用一个非空类型数据实例化之后，它被认为是一个单一指针，空数据变量被认为是一个空指针。所以 <code>Option&lt;extern &quot;C&quot; fn(c_int) -&gt; c_int&gt;</code>就是如何认定一个使用C ABI的空函数指针。</p>
   <h3 id="calling-rust-code-from-c">Calling Rust code from C</h3>
   <p>You may wish to compile Rust code in a way so that it can be called from C. This is fairly easy, but requires a few things:</p>
+  <p>你可能希望用另一种方式编译Rust代码，那样，他就能够被C语言调用掉。这个是相当容易的，但是需要几个前提：</p>
   <pre><code>#[no_mangle]
   pub extern fn hello_rust() -&gt; *const u8 {
       &quot;Hello, world!\0&quot;.as_ptr()
   }
   # fn main() {}</code></pre>
   <p>The <code>extern</code> makes this function adhere to the C calling convention, as discussed above in “<a href="ffi.html#foreign-calling-conventions">Foreign Calling Conventions</a>”. The <code>no_mangle</code> attribute turns off Rust’s name mangling, so that it is easier to link to.</p>
+  <p><code>extern</code>使得这个函数如上面讨论的<a href="ffi.html#foreign-calling-conventions">外部调用约定</a>附加在C调用约定上。<code>no_mangle</code>属性关闭了Rust语言的名称重编，所以它可以很容易的被连接到。</p>
   <h2 id="sec--borrow-and-asref">Borrow and AsRef 借用和引用</h2>
   <p>The <a href="http://doc.rust-lang.org/std/borrow/trait.Borrow.html"><code>Borrow</code></a> and <a href="http://doc.rust-lang.org/std/convert/trait.AsRef.html"><code>AsRef</code></a> traits are very similar, but different. Here’s a quick refresher on what these two traits mean.</p>
-  <h3 id="borrow">Borrow</h3>
+  <p><a href="http://doc.rust-lang.org/std/borrow/trait.Borrow.html"><code>Borrow借用</code></a>和<a href="http://doc.rust-lang.org/std/convert/trait.AsRef.html">AsRef地址引用`</a>特性是非常相似的，但是却又有不同。这里是对于这两个特性代表着什么意思。</p>
+  <h3 id="borrow-借用">Borrow 借用</h3>
   <p>The <code>Borrow</code> trait is used when you’re writing a datastructure, and you want to use either an owned or borrowed type as synonymous for some purpose.</p>
+  <p><code>Borrow借用</code>特性用 当你正在写一个数据结构，出于某种原因，你要么使用一个自有的类型要么使用一个借用类型作为代名词的时候，可以使用<code>Borrow借用</code>特性</p>
   <p>For example, <a href="http://doc.rust-lang.org/std/collections/struct.HashMap.html"><code>HashMap</code></a> has a <a href="http://doc.rust-lang.org/std/collections/struct.HashMap.html#method.get"><code>get</code> method</a> which uses <code>Borrow</code>:</p>
+  <p>例如，<a href="http://doc.rust-lang.org/std/collections/struct.HashMap.html"><code>HashMap</code></a>有一个使用了<code>Borrow借用</code>特性的<a href="http://doc.rust-lang.org/std/collections/struct.HashMap.html#method.get"><code>get</code>方法</a>:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> get&lt;Q: ?<span class="kw">Sized</span>&gt;(&amp;<span class="kw">self</span>, k: &amp;Q) -&gt; <span class="kw">Option</span>&lt;&amp;V&gt;
       where K: Borrow&lt;Q&gt;,
             Q: Hash + <span class="kw">Eq</span></code></pre></div>
   <p>This signature is pretty complicated. The <code>K</code> parameter is what we’re interested in here. It refers to a parameter of the <code>HashMap</code> itself:</p>
+  <p>这个标记是相当复杂的。<code>k</code>参数就是我们感兴趣的。它指向的是<code>HashMap</code>自身的一个参数：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> HashMap&lt;K, V, S = RandomState&gt; {</code></pre></div>
-  <p>The <code>K</code> parameter is the type of <em>key</em> the <code>HashMap</code> uses. So, looking at the signature of <code>get()</code> again, we can use <code>get()</code> when the key implements <code>Borrow&lt;Q&gt;</code>. That way, we can make a <code>HashMap</code> which uses <code>String</code> keys, but use <code>&amp;str</code>s when we’re searching:</p>
+  <p>The <code>K</code> parameter is the type of <em>key</em> the <code>HashMap</code> uses. So, looking at the signature of <code>get()</code> again, we can use <code>get()</code> when the key implements <code>Borrow&lt;Q&gt;</code>. That way, we can make a <code>HashMap</code> which uses <code>String</code> keys,but use <code>&amp;str</code>s when we’re searching:</p>
+  <p><code>K</code>参数就是 <code>HashMap</code>使用的 <em>Key</em> 的类型。所以再次看一下<code>get()</code>的标记，当 <em>key</em> 实现了<code>Borrow&lt;Q&gt;</code>后，我们可以使用<code>get()</code>方法。通过这种方式，我们可以做出一个<code>HashMap</code> ，它使用 的时<code>String字符串</code>键名，然而，当我们当我们查找时使用的时<code>&amp;str</code>:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::collections::HashMap;
   
   <span class="kw">let</span> <span class="kw">mut</span> map = HashMap::new();
@@ -4387,7 +4415,9 @@ code > span.er { font-weight: bold; }
   
   <span class="ot">assert_eq!</span>(map.get(<span class="st">&quot;Foo&quot;</span>), <span class="kw">Some</span>(&amp;<span class="dv">42</span>));</code></pre></div>
   <p>This is because the standard library has <code>impl Borrow&lt;str&gt; for String</code>.</p>
+  <p>这是因为标准库拥有一个 <code>impl Borrow&lt;str&gt; for String</code>。</p>
   <p>For most types, when you want to take an owned or borrowed type, a <code>&amp;T</code> is enough. But one area where <code>Borrow</code> is effective is when there’s more than one kind of borrowed value. Slices are an area where this is especially true: you can have both an <code>&amp;[T]</code> or a <code>&amp;mut [T]</code>. If we wanted to accept both of these types, <code>Borrow</code> is up for it:</p>
+  <p>对于大多数类型来说，当我们想要使用一个自由类型或者借用类型时，一个<code>&amp;T</code>就足够了。然而有一个地方使用<code>Borrow借用</code>是高效的，那就是不只是一种借用值的时候。分片是一个尤其如此地区：你可以使用<code>&amp;[T]</code>或者<code>&amp;mut [T]</code>这两种。如果我们想要接受这两种类型，<code>Borrow借用</code>弥补了这一点：</p>
   <pre><code>use std::borrow::Borrow;
   use std::fmt::Display;
   
@@ -4400,17 +4430,22 @@ code > span.er { font-weight: bold; }
   foo(&amp;i);
   foo(&amp;mut i);</code></pre>
   <p>This will print out <code>a is borrowed: 5</code> twice.</p>
-  <h3 id="asref">AsRef</h3>
+  <p>这将会打印<code>a is borrowed: 5</code>两次。</p>
+  <h3 id="asref-地址引用">AsRef 地址引用</h3>
   <p>The <code>AsRef</code> trait is a conversion trait. It’s used for converting some value to a reference in generic code. Like this:</p>
+  <p><code>AsRef</code>特性就是转换特性。它用于转换一些值到通用代码中的参考。就像着这样：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> s = <span class="st">&quot;Hello&quot;</span>.to_string();
   
   <span class="kw">fn</span> foo&lt;T: AsRef&lt;<span class="kw">str</span>&gt;&gt;(s: T) {
       <span class="kw">let</span> slice = s.as_ref();
   }</code></pre></div>
-  <h3 id="which-should-i-use">Which should I use?</h3>
+  <h3 id="which-should-i-use-我应该用哪一个">Which should I use? 我应该用哪一个？</h3>
   <p>We can see how they’re kind of the same: they both deal with owned and borrowed versions of some type. However, they’re a bit different.</p>
+  <p>我们可以看到它们是多么的相似：它们都是处理一些类型的自有和借用版本。然而，它们有一点不同</p>
   <p>Choose <code>Borrow</code> when you want to abstract over different kinds of borrowing, or when you’re building a datastructure that treats owned and borrowed values in equivalent ways, such as hashing and comparison.</p>
+  <p>当你想要抽象化不同种类的借用，后者当你正在创建一个将自有和借用值以同等方式对待的数据结构时，请选择<code>Borrow</code>，比如哈希和比较。</p>
   <p>Choose <code>AsRef</code> when you want to convert something to a reference directly, and you’re writing generic code.</p>
+  <p>当你正在写通用代码，想要直接转换某些内容为参考时请使用<code>AsRef</code>。</p>
   <h2 id="sec--release-channels">Release Channels 释放通道</h2>
   <p>The Rust project uses a concept called ‘release channels’ to manage releases. It’s important to understand this process to choose which version of Rust your project should use.</p>
   <h3 id="overview">Overview</h3>
