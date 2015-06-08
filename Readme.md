@@ -7,14 +7,15 @@ Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有
 ##翻译进度（已经完成章节列表）
 + 介绍说明
 + 第四章  高效的Rust
-  - 第一节  内存管理
-  - 第二节  测试用例
-  - 第三节  条件编译
-  - 第四节  文档
-  - 第五节  迭代器
-  - 第六节  并发
-  - 第七节  错误处理
-  - 第八节  外部函数接口
+  - 第一节  [堆和栈](src/the-stack-and-the-heap.md)
+  - 第二节  [测试用例](src/testing.md)
+  - 第三节  [条件编译](src/conditional-compilation.md)
+  - 第四节  [文档](src/documentation.md)
+  - 第五节  [迭代器](src/iterators.md)
+  - 第六节  [并发](src/concurrency.md)
+  - 第七节  [错误处理](src/error-handling.md)
+  - 第八节  [外部函数接口](src/ffi.md)
+  - 第九节  [借用和引用](src/borrow-and-asref.md)
   
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
 
