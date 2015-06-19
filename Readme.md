@@ -16,10 +16,11 @@ Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有
   - 第七节  [错误处理](src/error-handling.md)
   - 第八节  [外部函数接口](src/ffi.md)
   - 第九节  [借用和引用](src/borrow-and-asref.md)
+  - 第十节  [发行通道](src/release-channels.md)
   
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
 
-本仓库主要是将doc.rust-lang.org/book 转换成html，epub和pdf。
+本仓库主要是将doc.rust-lang.org/book 转换成html，epub和pdf。你可在本项目的dist目录中获取到最新编译好的中英文对照版本。
 
 英文版下载链接可以点击此处
 **[Download Links](http://killercup.github.io/trpl-ebook/)**

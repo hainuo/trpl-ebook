@@ -18,7 +18,7 @@
     * [Error Handling 错误处理](error-handling.md)
     * [FFI 对外函数接口](ffi.md)
     * [Borrow and AsRef 借用和引用](borrow-and-asref.md)
-    * [Release Channels 释放通道](release-channels.md)
+    * [Release Channels 发行通道](release-channels.md)
 * [Syntax and Semantics 语法和语义](syntax-and-semantics.md)
     * [Variable Bindings 变量绑定](variable-bindings.md)
     * [Functions 函数](functions.md)
