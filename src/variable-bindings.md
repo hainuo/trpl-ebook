@@ -1,7 +1,8 @@
-% Variable Bindings
+% Variable Bindings  变量绑定
 
-Virtually every non-'Hello World’ Rust program uses *variable bindings*. They
-look like this:
+Virtually every non-'Hello World’ Rust program uses *variable bindings*. They look like this:
+
+几乎每一个非“hello world”的Rust程序都在使用了*变量绑定*。他们看起来是这样子的：
 
 ```rust
 fn main() {
@@ -9,14 +10,13 @@ fn main() {
 }
 ```
 
-Putting `fn main() {` in each example is a bit tedious, so we’ll leave that out
-in the future. If you’re following along, make sure to edit your `main()`
-function, rather than leaving it off. Otherwise, you’ll get an error.
+Putting `fn main() {` in each example is a bit tedious, so we’ll leave that out in the future. If you’re following along, make sure to edit your `main()` function, rather than leaving it off. Otherwise, you’ll get an error.
 
-In many languages, this is called a *variable*, but Rust’s variable bindings
-have a few tricks up their sleeves. For example the left-hand side of a `let`
-expression is a ‘[pattern][pattern]’, not just a variable name. This means we
-can do things like:
+在每一个例子中写入一个`fn main(){` 是枯燥无味的，所以我们将它留到以后。如果你跟随者教程，请务必编辑你的`main()`函数，而不是把它删掉，不然你会得到一个报错。
+
+In many languages, this is called a *variable*, but Rust’s variable bindings have a few tricks up their sleeves. For example the left-hand side of a `let` expression is a ‘[pattern][pattern]’, not just a variable name. This means we can do things like:
+
+在许多语言中，这被称之为*变量*，但是Rust的变量绑定有一些高招。例如，一个`let`表达是的左侧是一个 `[pattern][pattern]`，而不是只有一个变量名。这意味着我们可以这样做：
 
 ```rust
 let (x, y) = (1, 2);
