@@ -128,10 +128,10 @@ code > span.er { font-weight: bold; }
   <li><a href="#asref-地址引用">AsRef 地址引用</a></li>
   <li><a href="#which-should-i-use-我应该用哪一个">Which should I use? 我应该用哪一个？</a></li>
   </ul></li>
-  <li><a href="#sec--release-channels">Release Channels 释放通道</a><ul>
-  <li><a href="#overview">Overview</a></li>
-  <li><a href="#choosing-a-version">Choosing a version</a></li>
-  <li><a href="#helping-the-ecosystem-through-ci">Helping the ecosystem through CI</a></li>
+  <li><a href="#sec--release-channels">Release Channels 发行通道</a><ul>
+  <li><a href="#overview-概述">Overview 概述</a></li>
+  <li><a href="#choosing-a-version-选择版本">Choosing a version 选择版本</a></li>
+  <li><a href="#helping-the-ecosystem-through-ci-通过ci来帮助生态链">Helping the ecosystem through CI 通过CI来帮助生态链</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#sec--syntax-and-semantics">Syntax and Semantics 语法和语义</a><ul>
@@ -4446,23 +4446,31 @@ code > span.er { font-weight: bold; }
   <p>当你想要抽象化不同种类的借用，后者当你正在创建一个将自有和借用值以同等方式对待的数据结构时，请选择<code>Borrow</code>，比如哈希和比较。</p>
   <p>Choose <code>AsRef</code> when you want to convert something to a reference directly, and you’re writing generic code.</p>
   <p>当你正在写通用代码，想要直接转换某些内容为参考时请使用<code>AsRef</code>。</p>
-  <h2 id="sec--release-channels">Release Channels 释放通道</h2>
+  <h2 id="sec--release-channels">Release Channels 发行通道</h2>
   <p>The Rust project uses a concept called ‘release channels’ to manage releases. It’s important to understand this process to choose which version of Rust your project should use.</p>
-  <h3 id="overview">Overview</h3>
+  <p>Rust项目使用了一个叫做‘发行通道’的概念来管理发布。这对于理解你的项目应该应该选择哪一个版本的Rust来使用的过程很重要。</p>
+  <h3 id="overview-概述">Overview 概述</h3>
   <p>There are three channels for Rust releases:</p>
+  <p>rust发行版一共有三个通道：</p>
   <ul>
-  <li>Nightly</li>
-  <li>Beta</li>
-  <li>Stable</li>
+  <li>Nightly 每日版本</li>
+  <li>Beta 测试版本</li>
+  <li>Stable 稳定版本</li>
   </ul>
   <p>New nightly releases are created once a day. Every six weeks, the latest nightly release is promoted to ‘Beta’. At that point, it will only receive patches to fix serious errors. Six weeks later, the beta is promoted to ‘Stable’, and becomes the next release of <code>1.x</code>.</p>
+  <p>每日版本是一天创建一次。每6个星期，最后一个每日版本被提升为测试版本。在这一个点上，它将只接受修复验证错误的补丁。6周后，测试版本被晋升为正式版，并成为<code>1.x</code>的下一个版本。</p>
   <p>This process happens in parallel. So every six weeks, on the same day, nightly goes to beta, beta goes to stable. When <code>1.x</code> is released, at the same time, <code>1.(x + 1)-beta</code> is released, and the nightly becomes the first version of <code>1.(x + 2)-nightly</code>.</p>
-  <h3 id="choosing-a-version">Choosing a version</h3>
+  <p>这个过程是平行发生的。所以每6周，在同一天，每日版本变成测试版，测试版本变成稳定版。当<code>1.x</code>被发布了，在同时<code>1.(x+1)-beta</code>也被发布，并且，每日版本变成了<code>1.(x+2)-nightly</code>的第一个版本。</p>
+  <h3 id="choosing-a-version-选择版本">Choosing a version 选择版本</h3>
   <p>Generally speaking, unless you have a specific reason, you should be using the stable release channel. These releases are intended for a general audience.</p>
+  <p>一般说来，除非你有一个特殊原因，你应该使用稳定版本通道。这些版本都是面向普通用户的。</p>
   <p>However, depending on your interest in Rust, you may choose to use nightly instead. The basic tradeoff is this: in the nightly channel, you can use unstable, new Rust features. However, unstable features are subject to change, and so any new nightly release may break your code. If you use the stable release, you cannot use experimental features, but the next release of Rust will not cause significant issues through breaking changes.</p>
-  <h3 id="helping-the-ecosystem-through-ci">Helping the ecosystem through CI</h3>
+  <p>然而，取决于你对Rust的兴趣，你可以攒泽使用每日版本。基本的权衡是这样的：在每日版本通道中，你可以使用不稳定的，新的Rust特性。但是，不稳定的特性可能会产生改变，因此任何新的每日版本都可以破坏你的代码。如果你使用了稳定版本，则不能够使用实验性特性，但是Rust的下一个版本将不会因为阻止变化产生明显的问题。</p>
+  <h3 id="helping-the-ecosystem-through-ci-通过ci来帮助生态链">Helping the ecosystem through CI 通过CI来帮助生态链</h3>
   <p>What about beta? We encourage all Rust users who use the stable release channel to also test against the beta channel in their continuous integration systems. This will help alert the team in case there’s an accidental regression.</p>
+  <p>为什么要测试？我们鼓励所有的使用稳定版本通道的Rust用户同样在他们的持续集成系统中尝试使用测试版本。</p>
   <p>Additionally, testing against nightly can catch regressions even sooner, and so if you don’t mind a third build, we’d appreciate testing against all channels.</p>
+  <p>此外，针对每日版本的测试能够更早的抓住回归，如果你不介意第三个版本，我们非常感谢你测试所有的通道。</p>
   <h1 id="sec--syntax-and-semantics">Syntax and Semantics 语法和语义</h1>
   <p>This section breaks Rust down into small chunks, one for each concept.</p>
   <p>If you’d like to learn Rust from the bottom up, reading this in order is a great way to do that.</p>
