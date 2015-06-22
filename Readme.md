@@ -18,7 +18,7 @@ Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有
   - 第九节  [借用和引用](src/borrow-and-asref.md)
   - 第十节  [发行通道](src/release-channels.md)
 + 第五章 [语法与语义](src/syntax-and-semantics.md)
-  - 第一节  [变量绑定](src/variable-bindings.md)  进行中
+  - 第一节  [变量绑定](src/variable-bindings.md)
   
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
 
