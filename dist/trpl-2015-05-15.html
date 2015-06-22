@@ -4486,52 +4486,69 @@ code > span.er { font-weight: bold; }
   }</code></pre></div>
   <p>Putting <code>fn main() {</code> in each example is a bit tedious, so we’ll leave that out in the future. If you’re following along, make sure to edit your <code>main()</code> function, rather than leaving it off. Otherwise, you’ll get an error.</p>
   <p>在每一个例子中写入一个<code>fn main(){</code> 是枯燥无味的，所以我们将它留到以后。如果你跟随者教程，请务必编辑你的<code>main()</code>函数，而不是把它删掉，不然你会得到一个报错。</p>
-  <p>In many languages, this is called a <em>variable</em>, but Rust’s variable bindings have a few tricks up their sleeves. For example the left-hand side of a <code>let</code> expression is a ‘<a href="#sec--patterns">pattern</a>’, not just a variable name. This means we can do things like:</p>
-  <p>在许多语言中，这被称之为<em>变量</em>，但是Rust的变量绑定有一些高招。例如，一个<code>let</code>表达是的左侧是一个 <code>[pattern][pattern]</code>，而不是只有一个变量名。这意味着我们可以这样做：</p>
+  <p>In many languages, this is called a <em>variable</em>, but Rust’s variable bindings have a few tricks up their sleeves. For example the left-hand side of a <code>let</code> expression is a ‘<a href="patterns.md">pattern</a>’, not just a variable name. This means we can do things like:</p>
+  <p>在许多语言中，这被称之为<em>变量</em>，但是Rust的变量绑定有一些高招。例如，一个<code>let</code>表达式的左侧是一个 <code>[pattern 模式][pattern]</code>，而不是只有一个变量名。这意味着我们可以这样做：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> (x, y) = (<span class="dv">1</span>, <span class="dv">2</span>);</code></pre></div>
-  <p>After this expression is evaluated, <code>x</code> will be one, and <code>y</code> will be two. Patterns are really powerful, and have <a href="#sec--patterns">their own section</a> in the book. We don’t need those features for now, so we’ll just keep this in the back of our minds as we go forward.</p>
+  <p>After this expression is evaluated, <code>x</code> will be one, and <code>y</code> will be two.Patterns are really powerful, and have <a href="patterns.md">their own section</a> in the book. We don’t need those features for now, so we’ll just keep this in the back of our minds as we go forward.</p>
+  <p>这个表达式被求值后，<code>x</code>将会是1，<code>y</code>将会是2. 模式是非常强大的，并且在本书中有<a href="patterns.md">自己的章节</a>。现在我们不需要那些特性，我们将这些置于脑后，因为我们还要继续学习。</p>
   <p>Rust is a statically typed language, which means that we specify our types up front, and they’re checked at compile time. So why does our first example compile? Well, Rust has this thing called ‘type inference’. If it can figure out what the type of something is, Rust doesn’t require you to actually type it out.</p>
+  <p>Rust是一门静态类型的语言，这意味着我们首先要声明我们的类型，并且在编译时会被检查。那么为什么我们的第一个例子能够编译通过呢？好吧，Rust有个叫做‘类型接口’的东西。如果Rust能够算出某些变量的类型是什么，它并不要求你真正的将它表示出来。</p>
   <p>We can add the type if we want to, though. Types come after a colon (<code>:</code>):</p>
+  <p>然而，如果我们需要，我们可以增加类型。类型总是在一个冒号（<code>:</code>）后面：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x: <span class="kw">i32</span> = <span class="dv">5</span>;</code></pre></div>
   <p>If I asked you to read this out loud to the rest of the class, you’d say “<code>x</code> is a binding with the type <code>i32</code> and the value <code>five</code>.”</p>
+  <p>如果我要求你向全班其余同学大声的读出来，你应该说：“<code>x</code> 是一个<code>i32</code>类型的变量，它的值是<code>5</code>。”</p>
   <p>In this case we chose to represent <code>x</code> as a 32-bit signed integer. Rust has many different primitive integer types. They begin with <code>i</code> for signed integers and <code>u</code> for unsigned integers. The possible integer sizes are 8, 16, 32, and 64 bits.</p>
+  <p>在这个案例中，我们选择声明<code>x</code>为一个32位的带符号的整数。Rust有很多不同的原始整数类型。他们使用<code>i</code>标记带符号的整数，使用<code>u</code>标记不带符号的整数。能够被使用的整数字节是8位，16位，32位和64位。</p>
   <p>In future examples, we may annotate the type in a comment. The examples will look like this:</p>
+  <p>在未来的案例中，我们可能在注释中声明一个类型。例子看起来是这样的：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> x = <span class="dv">5</span>; <span class="co">// x: i32</span>
   }</code></pre></div>
   <p>Note the similarities between this annotation and the syntax you use with <code>let</code>. Including these kinds of comments is not idiomatic Rust, but we’ll occasionally include them to help you understand what the types that Rust infers are.</p>
+  <p>请注意这个声明和你使用<code>let</code>语法的相似性。包含这种注释不是地道的Rust代码编写方式，然而，我们会偶尔使用来帮助你理解Rust推断的类型是什么。</p>
   <p>By default, bindings are <em>immutable</em>. This code will not compile:</p>
+  <p>默认，变量绑定是<em>不可变的</em>。以下代码将无法编译：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">5</span>;
   x = <span class="dv">10</span>;</code></pre></div>
   <p>It will give you this error:</p>
+  <p>它会给出错误：</p>
   <pre><code>error: re-assignment of immutable variable `x`
        x = 10;
        ^~~~~~~</code></pre>
   <p>If you want a binding to be mutable, you can use <code>mut</code>:</p>
+  <p>如果你想要一个可变的变量绑定，你可以使用<code>mut</code>：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> x = <span class="dv">5</span>; <span class="co">// mut x: i32</span>
   x = <span class="dv">10</span>;</code></pre></div>
   <p>There is no single reason that bindings are immutable by default, but we can think about it through one of Rust’s primary focuses: safety. If you forget to say <code>mut</code>, the compiler will catch it, and let you know that you have mutated something you may not have intended to mutate. If bindings were mutable by default, the compiler would not be able to tell you this. If you <em>did</em> intend mutation, then the solution is quite easy: add <code>mut</code>.</p>
+  <p>变量绑定默认为不可变的，有很多原因，但是我们可以考虑一下Rust的主要关注点之一：安全。如果你忘记标记<code>mut</code>，编译器将扑捉它，并且让你知道你已经改变了之前你没有预计到会改变的一个变量。如果变量绑定默认是可变的，编译器将不能够告诉你这个。如果你_希望_改变，解决方式很简单：增加<code>mut</code>。</p>
   <p>There are other good reasons to avoid mutable state when possible, but they’re out of the scope of this guide. In general, you can often avoid explicit mutation, and so it is preferable in Rust. That said, sometimes, mutation is what you need, so it’s not verboten.</p>
+  <p>在可能的情况下，还有其他一些好理由来避免可变状态，然而，他们超出了本教程的范围。通常情况下，你能够经常避免明确的可变类型，所以在Rust语言中，这种默认方式是最可取的。这就是说，有些时候，你需要可变类型，所以它们不被禁止。</p>
   <p>Let’s get back to bindings. Rust variable bindings have one more aspect that differs from other languages: bindings are required to be initialized with a value before you’re allowed to use them.</p>
+  <p>让我们回到变量绑定上来。Rust的变量绑定跟其他语言有不止一个的不同方面：在你被允许使用它们之前，变量绑定必须要有一个初始化值。</p>
   <p>Let’s try it out. Change your <code>src/main.rs</code> file to look like this:</p>
+  <p>让我们试一下。将你的<code>src/main.rs</code>文件更改成下面的样子：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> x: <span class="kw">i32</span>;
   
       <span class="ot">println!</span>(<span class="st">&quot;Hello world!&quot;</span>);
   }</code></pre></div>
   <p>You can use <code>cargo build</code> on the command line to build it. You’ll get a warning, but it will still print “Hello, world!”:</p>
+  <p>你可以在命令行中使用<code>cargo build</code>来构建它。你会得到一个警告，但是它仍然将打印出“hello world！”：</p>
   <pre><code>   Compiling hello_world v0.0.1 (file:///home/you/projects/hello_world)
   src/main.rs:2:9: 2:10 warning: unused variable: `x`, #[warn(unused_variable)]
      on by default
   src/main.rs:2     let x: i32;
                         ^</code></pre>
-  <p>Rust warns us that we never use the variable binding, but since we never use it, no harm, no foul. Things change if we try to actually use this <code>x</code>, however. Let’s do that. Change your program to look like this:</p>
+  <p>Rust warns us that we never use the variable binding, but since we never use it, no harm, no foul. Things change if we try to actually use this <code>x</code>,however. Let’s do that. Change your program to look like this:</p>
+  <p>Rust警告我们我们没有使用变量绑定，因为我们没有使用它，没有害处，就没有犯规。然而，如果我们尝试真正的使用这个<code>x</code>变量，事情就会变化了。让我们那样做一下。改变你的程序如下：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       <span class="kw">let</span> x: <span class="kw">i32</span>;
   
       <span class="ot">println!</span>(<span class="st">&quot;The value of x is: {}&quot;</span>, x);
   }</code></pre></div>
   <p>And try to build it. You’ll get an error:</p>
+  <p>然后试图构建它，你会得到一个错误：</p>
   <pre><code>$ cargo build
      Compiling hello_world v0.0.1 (file:///home/you/projects/hello_world)
   src/main.rs:4:39: 4:40 error: use of possibly uninitialized variable: `x`
@@ -4544,8 +4561,11 @@ code > span.er { font-weight: bold; }
   error: aborting due to previous error
   Could not compile `hello_world`.</code></pre>
   <p>Rust will not let us use a value that has not been initialized. Next, let’s talk about this stuff we’ve added to <code>println!</code>.</p>
+  <p>Rust将不会允许我们使用一个我们没有初始化的值。下一步，让我们讨论下我们加入到<code>println!</code>方法中的东西。</p>
   <p>If you include two curly braces (<code>{}</code>, some call them moustaches…) in your string to print, Rust will interpret this as a request to interpolate some sort of value. <em>String interpolation</em> is a computer science term that means “stick in the middle of a string.” We add a comma, and then <code>x</code>, to indicate that we want <code>x</code> to be the value we’re interpolating. The comma is used to separate arguments we pass to functions and macros, if you’re passing more than one.</p>
-  <p>When you just use the curly braces, Rust will attempt to display the value in a meaningful way by checking out its type. If you want to specify the format in a more detailed manner, there are a <a href="http://doc.rust-lang.org/std/fmt/index.html">wide number of options available</a>. For now, we’ll just stick to the default: integers aren’t very complicated to print.</p>
+  <p>如果你在你要打印的字符串中包含了两个花括号（<code>{}</code>,有些人称他们胡子），Rust会推断他们为一个请求插入一些顺序的值的敌方。<em>字符串插入</em>是一个计算机科学术语，这表示“插入到一个字符串的中间。”我们增加一个逗号，然后是<code>x</code>，来表名我们想要将<code>x</code>作为我们插入的值。如果你要传递不止一个参数的话，逗号被用于分割我们传递给函数和宏的参数。</p>
+  <p>When you just use the curly braces, Rust will attempt to display the value in a meaningful way by checking out its type. If you want to specify the format in a more detailed manner, there are a <a href="http://doc.rust-lang.org/std/fmt/index.html">wide number of options available</a>.For now, we’ll just stick to the default: integers aren’t very complicated to print.</p>
+  <p>当我们只需要使用花括号时，Rust通过检查它的类型将试图以一种有意义的方式来显示这个值。如果我们想要指定更详细的格式，这里有一个<a href="http://doc.rust-lang.org/std/fmt/index.html">很广泛的可选数字类型</a>。现在我们只使用默认：整数对打印来说并不是很复杂的。</p>
   <h2 id="sec--functions">Functions 函数</h2>
   <p>Every Rust program has at least one function, the <code>main</code> function:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
