@@ -4568,16 +4568,20 @@ code > span.er { font-weight: bold; }
   <p>当我们只需要使用花括号时，Rust通过检查它的类型将试图以一种有意义的方式来显示这个值。如果我们想要指定更详细的格式，这里有一个<a href="http://doc.rust-lang.org/std/fmt/index.html">很广泛的可选数字类型</a>。现在我们只使用默认：整数对打印来说并不是很复杂的。</p>
   <h2 id="sec--functions">Functions 函数</h2>
   <p>Every Rust program has at least one function, the <code>main</code> function:</p>
+  <p>每一个Rust程序至少都要有一个函数——<code>main</code>函数：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
   }</code></pre></div>
-  <p>This is the simplest possible function declaration. As we mentioned before, <code>fn</code> says ‘this is a function’, followed by the name, some parentheses because this function takes no arguments, and then some curly braces to indicate the body. Here’s a function named <code>foo</code>:</p>
+  <p>This is the simplest possible function declaration. As we mentioned before,<code>fn</code> says ‘this is a function’, followed by the name, some parentheses because this function takes no arguments, and then some curly braces to indicate the body. Here’s a function named <code>foo</code>:</p>
+  <p>这是最简单的函数声明。正如我们之前提到的，<code>fn</code>表示“这是一个函数”， 紧跟着的是函数名，然后是一对括号，因为这个函数没有使用参数，然后是一对花括号来表示函数体本身。这里有一个叫做<code>foo</code>的函数：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> foo() {
   }</code></pre></div>
   <p>So, what about taking arguments? Here’s a function that prints a number:</p>
+  <p>那么，有参数的话会怎样呢？这里有一个能够打印出一个数字的函数：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> print_number(x: <span class="kw">i32</span>) {
       <span class="ot">println!</span>(<span class="st">&quot;x is: {}&quot;</span>, x);
   }</code></pre></div>
   <p>Here’s a complete program that uses <code>print_number</code>:</p>
+  <p>这里有一个完成的程序使用<code>print_number</code>函数;</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       print_number(<span class="dv">5</span>);
   }
@@ -4585,8 +4589,10 @@ code > span.er { font-weight: bold; }
   <span class="kw">fn</span> print_number(x: <span class="kw">i32</span>) {
       <span class="ot">println!</span>(<span class="st">&quot;x is: {}&quot;</span>, x);
   }</code></pre></div>
-  <p>As you can see, function arguments work very similar to <code>let</code> declarations: you add a type to the argument name, after a colon.</p>
+  <p>As you can see, function arguments work very similar to <code>let</code> declarations:you add a type to the argument name, after a colon.</p>
+  <p>正如你看到的，函数参数非常想<code>let</code>声明：在冒号后面给参数名增加一个类型</p>
   <p>Here’s a complete program that adds two numbers together and prints them:</p>
+  <p>这里有一个完整的例子，一次使用两个数字，并打印他们：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
       print_sum(<span class="dv">5</span>, <span class="dv">6</span>);
   }
@@ -4595,23 +4601,30 @@ code > span.er { font-weight: bold; }
       <span class="ot">println!</span>(<span class="st">&quot;sum is: {}&quot;</span>, x + y);
   }</code></pre></div>
   <p>You separate arguments with a comma, both when you call the function, as well as when you declare it.</p>
+  <p>当你调用一个函数时，使用一个逗号来分割参数，就像你声明它时一样。</p>
   <p>Unlike <code>let</code>, you <em>must</em> declare the types of function arguments. This does not work:</p>
+  <p>不像<code>let</code>声明，你 <em>必须</em> 声明函数参数的类型。下面这样的程序不会运行：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> print_sum(x, y) {
       <span class="ot">println!</span>(<span class="st">&quot;sum is: {}&quot;</span>, x + y);
   }</code></pre></div>
   <p>You get this error:</p>
+  <p>你会得到错误：</p>
   <pre><code>expected one of `!`, `:`, or `@`, found `)`
   fn print_number(x, y) {</code></pre>
-  <p>This is a deliberate design decision. While full-program inference is possible, languages which have it, like Haskell, often suggest that documenting your types explicitly is a best-practice. We agree that forcing functions to declare types while allowing for inference inside of function bodies is a wonderful sweet spot between full inference and no inference.</p>
+  <p>This is a deliberate design decision. While full-program inference is possible,languages which have it, like Haskell, often suggest that documenting your types explicitly is a best-practice. We agree that forcing functions to declare types while allowing for inference inside of function bodies is a wonderful sweet spot between full inference and no inference.</p>
+  <p>这是一个深思熟虑的设计决定。虽然全程序推断是可能的，拥有这种方式的语言有Haskell，经常建议明确的注释你的参数类型是一个最佳实践。我们同意在允许函数体内部推断的同时强制函数声明类型是全局推断和禁止推断之间的灵活点。</p>
   <p>What about returning a value? Here’s a function that adds one to an integer:</p>
+  <p>有返回值会怎样？这里有一个对整数+1函数：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> add_one(x: <span class="kw">i32</span>) -&gt; <span class="kw">i32</span> {
       x + <span class="dv">1</span>
   }</code></pre></div>
   <p>Rust functions return exactly one value, and you declare the type after an ‘arrow’, which is a dash (<code>-</code>) followed by a greater-than sign (<code>&gt;</code>). The last line of a function determines what it returns. You’ll note the lack of a semicolon here. If we added it in:</p>
+  <p>Rust函数的返回一个明确的值，你在一个“箭头”（有一个破折号<code>-</code>紧跟着一个大于号<code>&gt;</code>）之后声明一个类型。函数的最后一行角定了它返回什么。你会注意到这里缺少一个分号。如果我们加入了它（分号）：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> add_one(x: <span class="kw">i32</span>) -&gt; <span class="kw">i32</span> {
       x + <span class="dv">1</span>;
   }</code></pre></div>
   <p>We would get an error:</p>
+  <p>会报错</p>
   <pre><code>error: not all control paths return a value
   fn add_one(x: i32) -&gt; i32 {
        x + 1;
@@ -4621,26 +4634,37 @@ code > span.er { font-weight: bold; }
        x + 1;
             ^</code></pre>
   <p>This reveals two interesting things about Rust: it is an expression-based language, and semicolons are different from semicolons in other ‘curly brace and semicolon’-based languages. These two things are related.</p>
-  <h4 id="expressions-vs.statements">Expressions vs. Statements</h4>
+  <p>这里揭示了Rust的两个有趣的内容：它是一个基于表达式的语言，并且分号不同于其他基于“花括号和分号”的语言。这两件事情是相关联的。</p>
+  <h4 id="expressions-vs.statements-表达式-vs.-声明">Expressions vs. Statements 表达式 VS. 声明</h4>
   <p>Rust is primarily an expression-based language. There are only two kinds of statements, and everything else is an expression.</p>
-  <p>So what’s the difference? Expressions return a value, and statements do not. That’s why we end up with ‘not all control paths return a value’ here: the statement <code>x + 1;</code> doesn’t return a value. There are two kinds of statements in Rust: ‘declaration statements’ and ‘expression statements’. Everything else is an expression. Let’s talk about declaration statements first.</p>
+  <p>Rust是一个主要基于表达是的语言。只有两种声明类型，并且其他一切都是表达式。</p>
+  <p>So what’s the difference? Expressions return a value, and statements do not.That’s why we end up with ‘not all control paths return a value’ here: the statement <code>x + 1;</code> doesn’t return a value. There are two kinds of statements in Rust: ‘declaration statements’ and ‘expression statements’. Everything else is an expression. Let’s talk about declaration statements first.</p>
+  <p>有什么区别呢？表达式返回一个值，声明不会。这就是为什么我们在这里使用‘不是全部控制路径返回值’：声明<code>x + 1;</code>不会返回值。在Rust中有两种声明方式：‘宣布声明’和‘表达式声明’。其他一切都是表达式。我们首先讨论下宣布声明；</p>
   <p>In some languages, variable bindings can be written as expressions, not just statements. Like Ruby:</p>
+  <p>在某些语言中，变量绑定可以被写成表达式，而不只是一个声明。像是Ruby语言：</p>
   <pre><code>x = y = 5</code></pre>
   <p>In Rust, however, using <code>let</code> to introduce a binding is <em>not</em> an expression. The following will produce a compile-time error:</p>
+  <p>然而在Rust中 在一个变量绑定时使用<code>let</code><em>不是</em> 一个表达式。下面的代码将产生一个编译错误：</p>
   <pre><code>let x = (let y = 5); // expected identifier, found keyword `let`</code></pre>
   <p>The compiler is telling us here that it was expecting to see the beginning of an expression, and a <code>let</code> can only begin a statement, not an expression.</p>
+  <p>编译器在告诉我们 这里被预期为一个表达式的开始，但是<code>let</code>只能够开始一个声明，不能够开始一个表达式。</p>
   <p>Note that assigning to an already-bound variable (e.g. <code>y = 5</code>) is still an expression, although its value is not particularly useful. Unlike other languages where an assignment evaluates to the assigned value (e.g. <code>5</code> in the previous example), in Rust the value of an assignment is an empty tuple <code>()</code>:</p>
+  <p>需要注意的是，指定一个已经准备好的变量（例如<code>y = 5</code>）仍然是一个表达式，尽管他的值不是特别有用。不像其他语言，一个赋值语句回来指定变量（例如前面一个例子中的<code>5</code>），在Rust中，指定的值僵尸一个空的元组<code>()</code>：</p>
   <pre><code>let mut y = 5;
   
   let x = (y = 6);  // x has the value `()`, not `6`</code></pre>
   <p>The second kind of statement in Rust is the <em>expression statement</em>. Its purpose is to turn any expression into a statement. In practical terms, Rust’s grammar expects statements to follow other statements. This means that you use semicolons to separate expressions from each other. This means that Rust looks a lot like most other languages that require you to use semicolons at the end of every line, and you will see semicolons at the end of almost every line of Rust code you see.</p>
+  <p>在Rust中的第二种声明是<em>表达式声明</em>。它的目的是将任意表达式转换成语句。就真实情况而言，Rus的语法希望语句来跟随其他声明。这意味着，你使用分号来区分表达式。这也意味着Rust看起来像是其他大多数要求你在每一行的结束使用分号的语言，并且你将会在你见到的Rust代码的几乎每一行的末尾都有分号。</p>
   <p>What is this exception that makes us say “almost”? You saw it already, in this code:</p>
+  <p>是什么让我们说“几乎”?你已经见过了，在这个代码中：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> add_one(x: <span class="kw">i32</span>) -&gt; <span class="kw">i32</span> {
       x + <span class="dv">1</span>
   }</code></pre></div>
   <p>Our function claims to return an <code>i32</code>, but with a semicolon, it would return <code>()</code> instead. Rust realizes this probably isn’t what we want, and suggests removing the semicolon in the error we saw before.</p>
-  <h4 id="early-returns">Early returns</h4>
+  <p>我们的函数声明返回一个<code>i32</code>整数，但是使用了分号后，他只能够反悔<code>()</code>。Rust意识到这可能不是我们需要的，并会建议移除我们之前看到的错误中的分号。</p>
+  <h4 id="early-returns-及早返回">Early returns 及早返回</h4>
   <p>But what about early returns? Rust does have a keyword for that, <code>return</code>:</p>
+  <p>什么是及早返回？Rust有一个关键词<code>return</code>：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> foo(x: <span class="kw">i32</span>) -&gt; <span class="kw">i32</span> {
       <span class="kw">return</span> x;
   
@@ -4648,17 +4672,22 @@ code > span.er { font-weight: bold; }
       x + <span class="dv">1</span>
   }</code></pre></div>
   <p>Using a <code>return</code> as the last line of a function works, but is considered poor style:</p>
+  <p>在函数的最后一行使用<code>return</code>，是可以运行的，但是被认为是差的格式：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> foo(x: <span class="kw">i32</span>) -&gt; <span class="kw">i32</span> {
       <span class="kw">return</span> x + <span class="dv">1</span>;
   }</code></pre></div>
   <p>The previous definition without <code>return</code> may look a bit strange if you haven’t worked in an expression-based language before, but it becomes intuitive over time.</p>
-  <h4 id="diverging-functions">Diverging functions</h4>
+  <p>如果你之前没有使用过一门基于表达式的语言的话，前面没有使用<code>return</code>的定义语句看起可能有点怪，但是随着时间的迁移，它将变得直观。</p>
+  <h4 id="diverging-functions-发散函数">Diverging functions 发散函数</h4>
   <p>Rust has some special syntax for ‘diverging functions’, which are functions that do not return:</p>
+  <p>Rust有一些特殊语法用于‘发散函数’，它是一个没有返回值的函数：</p>
   <pre><code>fn diverges() -&gt; ! {
       panic!(&quot;This function never returns!&quot;);
   }</code></pre>
   <p><code>panic!</code> is a macro, similar to <code>println!()</code> that we’ve already seen. Unlike <code>println!()</code>, <code>panic!()</code> causes the current thread of execution to crash with the given message.</p>
+  <p><code>panic!</code>是一个宏，跟我们已经见过的<code>println!()</code>相似。不像<code>println!()</code>,<code>panic!()</code>使用给定的信息致使执行的当前线程崩溃。</p>
   <p>Because this function will cause a crash, it will never return, and so it has the type ‘<code>!</code>’, which is read ‘diverges’. A diverging function can be used as any type:</p>
+  <p>因为这个函数会致使一个崩溃，它永远没有返回值，所以他使用被称为‘发散’的<code>!</code>类型。一个发散函数可以被用于任意类型：</p>
   <pre><code># fn diverges() -&gt; ! {
   #    panic!(&quot;This function never returns!&quot;);
   # }

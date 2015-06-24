@@ -22,7 +22,7 @@
 * [Syntax and Semantics 语法和语义](syntax-and-semantics.md)
     * [Variable Bindings 变量绑定](variable-bindings.md)
     * [Functions 函数](functions.md)
-    * [Primitive Types 复合数据类型](primitive-types.md)
+    * [Primitive Types 原始数据类型](primitive-types.md)
     * [Comments 注释](comments.md)
     * [if if条件语句](if.md)
     * [for loops for循环语句](for-loops.md)

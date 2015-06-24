@@ -1,9 +1,8 @@
-% Primitive Types
+% Primitive Types 原始数据类型
 
-The Rust language has a number of types that are considered ‘primitive’. This
-means that they’re built-in to the language. Rust is structured in such a way
-that the standard library also provides a number of useful types built on top
-of these ones, as well, but these are the most primitive.
+The Rust language has a number of types that are considered ‘primitive’. This means that they’re built-in to the language. Rust is structured in such a way that the standard library also provides a number of useful types built on top of these ones, as well, but these are the most primitive.
+
+Rust语言有很多被认为是原始数据类型的语言。   
 
 # Booleans
 
