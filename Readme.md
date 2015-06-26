@@ -20,6 +20,7 @@ Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有
 + 第五章 [语法与语义](src/syntax-and-semantics.md)
   - 第一节  [变量绑定](src/variable-bindings.md)
   - 第二节  [函数](src/functions.md)
+  - 第三节  [注释](src/comments.md)
   
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
 
