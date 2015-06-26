@@ -137,7 +137,7 @@ code > span.er { font-weight: bold; }
   <li><a href="#sec--syntax-and-semantics">Syntax and Semantics 语法和语义</a><ul>
   <li><a href="#sec--variable-bindings">Variable Bindings 变量绑定</a></li>
   <li><a href="#sec--functions">Functions 函数</a></li>
-  <li><a href="#sec--primitive-types">Primitive Types 复合数据类型</a><ul>
+  <li><a href="#sec--primitive-types">Primitive Types 原始数据类型</a><ul>
   <li><a href="#booleans">Booleans</a></li>
   <li><a href="#char"><code>char</code></a></li>
   <li><a href="#numeric-types">Numeric types</a></li>
@@ -4693,8 +4693,9 @@ code > span.er { font-weight: bold; }
   # }
   let x: i32 = diverges();
   let x: String = diverges();</code></pre>
-  <h2 id="sec--primitive-types">Primitive Types 复合数据类型</h2>
+  <h2 id="sec--primitive-types">Primitive Types 原始数据类型</h2>
   <p>The Rust language has a number of types that are considered ‘primitive’. This means that they’re built-in to the language. Rust is structured in such a way that the standard library also provides a number of useful types built on top of these ones, as well, but these are the most primitive.</p>
+  <p>Rust语言有很多被认为是原始数据类型的语言。</p>
   <h3 id="booleans">Booleans</h3>
   <p>Rust has a built in boolean type, named <code>bool</code>. It has two values, <code>true</code> and <code>false</code>:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="kw">true</span>;
@@ -4805,8 +4806,10 @@ code > span.er { font-weight: bold; }
   let x: fn(i32) -&gt; i32 = foo;</code></pre>
   <p>In this case, <code>x</code> is a ‘function pointer’ to a function that takes an <code>i32</code> and returns an <code>i32</code>.</p>
   <h2 id="sec--comments">Comments 注释</h2>
-  <p>Now that we have some functions, it’s a good idea to learn about comments. Comments are notes that you leave to other programmers to help explain things about your code. The compiler mostly ignores them.</p>
+  <p>Now that we have some functions, it’s a good idea to learn about comments.Comments are notes that you leave to other programmers to help explain things about your code. The compiler mostly ignores them.</p>
+  <p>我们有了几个函数，了解注释是一个好主意。注释是标注在你将代码给其他程序员后，帮助他们理解你的代码的东西。编译器大都忽略他们。</p>
   <p>Rust has two kinds of comments that you should care about: <em>line comments</em> and <em>doc comments</em>.</p>
+  <p>Rust有两种你需要关注的注释类型，<em>行注释</em>和<em>块注释</em>。</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">// Line comments are anything after ‘//’ and extend to the end of the line.</span>
   
   <span class="kw">let</span> x = <span class="dv">5</span>; <span class="co">// this is also a line comment.</span>
@@ -4815,6 +4818,7 @@ code > span.er { font-weight: bold; }
   <span class="co">// to each other. Put a space between the // and your comment so that it’s</span>
   <span class="co">// more readable.</span></code></pre></div>
   <p>The other kind of comment is a doc comment. Doc comments use <code>///</code> instead of <code>//</code>, and support Markdown notation inside:</p>
+  <p>另一种注释类是是块注释。块注释使用<code>///</code>替代<code>//</code>，并且支持Markdown符号</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="co">/// Adds one to the number given.</span>
   <span class="co">///</span>
   <span class="co">/// # Examples</span>
@@ -4828,7 +4832,9 @@ code > span.er { font-weight: bold; }
       x + <span class="dv">1</span>
   }</code></pre></div>
   <p>When writing doc comments, providing some examples of usage is very, very helpful. You’ll notice we’ve used a new macro here: <code>assert_eq!</code>. This compares two values, and <code>panic!</code>s if they’re not equal to each other. It’s very helpful in documentation. There’s another macro, <code>assert!</code>, which <code>panic!</code>s if the value passed to it is <code>false</code>.</p>
-  <p>You can use the <a href="#sec--documentation"><code>rustdoc</code></a> tool to generate HTML documentation from these doc comments, and also to run the code examples as tests!</p>
+  <p>当些块注释时，提供一些应用示例是非常非常有帮助的。你会注意到我们在这里使用了一个新的宏：<code>assert_eq!</code>。它对比两个值，并且在他们相互见不相等时产生<code>panic!</code>。在文档中它是非常有用的。这里还有另一个宏，<code>assert!</code>，如果传递给它的值是<code>false</code>，就会<code>panic!</code>。</p>
+  <p>You can use the <a href="documentation.md"><code>rustdoc</code></a> tool to generate HTML documentation from these doc comments, and also to run the code examples as tests!</p>
+  <p>你可以使用<a href="documentation.md"><code>rustdoc</code></a>工具从这些块注释来生成html文档注释，同样可以运行的代码例子作为测试！</p>
   <h2 id="sec--if">if if条件语句</h2>
   <p>Rust’s take on <code>if</code> is not particularly complex, but it’s much more like the <code>if</code> you’ll find in a dynamically typed language than in a more traditional systems language. So let’s talk about it, to make sure you grasp the nuances.</p>
   <p><code>if</code> is a specific form of a more general concept, the ‘branch’. The name comes from a branch in a tree: a decision point, where depending on a choice, multiple paths can be taken.</p>
