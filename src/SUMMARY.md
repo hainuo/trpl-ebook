@@ -27,7 +27,7 @@
     * [if if条件语句](if.md)
     * [for loops for循环语句](for-loops.md)
     * [while loops while循环语句](while-loops.md)
-    * [Ownership 权限体系](ownership.md)
+    * [Ownership 所有权](ownership.md)
     * [References and Borrowing 地址引用和借用](references-and-borrowing.md)
     * [Lifetimes 生命周期](lifetimes.md)
     * [Mutability 可变性](mutability.md)

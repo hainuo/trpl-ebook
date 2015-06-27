@@ -1,31 +1,29 @@
-% Ownership
+% Ownership 所有权
 
-This guide is one of three presenting Rust’s ownership system. This is one of
-Rust’s most unique and compelling features, with which Rust developers should
-become quite acquainted. Ownership is how Rust achieves its largest goal,
-memory safety. There are a few distinct concepts, each with its own
-chapter:
+This guide is one of three presenting Rust’s ownership system. This is one of Rust’s most unique and compelling features, with which Rust developers should become quite acquainted. Ownership is how Rust achieves its largest goal, memory safety. There are a few distinct concepts, each with its own chapter:
 
-* ownership, which you’re reading now
-* [borrowing][borrowing], and their associated feature ‘references’
-* [lifetimes][lifetimes], an advanced concept of borrowing
+本指引是三个当前Rust的所有权系统之一。这是Rust最特殊，最引人注目的特性，Rust开发者应该对他有一个相当的认知。所有权是Rust如何达成它最大的目标——内存安全的关键特性。这里有一些清晰的概念，每一个都有自己的章节：
 
-These three chapters are related, and in order. You’ll need all three to fully
-understand the ownership system.
+* ownership, which you’re reading now  所有权系统  你正在阅读的章节
+* [borrowing][borrowing], and their associated feature ‘references’   [借用][borrowing] 它们相关特性的‘引用’
+* [lifetimes][lifetimes], an advanced concept of borrowing [生命周期][lifetimes] 借用的一个高级概念
+
+These three chapters are related, and in order. You’ll need all three to fully understand the ownership system.
+
+这三个章节是按照顺序相关联的。你需要它们三个来完全理解所有权系统。
 
 [borrowing]: references-and-borrowing.html
 [lifetimes]: lifetimes.html
 
-# Meta
+# Meta  元
 
 Before we get to the details, two important notes about the ownership system.
 
-Rust has a focus on safety and speed. It accomplishes these goals through many
-‘zero-cost abstractions’, which means that in Rust, abstractions cost as little
-as possible in order to make them work. The ownership system is a prime example
-of a zero-cost abstraction. All of the analysis we’ll talk about in this guide
-is _done at compile time_. You do not pay any run-time cost for any of these
-features.
+在我们详细说明之前，两个重要的事项是所有权系统。
+
+Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little as possible in order to make them work. The ownership system is a prime example of a zero-cost abstraction. All of the analysis we’ll talk about in this guide is _done at compile time_. You do not pay any run-time cost for any of these features.
+
+Rust注重安全和速度。它通过许多‘0成本抽象’来达成目标，这意味着在Rust中，抽象花费尽可能少的代价来使他们工作。所有权体系是0成本抽象的一个最佳实践。在本指引中我们要谈论的所有的分析是在 _编译时内完成_ 的。你不需要为这些特性花费任何运行时。
 
 However, this system does have a certain cost: learning curve. Many new users
 to Rust experience something we like to call ‘fighting with the borrow

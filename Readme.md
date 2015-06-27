@@ -1,12 +1,12 @@
-# 'The Rust Programming Language' as EBook
-# Rust编程语言 电子书
+# 'The Rust Programming Language' as EBook Rust编程语言电子书
+  s
 
 由 @hainuo 翻译成中文.由于第一次翻译科技文献，不太熟悉英语的表达方式，所以可能有不少地方不到位请大家见谅；同时请大家指出其中翻译错误地方，以便 @hainuo 进行修正。  
 Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有翻译，如果你想加入到翻译中来，请fork 并提交pull request
 
 ##翻译进度（已经完成章节列表）
-+ 介绍说明
-+ 第四章  [高效的Rust](src/effective-rust.md.md)
++ 介绍说明 [readme](src/readme.nmd)
++ 第四章  [高效的Rust](src/effective-rust.md)
   - 第一节  [堆和栈](src/the-stack-and-the-heap.md)
   - 第二节  [测试用例](src/testing.md)
   - 第三节  [条件编译](src/conditional-compilation.md)
@@ -21,6 +21,9 @@ Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有
   - 第一节  [变量绑定](src/variable-bindings.md)
   - 第二节  [函数](src/functions.md)
   - 第三节  [注释](src/comments.md)
+  - 第四节  [if条件语句](src/if.md)
+  - 第五节  [for循环](src/for-loops.md)
+  - 第六节  [while循环语句](src/while-loops.md)
   
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
 
