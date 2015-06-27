@@ -151,20 +151,20 @@ code > span.er { font-weight: bold; }
   <li><a href="#sec--if">if if条件语句</a></li>
   <li><a href="#sec--for-loops">for loops for循环语句</a></li>
   <li><a href="#sec--while-loops">while loops while循环语句</a></li>
-  <li><a href="#sec--ownership">Ownership 权限体系</a><ul>
-  <li><a href="#meta">Meta</a></li>
+  <li><a href="#sec--ownership">Ownership 所有权</a><ul>
+  <li><a href="#meta-元">Meta 元</a></li>
   <li><a href="#ownership">Ownership</a></li>
   <li><a href="#move-semantics">Move semantics</a></li>
   <li><a href="#more-than-ownership">More than ownership</a></li>
   </ul></li>
   <li><a href="#sec--references-and-borrowing">References and Borrowing 地址引用和借用</a><ul>
-  <li><a href="#meta-1">Meta</a></li>
+  <li><a href="#meta">Meta</a></li>
   <li><a href="#borrowing">Borrowing</a></li>
   <li><a href="#mut-references">&amp;mut references</a></li>
   <li><a href="#the-rules">The Rules</a></li>
   </ul></li>
   <li><a href="#sec--lifetimes">Lifetimes 生命周期</a><ul>
-  <li><a href="#meta-2">Meta</a></li>
+  <li><a href="#meta-1">Meta</a></li>
   <li><a href="#lifetimes">Lifetimes</a></li>
   </ul></li>
   <li><a href="#sec--mutability">Mutability 可变性</a><ul>
@@ -4837,15 +4837,20 @@ code > span.er { font-weight: bold; }
   <p>你可以使用<a href="documentation.md"><code>rustdoc</code></a>工具从这些块注释来生成html文档注释，同样可以运行的代码例子作为测试！</p>
   <h2 id="sec--if">if if条件语句</h2>
   <p>Rust’s take on <code>if</code> is not particularly complex, but it’s much more like the <code>if</code> you’ll find in a dynamically typed language than in a more traditional systems language. So let’s talk about it, to make sure you grasp the nuances.</p>
+  <p>Rust对<code>if</code>的处理并不是特别的复杂，但是比起传统的系统语言，你会发现它更像动态类型语言中的<code>if</code>。所以我们来讨论它吧，以确保你掌握细节。</p>
   <p><code>if</code> is a specific form of a more general concept, the ‘branch’. The name comes from a branch in a tree: a decision point, where depending on a choice, multiple paths can be taken.</p>
+  <p><code>if</code> 是一个广泛概念“分支”的一个明确的形式。这个名字来自于一个树状分支，依赖于一个选择点，有多条路径可以选择。</p>
   <p>In the case of <code>if</code>, there is one choice that leads down two paths:</p>
+  <p>在<code>if</code>案例中，每一个选择都会引出亮条路径</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">5</span>;
   
   <span class="kw">if</span> x == <span class="dv">5</span> {
       <span class="ot">println!</span>(<span class="st">&quot;x is five!&quot;</span>);
   }</code></pre></div>
-  <p>If we changed the value of <code>x</code> to something else, this line would not print. More specifically, if the expression after the <code>if</code> evaluates to <code>true</code>, then the block is executed. If it’s <code>false</code>, then it is not.</p>
+  <p>If we changed the value of <code>x</code> to something else, this line would not print.More specifically, if the expression after the <code>if</code> evaluates to <code>true</code>, then the block is executed. If it’s <code>false</code>, then it is not.</p>
+  <p>如果我们改变了<code>x</code>的值，这一行就不会被打印。更确切的说，如果<code>if</code>后面的表达式等于<code>true</code>，代码块就被执行，如果它是<code>false</code>，就不会执行。</p>
   <p>If you want something to happen in the <code>false</code> case, use an <code>else</code>:</p>
+  <p>如果你你想在<code>false</code>情况下发生一些事情，请使用<code>else</code>：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">5</span>;
   
   <span class="kw">if</span> x == <span class="dv">5</span> {
@@ -4854,6 +4859,7 @@ code > span.er { font-weight: bold; }
       <span class="ot">println!</span>(<span class="st">&quot;x is not five :(&quot;</span>);
   }</code></pre></div>
   <p>If there is more than one case, use an <code>else if</code>:</p>
+  <p>如果多余一个条件，请使用<code>else if</code>：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">5</span>;
   
   <span class="kw">if</span> x == <span class="dv">5</span> {
@@ -4864,6 +4870,7 @@ code > span.er { font-weight: bold; }
       <span class="ot">println!</span>(<span class="st">&quot;x is not five or six :(&quot;</span>);
   }</code></pre></div>
   <p>This is all pretty standard. However, you can also do this:</p>
+  <p>这是最完美的标准的，然而你也可以这样做：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">5</span>;
   
   <span class="kw">let</span> y = <span class="kw">if</span> x == <span class="dv">5</span> {
@@ -4872,28 +4879,37 @@ code > span.er { font-weight: bold; }
       <span class="dv">15</span>
   }; <span class="co">// y: i32</span></code></pre></div>
   <p>Which we can (and probably should) write like this:</p>
+  <p>我们可以（并且可能应该）这样写：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> x = <span class="dv">5</span>;
   
   <span class="kw">let</span> y = <span class="kw">if</span> x == <span class="dv">5</span> { <span class="dv">10</span> } <span class="kw">else</span> { <span class="dv">15</span> }; <span class="co">// y: i32</span></code></pre></div>
   <p>This works because <code>if</code> is an expression. The value of the expression is the value of the last expression in whichever branch was chosen. An <code>if</code> without an <code>else</code> always results in <code>()</code> as the value.</p>
+  <p>这样做是因为<code>if</code>是一个表达式。表达式的值是被选择的分支的最后的表达式的值。一个没有<code>else</code>的<code>if</code>总是会导致以<code>()</code>作为值。</p>
   <h2 id="sec--for-loops">for loops for循环语句</h2>
   <p>The <code>for</code> loop is used to loop a particular number of times. Rust’s <code>for</code> loops work a bit differently than in other systems languages, however. Rust’s <code>for</code> loop doesn’t look like this “C-style” <code>for</code> loop:</p>
+  <p><code>for</code>循环被用来循环一个特定数字的次数。然而，Rust的<code>for</code>循环运行方式跟其他系统语言有一点不同。Rust的<code>for</code>遵化呢看起来并不是这样的<code>C风格</code>的<code>for</code>循环：</p>
   <pre><code>for (x = 0; x &lt; 10; x++) {
       printf( &quot;%d\n&quot;, x );
   }</code></pre>
   <p>Instead, it looks like this:</p>
+  <p>相反，它看起来像这样：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> x in <span class="dv">0.</span>.<span class="dv">10</span> {
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, x); <span class="co">// x: i32</span>
   }</code></pre></div>
   <p>In slightly more abstract terms,</p>
+  <p>抽象描述是这样的</p>
   <pre><code>for var in expression {
       code
   }</code></pre>
   <p>The expression is an <a href="#sec--iterators">iterator</a>. The iterator gives back a series of elements. Each element is one iteration of the loop. That value is then bound to the name <code>var</code>, which is valid for the loop body. Once the body is over, the next value is fetched from the iterator, and we loop another time. When there are no more values, the <code>for</code> loop is over.</p>
-  <p>In our example, <code>0..10</code> is an expression that takes a start and an end position, and gives an iterator over those values. The upper bound is exclusive, though, so our loop will print <code>0</code> through <code>9</code>, not <code>10</code>.</p>
+  <p>表达式是一个<a href="#sec--iterators">迭代器</a>。迭代器返回一个元素序列。每一个元素是循环的一个迭代。值被绑定到在循环体中有效的变量<code>var</code>上。一旦循环体结束，下一个值被从迭代器中取出，我们再一次循环。当没有更多值时，<code>for</code>循环结束。</p>
+  <p>In our example, <code>0..10</code> is an expression that takes a start and an end position,and gives an iterator over those values. The upper bound is exclusive, though,so our loop will print <code>0</code> through <code>9</code>, not <code>10</code>.</p>
+  <p>在我们的例子中，<code>0..10</code> 是一个表达式，有一个开始和一个结束位置，并且给处包含他们的迭代器。由于上线是排他性的，所以我们的循环将打印从<code>0</code>至<code>9</code>,不包含<code>10</code>.</p>
   <p>Rust does not have the “C-style” <code>for</code> loop on purpose. Manually controlling each element of the loop is complicated and error prone, even for experienced C developers.</p>
+  <p>Rust不是用“C风格”的<code>for</code>循环是有意图的。手动控制循环的每一个元素是复杂的，并且易出错，即便是具有丰富经验的C开发者。</p>
   <h2 id="sec--while-loops">while loops while循环语句</h2>
   <p>Rust also has a <code>while</code> loop. It looks like this:</p>
+  <p>Rust同样有<code>while</code>循环，它看起来这样：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> x = <span class="dv">5</span>; <span class="co">// mut x: i32</span>
   <span class="kw">let</span> <span class="kw">mut</span> done = <span class="kw">false</span>; <span class="co">// mut done: bool</span>
   
@@ -4907,13 +4923,18 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre></div>
   <p><code>while</code> loops are the correct choice when you’re not sure how many times you need to loop.</p>
+  <p><code>while</code>循环是当你不确定你需要循环多少次时的正确的选择。</p>
   <p>If you need an infinite loop, you may be tempted to write this:</p>
+  <p>如果你需要无限循环，你可能视图这样写：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">while</span> <span class="kw">true</span> {</code></pre></div>
   <p>However, Rust has a dedicated keyword, <code>loop</code>, to handle this case:</p>
+  <p>然而，Rust有一个用来处理这个案例的专门的关键词，<code>loop</code>:</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">loop</span> {</code></pre></div>
   <p>Rust’s control-flow analysis treats this construct differently than a <code>while true</code>, since we know that it will always loop. In general, the more information we can give to the compiler, the better it can do with safety and code generation, so you should always prefer <code>loop</code> when you plan to loop infinitely.</p>
-  <h4 id="ending-iteration-early">Ending iteration early</h4>
+  <p>Rust的控制流分析系统对待这个结构不同于<code>while true</code>，因为我们知道它总是循环。通常情况下，我们能够给到编译器的信息越多，编译器安全操作和代码生成就做的越好，所以，当你计划使用无限循环时，你应该总是偏爱<code>loop</code>。</p>
+  <h4 id="ending-iteration-early-及早结束迭代">Ending iteration early 及早结束迭代</h4>
   <p>Let’s take a look at that <code>while</code> loop we had earlier:</p>
+  <p>让我们看一下前面已经有的<code>while</code>循环：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> x = <span class="dv">5</span>;
   <span class="kw">let</span> <span class="kw">mut</span> done = <span class="kw">false</span>;
   
@@ -4927,7 +4948,9 @@ code > span.er { font-weight: bold; }
       }
   }</code></pre></div>
   <p>We had to keep a dedicated <code>mut</code> boolean variable binding, <code>done</code>, to know when we should exit out of the loop. Rust has two keywords to help us with modifying iteration: <code>break</code> and <code>continue</code>.</p>
+  <p>我们不得不保持一个专门的<code>mut</code>布尔变量绑定，<code>done</code>，来确认什么时候我们应该跳出循环。Rist有两个关键词来帮助我们修改迭代：<code>break</code>和<code>continue</code>。</p>
   <p>In this case, we can write the loop in a better way with <code>break</code>:</p>
+  <p>在这个案例中，我们可以使用<code>break</code>以一种更好的方式写这个循环：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> x = <span class="dv">5</span>;
   
   <span class="kw">loop</span> {
@@ -4938,24 +4961,31 @@ code > span.er { font-weight: bold; }
       <span class="kw">if</span> x % <span class="dv">5</span> == <span class="dv">0</span> { <span class="kw">break</span>; }
   }</code></pre></div>
   <p>We now loop forever with <code>loop</code> and use <code>break</code> to break out early.</p>
+  <p>我们可以使用<code>loop</code>永远循环，并且使用<code>break</code>来及早打断跳出循环。</p>
   <p><code>continue</code> is similar, but instead of ending the loop, goes to the next iteration. This will only print the odd numbers:</p>
+  <p><code>continu</code> 类似，然而不同于结束循环，它会进入到下次迭代中。这将只打印偶数：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">for</span> x in <span class="dv">0.</span>.<span class="dv">10</span> {
       <span class="kw">if</span> x % <span class="dv">2</span> == <span class="dv">0</span> { <span class="kw">continue</span>; }
   
       <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, x);
   }</code></pre></div>
   <p>Both <code>continue</code> and <code>break</code> are valid in both <code>while</code> loops and <a href="#sec--for-loops"><code>for</code> loops</a>.</p>
-  <h2 id="sec--ownership">Ownership 权限体系</h2>
+  <p><code>continue</code>和<code>break</code>对<code>while</code>循环和<a href="#sec--for-loops"><code>for</code>循环</a>同样有效。</p>
+  <h2 id="sec--ownership">Ownership 所有权</h2>
   <p>This guide is one of three presenting Rust’s ownership system. This is one of Rust’s most unique and compelling features, with which Rust developers should become quite acquainted. Ownership is how Rust achieves its largest goal, memory safety. There are a few distinct concepts, each with its own chapter:</p>
+  <p>本指引是三个当前Rust的所有权系统之一。这是Rust最特殊，最引人注目的特性，Rust开发者应该对他有一个相当的认知。所有权是Rust如何达成它最大的目标——内存安全的关键特性。这里有一些清晰的概念，每一个都有自己的章节：</p>
   <ul>
-  <li>ownership, which you’re reading now</li>
-  <li><a href="#sec--references-and-borrowing">borrowing</a>, and their associated feature ‘references’</li>
-  <li><a href="#sec--lifetimes">lifetimes</a>, an advanced concept of borrowing</li>
+  <li>ownership, which you’re reading now 所有权系统 你正在阅读的章节</li>
+  <li><a href="#sec--references-and-borrowing">borrowing</a>, and their associated feature ‘references’ <a href="#sec--references-and-borrowing">借用</a> 它们相关特性的‘引用’</li>
+  <li><a href="#sec--lifetimes">lifetimes</a>, an advanced concept of borrowing <a href="#sec--lifetimes">生命周期</a> 借用的一个高级概念</li>
   </ul>
   <p>These three chapters are related, and in order. You’ll need all three to fully understand the ownership system.</p>
-  <h3 id="meta">Meta</h3>
+  <p>这三个章节是按照顺序相关联的。你需要它们三个来完全理解所有权系统。</p>
+  <h3 id="meta-元">Meta 元</h3>
   <p>Before we get to the details, two important notes about the ownership system.</p>
+  <p>在我们详细说明之前，两个重要的事项是所有权系统。</p>
   <p>Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little as possible in order to make them work. The ownership system is a prime example of a zero-cost abstraction. All of the analysis we’ll talk about in this guide is <em>done at compile time</em>. You do not pay any run-time cost for any of these features.</p>
+  <p>Rust注重安全和速度。它通过许多‘0成本抽象’来达成目标，这意味着在Rust中，抽象花费尽可能少的代价来使他们工作。所有权体系是0成本抽象的一个最佳实践。在本指引中我们要谈论的所有的分析是在 <em>编译时内完成</em> 的。你不需要为这些特性花费任何运行时。</p>
   <p>However, this system does have a certain cost: learning curve. Many new users to Rust experience something we like to call ‘fighting with the borrow checker’, where the Rust compiler refuses to compile a program that the author thinks is valid. This often happens because the programmer’s mental model of how ownership should work doesn’t match the actual rules that Rust implements. You probably will experience similar things at first. There is good news, however: more experienced Rust developers report that once they work with the rules of the ownership system for a period of time, they fight the borrow checker less and less.</p>
   <p>With that in mind, let’s learn about ownership.</p>
   <h3 id="ownership">Ownership</h3>
@@ -5036,7 +5066,7 @@ code > span.er { font-weight: bold; }
   <li><a href="#sec--lifetimes">lifetimes</a>, an advanced concept of borrowing</li>
   </ul>
   <p>These three chapters are related, and in order. You’ll need all three to fully understand the ownership system.</p>
-  <h3 id="meta-1">Meta</h3>
+  <h3 id="meta">Meta</h3>
   <p>Before we get to the details, two important notes about the ownership system.</p>
   <p>Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little as possible in order to make them work. The ownership system is a prime example of a zero cost abstraction. All of the analysis we’ll talk about in this guide is <em>done at compile time</em>. You do not pay any run-time cost for any of these features.</p>
   <p>However, this system does have a certain cost: learning curve. Many new users to Rust experience something we like to call ‘fighting with the borrow checker’, where the Rust compiler refuses to compile a program that the author thinks is valid. This often happens because the programmer’s mental model of how ownership should work doesn’t match the actual rules that Rust implements. You probably will experience similar things at first. There is good news, however: more experienced Rust developers report that once they work with the rules of the ownership system for a period of time, they fight the borrow checker less and less.</p>
@@ -5249,7 +5279,7 @@ code > span.er { font-weight: bold; }
   <li>lifetimes, which you’re reading now</li>
   </ul>
   <p>These three chapters are related, and in order. You’ll need all three to fully understand the ownership system.</p>
-  <h3 id="meta-2">Meta</h3>
+  <h3 id="meta-1">Meta</h3>
   <p>Before we get to the details, two important notes about the ownership system.</p>
   <p>Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little as possible in order to make them work. The ownership system is a prime example of a zero-cost abstraction. All of the analysis we’ll talk about in this guide is <em>done at compile time</em>. You do not pay any run-time cost for any of these features.</p>
   <p>However, this system does have a certain cost: learning curve. Many new users to Rust experience something we like to call ‘fighting with the borrow checker’, where the Rust compiler refuses to compile a program that the author thinks is valid. This often happens because the programmer’s mental model of how ownership should work doesn’t match the actual rules that Rust implements. You probably will experience similar things at first. There is good news, however: more experienced Rust developers report that once they work with the rules of the ownership system for a period of time, they fight the borrow checker less and less.</p>
