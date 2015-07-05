@@ -1,48 +1,49 @@
-% References and Borrowing
+% References and Borrowing 地址引用和借用
 
-This guide is one of three presenting Rust’s ownership system. This is one of
-Rust’s most unique and compelling features, with which Rust developers should
-become quite acquainted. Ownership is how Rust achieves its largest goal,
-memory safety. There are a few distinct concepts, each with its own
-chapter:
+This guide is one of three presenting Rust’s ownership system. This is one of Rust’s most unique and compelling features, with which Rust developers should
+become quite acquainted. Ownership is how Rust achieves its largest goal,memory safety. There are a few distinct concepts, each with its own chapter:
 
-* [ownership][ownership], the key concept
-* borrowing, which you’re reading now
-* [lifetimes][lifetimes], an advanced concept of borrowing
+本指引是三个当前Rust的所有权系统之一。这是Rust最特殊，最引人注目的特性，Rust开发者应该对他有一个相当的认知。所有权是Rust如何达成它最大的目标——内存安全的关键特性。这里有一些清晰的概念，每一个都有自己的章节：
+
+* [ownership][ownership], the key concept   [所有权][ownership]关键概念
+* borrowing, which you’re reading now      [借用]你正在阅读的章节
+* [lifetimes][lifetimes], an advanced concept of borrowing [生命周期][lifetimes] 一个借用的高级概念
 
 These three chapters are related, and in order. You’ll need all three to fully
 understand the ownership system.
 
+这三个章节是按照顺序相关联的。你需要它们三个来完全理解所有权系统。
+
 [ownership]: ownership.html
 [lifetimes]: lifetimes.html
 
-# Meta
+# Meta  元
 
 Before we get to the details, two important notes about the ownership system.
 
-Rust has a focus on safety and speed. It accomplishes these goals through many
-‘zero-cost abstractions’, which means that in Rust, abstractions cost as little
-as possible in order to make them work. The ownership system is a prime example
-of a zero cost abstraction. All of the analysis we’ll talk about in this guide
-is _done at compile time_. You do not pay any run-time cost for any of these
-features.
+在我们详细说明之前，有两个关于所有权系统的重要事项。
 
-However, this system does have a certain cost: learning curve. Many new users
-to Rust experience something we like to call ‘fighting with the borrow
-checker’, where the Rust compiler refuses to compile a program that the author
-thinks is valid. This often happens because the programmer’s mental model of
-how ownership should work doesn’t match the actual rules that Rust implements.
-You probably will experience similar things at first. There is good news,
-however: more experienced Rust developers report that once they work with the
-rules of the ownership system for a period of time, they fight the borrow
-checker less and less.
+Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little
+as possible in order to make them work. The ownership system is a prime example of a zero cost abstraction. All of the analysis we’ll talk about in this guide
+is _done at compile time_. You do not pay any run-time cost for any of these features.
+
+Rust注重安全和速度。它通过许多‘0成本抽象’来达成目标，这意味着在Rust中，抽象花费尽可能少的代价来使他们工作。所有权体系是0成本抽象的一个最佳实践。在本指引中我们要谈论的所有的分析是在 _编译时内完成_ 的。你不需要为这些特性花费任何运行时。
+
+However, this system does have a certain cost: learning curve. Many new users to Rust experience something we like to call ‘fighting with the borrow checker’, where the Rust compiler refuses to compile a program that the author thinks is valid. This often happens because the programmer’s mental model of how ownership should work doesn’t match the actual rules that Rust implements.You probably will experience similar things at first. There is good news,however: more experienced Rust developers report that once they work with the rules of the ownership system for a period of time, they fight the borrow checker less and less.
+
+然而，这样的系统确实需要一定的代价：学习曲线。很多新的Rust体验用户，我们喜欢称之为“与借用检查作战”，Rust编译器拒绝编译一个作者人为是有效的程序的地方。这是经常发生的因为程序的所有权应该运行的推断模型与Rust继承实际规则不匹配。你可能会砸第一次就遇到相似的情况。这是一个好消息，然而：有经验的Rust的开发者报告说：一旦他们开始使用所有权规则一段时间后，他们与借用检查作战的情况越来越少。
 
 With that in mind, let’s learn about borrowing.
 
-# Borrowing
+有了这些概念，我们开始学习借用。
+
+
+# Borrowing  借用
 
 At the end of the [ownership][ownership] section, we had a nasty function that looked
 like this:
+
+在[所有权][ownership]章节的最后，我们有一个看起来像这样子的讨厌的函数：
 
 ```rust
 fn foo(v1: Vec<i32>, v2: Vec<i32>) -> (Vec<i32>, Vec<i32>, i32) {
@@ -77,15 +78,13 @@ let answer = foo(&v1, &v2);
 // we can use v1 and v2 here!
 ```
 
-Instead of taking `Vec<i32>`s as our arguments, we take a reference:
-`&Vec<i32>`. And instead of passing `v1` and `v2` directly, we pass `&v1` and
-`&v2`. We call the `&T` type a ‘reference’, and rather than owning the resource,
-it borrows ownership. A binding that borrows something does not deallocate the
-resource when it goes out of scope. This means that after the call to `foo()`,
-we can use our original bindings again.
+Instead of taking `Vec<i32>`s as our arguments, we take a reference:`&Vec<i32>`. And instead of passing `v1` and `v2` directly, we pass `&v1` and `&v2`. We call the `&T` type a ‘reference’, and rather than owning the resource,it borrows ownership. A binding that borrows something does not deallocate the resource when it goes out of scope. This means that after the call to `foo()`,we can use our original bindings again.
 
-References are immutable, just like bindings. This means that inside of `foo()`,
-the vectors can’t be changed at all:
+我们使用了一个地址引用`&Vec<i32>`，而不是`Vec<i32>`。我们传递`&v1`给`&v2`而不是直接传递`v1`给`v2`。我们称`&T`类型为一个‘地址引用’，不止是拥有了资源，它还借来了所有权。一个借用类型的变量绑定，在它离开作用域时，不需要释放资源。这意味着，在调用`foo()`后，我们可以再次使用我们原来的变量绑定。
+
+References are immutable, just like bindings. This means that inside of `foo()`,the vectors can’t be changed at all:
+
+引用是不可改变的，就像变量绑定。这意味着在`foo()`的内部，向量根本不可能被改变：
 
 ```rust,ignore
 fn foo(v: &Vec<i32>) {
@@ -99,6 +98,8 @@ foo(&v);
 
 errors with:
 
+错误：
+
 ```text
 error: cannot borrow immutable borrowed content `*v` as mutable
 v.push(5);
@@ -107,10 +108,14 @@ v.push(5);
 
 Pushing a value mutates the vector, and so we aren’t allowed to do it.
 
-# &mut references
+推送一个值会改变向量，所以我们不允许这样做。
 
-There’s a second kind of reference: `&mut T`. A ‘mutable reference’ allows you
-to mutate the resource you’re borrowing. For example:
+
+# &mut references   可变的地址引用
+
+There’s a second kind of reference: `&mut T`. A ‘mutable reference’ allows you to mutate the resource you’re borrowing. For example:
+
+有另一种形式的地址引用：`&mut T`。 一个“可变的地址引用”允许你改变你借用的资源。例如：
 
 ```rust
 let mut x = 5;
@@ -121,14 +126,13 @@ let mut x = 5;
 println!("{}", x);
 ```
 
-This will print `6`. We make `y` a mutable reference to `x`, then add one to
-the thing `y` points at. You’ll notice that `x` had to be marked `mut` as well,
-if it wasn’t, we couldn’t take a mutable borrow to an immutable value.
+This will print `6`. We make `y` a mutable reference to `x`, then add one to the thing `y` points at. You’ll notice that `x` had to be marked `mut` as well,if it wasn’t, we couldn’t take a mutable borrow to an immutable value.
 
-Otherwise, `&mut` references are just like references. There _is_ a large
-difference between the two, and how they interact, though. You can tell
-something is fishy in the above example, because we need that extra scope, with
-the `{` and `}`. If we remove them, we get an error:
+这回打印`6`。我们设定`y`为一个`x`的可变类型的地址引用，并对`y`指向的内容增加1。你讲注意到`x`同样必须被标记为`mut`，如果它不是，我们不可能让一个可变的借用指向一个不可变的值。
+
+Otherwise, `&mut` references are just like references. There _is_ a large difference between the two, and how they interact, though. You can tell something is fishy in the above example, because we need that extra scope, with the `{` and `}`. If we remove them, we get an error:
+
+否则，`&mut`地址引用就像是地址引用。然而，两者之间和他们之间如何交互 _是_ 有很大不同。你可以说上个例子中某些内容不是个味儿，因为我们需要使用`{`和`}`来扩展作用域。如果我们移除它们，我们会得到一个报错：
 
 ```text
 error: cannot borrow `x` as immutable because it is also borrowed as mutable
@@ -147,29 +151,33 @@ fn main() {
 
 As it turns out, there are rules.
 
-# The Rules
+事实证明，确实是有规则的。
+
+# The Rules  规则
 
 Here’s the rules about borrowing in Rust:
 
-First, any borrow must last for a smaller scope than the owner. Second, you may
-have one or the other of these two kinds of borrows, but not both at the same
+在Rust中有关于借用的规则：
+
+First, any borrow must last for a smaller scope than the owner. Second, you may have one or the other of these two kinds of borrows, but not both at the same
 time:
 
-* 0 to N references (`&T`) to a resource.
-* exactly one mutable reference (`&mut T`)
+首先，任何借用持续存在的作用域必须比owner的作用域更小。第二，你必须有两种借用类型之一，但是它们不能够同时存在：
+
+* 0 to N references (`&T`) to a resource.  0到n引用地址(`&T`)指向一个资源
+* exactly one mutable reference (`&mut T`)  明确一个可变类型的地址引用（`&mut T`）
 
 
-You may notice that this is very similar, though not exactly the same as,
-to the definition of a data race:
+You may notice that this is very similar, though not exactly the same as, to the definition of a data race:
 
-> There is a ‘data race’ when two or more pointers access the same memory
-> location at the same time, where at least one of them is writing, and the
-> operations are not synchronized.
+你可能会注意到，这非常相似，尽管不是完全相似，来定义一个数据竞争：
 
-With references, you may have as many as you’d like, since none of them are
-writing. If you are writing, you need two or more pointers to the same memory,
-and you can only have one `&mut` at a time. This is how Rust prevents data
-races at compile time: we’ll get errors if we break the rules.
+> There is a ‘data race’ when two or more pointers access the same memory location at the same time, where at least one of them is writing, and the operations are not synchronized.
+> 当两个或者多个指针在同一时间存取相同内存位置时，其中至少有一个会写入，并且操作不会被同步，这就是一个“数据竞争”。
+
+With references, you may have as many as you’d like, since none of them are writing. If you are writing, you need two or more pointers to the same memory,and you can only have one `&mut` at a time. This is how Rust prevents data races at compile time: we’ll get errors if we break the rules.
+
+
 
 With this in mind, let’s consider our example again.
 

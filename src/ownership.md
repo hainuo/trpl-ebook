@@ -19,7 +19,7 @@ These three chapters are related, and in order. You’ll need all three to fully
 
 Before we get to the details, two important notes about the ownership system.
 
-在我们详细说明之前，两个重要的事项是所有权系统。
+在我们详细说明之前，有两个关于所有权系统的重要事项。
 
 Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little as possible in order to make them work. The ownership system is a prime example of a zero-cost abstraction. All of the analysis we’ll talk about in this guide is _done at compile time_. You do not pay any run-time cost for any of these features.
 
