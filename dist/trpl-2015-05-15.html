@@ -158,13 +158,13 @@ code > span.er { font-weight: bold; }
   <li><a href="#more-than-ownership-不只是所有权">More than ownership 不只是所有权</a></li>
   </ul></li>
   <li><a href="#sec--references-and-borrowing">References and Borrowing 地址引用和借用</a><ul>
-  <li><a href="#meta">Meta</a></li>
-  <li><a href="#borrowing">Borrowing</a></li>
-  <li><a href="#mut-references">&amp;mut references</a></li>
-  <li><a href="#the-rules">The Rules</a></li>
+  <li><a href="#meta-元-1">Meta 元</a></li>
+  <li><a href="#borrowing-借用">Borrowing 借用</a></li>
+  <li><a href="#mut-references-可变的地址引用">&amp;mut references 可变的地址引用</a></li>
+  <li><a href="#the-rules-规则">The Rules 规则</a></li>
   </ul></li>
   <li><a href="#sec--lifetimes">Lifetimes 生命周期</a><ul>
-  <li><a href="#meta-1">Meta</a></li>
+  <li><a href="#meta">Meta</a></li>
   <li><a href="#lifetimes">Lifetimes</a></li>
   </ul></li>
   <li><a href="#sec--mutability">Mutability 可变性</a><ul>
@@ -4983,7 +4983,7 @@ code > span.er { font-weight: bold; }
   <p>这三个章节是按照顺序相关联的。你需要它们三个来完全理解所有权系统。</p>
   <h3 id="meta-元">Meta 元</h3>
   <p>Before we get to the details, two important notes about the ownership system.</p>
-  <p>在我们详细说明之前，两个重要的事项是所有权系统。</p>
+  <p>在我们详细说明之前，有两个关于所有权系统的重要事项。</p>
   <p>Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little as possible in order to make them work. The ownership system is a prime example of a zero-cost abstraction. All of the analysis we’ll talk about in this guide is <em>done at compile time</em>. You do not pay any run-time cost for any of these features.</p>
   <p>Rust注重安全和速度。它通过许多‘0成本抽象’来达成目标，这意味着在Rust中，抽象花费尽可能少的代价来使他们工作。所有权体系是0成本抽象的一个最佳实践。在本指引中我们要谈论的所有的分析是在 <em>编译时内完成</em> 的。你不需要为这些特性花费任何运行时。</p>
   <p>However, this system does have a certain cost: learning curve. Many new users to Rust experience something we like to call ‘fighting with the borrow checker’, where the Rust compiler refuses to compile a program that the author thinks is valid. This often happens because the programmer’s mental model of how ownership should work doesn’t match the actual rules that Rust implements.You probably will experience similar things at first. There is good news, however: more experienced Rust developers report that once they work with the rules of the ownership system for a period of time, they fight the borrow checker less and less.</p>
@@ -5078,20 +5078,27 @@ code > span.er { font-weight: bold; }
   <p>Luckily, Rust offers a feature, borrowing, which helps us solve this problem.It’s the topic of the next section!</p>
   <p>幸运的是，Rust提供了一个特性，借用，它能够帮助我们解决这个问题。这是下一个章节的话题！</p>
   <h2 id="sec--references-and-borrowing">References and Borrowing 地址引用和借用</h2>
-  <p>This guide is one of three presenting Rust’s ownership system. This is one of Rust’s most unique and compelling features, with which Rust developers should become quite acquainted. Ownership is how Rust achieves its largest goal, memory safety. There are a few distinct concepts, each with its own chapter:</p>
+  <p>This guide is one of three presenting Rust’s ownership system. This is one of Rust’s most unique and compelling features, with which Rust developers should become quite acquainted. Ownership is how Rust achieves its largest goal,memory safety. There are a few distinct concepts, each with its own chapter:</p>
+  <p>本指引是三个当前Rust的所有权系统之一。这是Rust最特殊，最引人注目的特性，Rust开发者应该对他有一个相当的认知。所有权是Rust如何达成它最大的目标——内存安全的关键特性。这里有一些清晰的概念，每一个都有自己的章节：</p>
   <ul>
-  <li><a href="#sec--ownership">ownership</a>, the key concept</li>
-  <li>borrowing, which you’re reading now</li>
-  <li><a href="#sec--lifetimes">lifetimes</a>, an advanced concept of borrowing</li>
+  <li><a href="#sec--ownership">ownership</a>, the key concept <a href="#sec--ownership">所有权</a>关键概念</li>
+  <li>borrowing, which you’re reading now [借用]你正在阅读的章节</li>
+  <li><a href="#sec--lifetimes">lifetimes</a>, an advanced concept of borrowing <a href="#sec--lifetimes">生命周期</a> 一个借用的高级概念</li>
   </ul>
   <p>These three chapters are related, and in order. You’ll need all three to fully understand the ownership system.</p>
-  <h3 id="meta">Meta</h3>
+  <p>这三个章节是按照顺序相关联的。你需要它们三个来完全理解所有权系统。</p>
+  <h3 id="meta-元-1">Meta 元</h3>
   <p>Before we get to the details, two important notes about the ownership system.</p>
+  <p>在我们详细说明之前，有两个关于所有权系统的重要事项。</p>
   <p>Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little as possible in order to make them work. The ownership system is a prime example of a zero cost abstraction. All of the analysis we’ll talk about in this guide is <em>done at compile time</em>. You do not pay any run-time cost for any of these features.</p>
-  <p>However, this system does have a certain cost: learning curve. Many new users to Rust experience something we like to call ‘fighting with the borrow checker’, where the Rust compiler refuses to compile a program that the author thinks is valid. This often happens because the programmer’s mental model of how ownership should work doesn’t match the actual rules that Rust implements. You probably will experience similar things at first. There is good news, however: more experienced Rust developers report that once they work with the rules of the ownership system for a period of time, they fight the borrow checker less and less.</p>
+  <p>Rust注重安全和速度。它通过许多‘0成本抽象’来达成目标，这意味着在Rust中，抽象花费尽可能少的代价来使他们工作。所有权体系是0成本抽象的一个最佳实践。在本指引中我们要谈论的所有的分析是在 <em>编译时内完成</em> 的。你不需要为这些特性花费任何运行时。</p>
+  <p>However, this system does have a certain cost: learning curve. Many new users to Rust experience something we like to call ‘fighting with the borrow checker’, where the Rust compiler refuses to compile a program that the author thinks is valid. This often happens because the programmer’s mental model of how ownership should work doesn’t match the actual rules that Rust implements.You probably will experience similar things at first. There is good news,however: more experienced Rust developers report that once they work with the rules of the ownership system for a period of time, they fight the borrow checker less and less.</p>
+  <p>然而，这样的系统确实需要一定的代价：学习曲线。很多新的Rust体验用户，我们喜欢称之为“与借用检查作战”，Rust编译器拒绝编译一个作者人为是有效的程序的地方。这是经常发生的因为程序的所有权应该运行的推断模型与Rust继承实际规则不匹配。你可能会砸第一次就遇到相似的情况。这是一个好消息，然而：有经验的Rust的开发者报告说：一旦他们开始使用所有权规则一段时间后，他们与借用检查作战的情况越来越少。</p>
   <p>With that in mind, let’s learn about borrowing.</p>
-  <h3 id="borrowing">Borrowing</h3>
+  <p>有了这些概念，我们开始学习借用。</p>
+  <h3 id="borrowing-借用">Borrowing 借用</h3>
   <p>At the end of the <a href="#sec--ownership">ownership</a> section, we had a nasty function that looked like this:</p>
+  <p>在<a href="#sec--ownership">所有权</a>章节的最后，我们有一个看起来像这样子的讨厌的函数：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> foo(v1: Vec&lt;<span class="kw">i32</span>&gt;, v2: Vec&lt;<span class="kw">i32</span>&gt;) -&gt; (Vec&lt;<span class="kw">i32</span>&gt;, Vec&lt;<span class="kw">i32</span>&gt;, <span class="kw">i32</span>) {
       <span class="co">// do stuff with v1 and v2</span>
   
@@ -5117,8 +5124,10 @@ code > span.er { font-weight: bold; }
   <span class="kw">let</span> answer = foo(&amp;v1, &amp;v2);
   
   <span class="co">// we can use v1 and v2 here!</span></code></pre></div>
-  <p>Instead of taking <code>Vec&lt;i32&gt;</code>s as our arguments, we take a reference: <code>&amp;Vec&lt;i32&gt;</code>. And instead of passing <code>v1</code> and <code>v2</code> directly, we pass <code>&amp;v1</code> and <code>&amp;v2</code>. We call the <code>&amp;T</code> type a ‘reference’, and rather than owning the resource, it borrows ownership. A binding that borrows something does not deallocate the resource when it goes out of scope. This means that after the call to <code>foo()</code>, we can use our original bindings again.</p>
-  <p>References are immutable, just like bindings. This means that inside of <code>foo()</code>, the vectors can’t be changed at all:</p>
+  <p>Instead of taking <code>Vec&lt;i32&gt;</code>s as our arguments, we take a reference:<code>&amp;Vec&lt;i32&gt;</code>. And instead of passing <code>v1</code> and <code>v2</code> directly, we pass <code>&amp;v1</code> and <code>&amp;v2</code>. We call the <code>&amp;T</code> type a ‘reference’, and rather than owning the resource,it borrows ownership. A binding that borrows something does not deallocate the resource when it goes out of scope. This means that after the call to <code>foo()</code>,we can use our original bindings again.</p>
+  <p>我们使用了一个地址引用<code>&amp;Vec&lt;i32&gt;</code>，而不是<code>Vec&lt;i32&gt;</code>。我们传递<code>&amp;v1</code>给<code>&amp;v2</code>而不是直接传递<code>v1</code>给<code>v2</code>。我们称<code>&amp;T</code>类型为一个‘地址引用’，不止是拥有了资源，它还借来了所有权。一个借用类型的变量绑定，在它离开作用域时，不需要释放资源。这意味着，在调用<code>foo()</code>后，我们可以再次使用我们原来的变量绑定。</p>
+  <p>References are immutable, just like bindings. This means that inside of <code>foo()</code>,the vectors can’t be changed at all:</p>
+  <p>引用是不可改变的，就像变量绑定。这意味着在<code>foo()</code>的内部，向量根本不可能被改变：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> foo(v: &amp;Vec&lt;<span class="kw">i32</span>&gt;) {
        v.push(<span class="dv">5</span>);
   }
@@ -5127,20 +5136,25 @@ code > span.er { font-weight: bold; }
   
   foo(&amp;v);</code></pre></div>
   <p>errors with:</p>
+  <p>错误：</p>
   <pre><code>error: cannot borrow immutable borrowed content `*v` as mutable
   v.push(5);
   ^</code></pre>
   <p>Pushing a value mutates the vector, and so we aren’t allowed to do it.</p>
-  <h3 id="mut-references">&amp;mut references</h3>
+  <p>推送一个值会改变向量，所以我们不允许这样做。</p>
+  <h3 id="mut-references-可变的地址引用">&amp;mut references 可变的地址引用</h3>
   <p>There’s a second kind of reference: <code>&amp;mut T</code>. A ‘mutable reference’ allows you to mutate the resource you’re borrowing. For example:</p>
+  <p>有另一种形式的地址引用：<code>&amp;mut T</code>。 一个“可变的地址引用”允许你改变你借用的资源。例如：</p>
   <div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> x = <span class="dv">5</span>;
   {
       <span class="kw">let</span> y = &amp;<span class="kw">mut</span> x;
       *y += <span class="dv">1</span>;
   }
   <span class="ot">println!</span>(<span class="st">&quot;{}&quot;</span>, x);</code></pre></div>
-  <p>This will print <code>6</code>. We make <code>y</code> a mutable reference to <code>x</code>, then add one to the thing <code>y</code> points at. You’ll notice that <code>x</code> had to be marked <code>mut</code> as well, if it wasn’t, we couldn’t take a mutable borrow to an immutable value.</p>
+  <p>This will print <code>6</code>. We make <code>y</code> a mutable reference to <code>x</code>, then add one to the thing <code>y</code> points at. You’ll notice that <code>x</code> had to be marked <code>mut</code> as well,if it wasn’t, we couldn’t take a mutable borrow to an immutable value.</p>
+  <p>这回打印<code>6</code>。我们设定<code>y</code>为一个<code>x</code>的可变类型的地址引用，并对<code>y</code>指向的内容增加1。你讲注意到<code>x</code>同样必须被标记为<code>mut</code>，如果它不是，我们不可能让一个可变的借用指向一个不可变的值。</p>
   <p>Otherwise, <code>&amp;mut</code> references are just like references. There <em>is</em> a large difference between the two, and how they interact, though. You can tell something is fishy in the above example, because we need that extra scope, with the <code>{</code> and <code>}</code>. If we remove them, we get an error:</p>
+  <p>否则，<code>&amp;mut</code>地址引用就像是地址引用。然而，两者之间和他们之间如何交互 <em>是</em> 有很大不同。你可以说上个例子中某些内容不是个味儿，因为我们需要使用<code>{</code>和<code>}</code>来扩展作用域。如果我们移除它们，我们会得到一个报错：</p>
   <pre><code>error: cannot borrow `x` as immutable because it is also borrowed as mutable
       println!(&quot;{}&quot;, x);
                      ^
@@ -5154,18 +5168,22 @@ code > span.er { font-weight: bold; }
   }
   ^</code></pre>
   <p>As it turns out, there are rules.</p>
-  <h3 id="the-rules">The Rules</h3>
+  <p>事实证明，确实是有规则的。</p>
+  <h3 id="the-rules-规则">The Rules 规则</h3>
   <p>Here’s the rules about borrowing in Rust:</p>
+  <p>在Rust中有关于借用的规则：</p>
   <p>First, any borrow must last for a smaller scope than the owner. Second, you may have one or the other of these two kinds of borrows, but not both at the same time:</p>
+  <p>首先，任何借用持续存在的作用域必须比owner的作用域更小。第二，你必须有两种借用类型之一，但是它们不能够同时存在：</p>
   <ul>
-  <li>0 to N references (<code>&amp;T</code>) to a resource.</li>
-  <li>exactly one mutable reference (<code>&amp;mut T</code>)</li>
+  <li>0 to N references (<code>&amp;T</code>) to a resource. 0到n引用地址(<code>&amp;T</code>)指向一个资源</li>
+  <li>exactly one mutable reference (<code>&amp;mut T</code>) 明确一个可变类型的地址引用（<code>&amp;mut T</code>）</li>
   </ul>
   <p>You may notice that this is very similar, though not exactly the same as, to the definition of a data race:</p>
+  <p>你可能会注意到，这非常相似，尽管不是完全相似，来定义一个数据竞争：</p>
   <blockquote>
-  <p>There is a ‘data race’ when two or more pointers access the same memory location at the same time, where at least one of them is writing, and the operations are not synchronized.</p>
+  <p>There is a ‘data race’ when two or more pointers access the same memory location at the same time, where at least one of them is writing, and the operations are not synchronized. 当两个或者多个指针在同一时间存取相同内存位置时，其中至少有一个会写入，并且操作不会被同步，这就是一个“数据竞争”。</p>
   </blockquote>
-  <p>With references, you may have as many as you’d like, since none of them are writing. If you are writing, you need two or more pointers to the same memory, and you can only have one <code>&amp;mut</code> at a time. This is how Rust prevents data races at compile time: we’ll get errors if we break the rules.</p>
+  <p>With references, you may have as many as you’d like, since none of them are writing. If you are writing, you need two or more pointers to the same memory,and you can only have one <code>&amp;mut</code> at a time. This is how Rust prevents data races at compile time: we’ll get errors if we break the rules.</p>
   <p>With this in mind, let’s consider our example again.</p>
   <h4 id="thinking-in-scopes">Thinking in scopes</h4>
   <p>Here’s the code:</p>
@@ -5298,7 +5316,7 @@ code > span.er { font-weight: bold; }
   <li>lifetimes, which you’re reading now</li>
   </ul>
   <p>These three chapters are related, and in order. You’ll need all three to fully understand the ownership system.</p>
-  <h3 id="meta-1">Meta</h3>
+  <h3 id="meta">Meta</h3>
   <p>Before we get to the details, two important notes about the ownership system.</p>
   <p>Rust has a focus on safety and speed. It accomplishes these goals through many ‘zero-cost abstractions’, which means that in Rust, abstractions cost as little as possible in order to make them work. The ownership system is a prime example of a zero-cost abstraction. All of the analysis we’ll talk about in this guide is <em>done at compile time</em>. You do not pay any run-time cost for any of these features.</p>
   <p>However, this system does have a certain cost: learning curve. Many new users to Rust experience something we like to call ‘fighting with the borrow checker’, where the Rust compiler refuses to compile a program that the author thinks is valid. This often happens because the programmer’s mental model of how ownership should work doesn’t match the actual rules that Rust implements. You probably will experience similar things at first. There is good news, however: more experienced Rust developers report that once they work with the rules of the ownership system for a period of time, they fight the borrow checker less and less.</p>
