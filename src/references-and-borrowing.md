@@ -159,8 +159,7 @@ Here’s the rules about borrowing in Rust:
 
 在Rust中有关于借用的规则：
 
-First, any borrow must last for a smaller scope than the owner. Second, you may have one or the other of these two kinds of borrows, but not both at the same
-time:
+First, any borrow must last for a smaller scope than the owner. Second, you may have one or the other of these two kinds of borrows, but not both at the same time:
 
 首先，任何借用持续存在的作用域必须比owner的作用域更小。第二，你必须有两种借用类型之一，但是它们不能够同时存在：
 
@@ -177,13 +176,17 @@ You may notice that this is very similar, though not exactly the same as, to the
 
 With references, you may have as many as you’d like, since none of them are writing. If you are writing, you need two or more pointers to the same memory,and you can only have one `&mut` at a time. This is how Rust prevents data races at compile time: we’ll get errors if we break the rules.
 
-
+通过使用地址引用，你会拥有比你想要的还要多德，因为他们不需要写入。如果你要写入，你需要两个或者更多个指向相同内存的指针，并且你只有一个`&mut`在同一时间。这正是Rust在编译时内阻止数据竞争的原因：如果我们打破了规则我们将得到报错。
 
 With this in mind, let’s consider our example again.
 
-## Thinking in scopes
+有了这个概念，让我们再次注视下我们的例子。
+
+## Thinking in scopes 作用域思想
 
 Here’s the code:
+
+下面是代码：
 
 ```rust,ignore
 let mut x = 5;
@@ -196,15 +199,18 @@ println!("{}", x);
 
 This code gives us this error:
 
+这段代码给出报错
+
+
 ```text
 error: cannot borrow `x` as immutable because it is also borrowed as mutable
     println!("{}", x);
                    ^
 ```
 
-This is because we’ve violated the rules: we have a `&mut T` pointing to `x`,
-and so we aren’t allowed to create any `&T`s. One or the other. The note
-hints at how to think about this problem:
+This is because we’ve violated the rules: we have a `&mut T` pointing to `x`,and so we aren’t allowed to create any `&T`s. One or the other. The note hints at how to think about this problem:
+
+这是因为我们违反了规则：我们有一个指向`x`的指针`&mut T`,所以我们不被允许创建任何`&T`。一个或者另一个。注释暗示着如何看待这个问题：
 
 ```text
 note: previous borrow ends here
@@ -214,10 +220,9 @@ fn main() {
 ^
 ```
 
-In other words, the mutable borow is held through the rest of our example. What
-we want is for the mutable borrow to end _before_ we try to call `println!` and
-make an immutable borrow. In Rust, borrowing is tied to the scope that the
-borrow is valid for. And our scopes look like this:
+In other words, the mutable borow is held through the rest of our example. What we want is for the mutable borrow to end _before_ we try to call `println!` and make an immutable borrow. In Rust, borrowing is tied to the scope that the borrow is valid for. And our scopes look like this:
+
+换句话说，可变的借用视同例子中剩余部分来保持的。对于可变的借用，我们想要的是在我们尝试调用`println!`，和生成一个不可变的借用 _之前_ 结束。在Rust中，借用是被置于一个对借用是有效的作用域中。作用域看起来像这样：
 
 ```rust,ignore
 let mut x = 5;
@@ -232,7 +237,11 @@ println!("{}", x); // -+ - try to borrow x here
 
 The scopes conflict: we can’t make an `&x` while `y` is in scope.
 
+作用域冲冲突：我们不能够在`y`的作用域内创建一个`&x`.
+
 So when we add the curly braces:
+
+所以在这个时候我们增加了花括号：
 
 ```rust
 let mut x = 5;
@@ -245,19 +254,21 @@ let mut x = 5;
 println!("{}", x);  // <- try to borrow x here
 ```
 
-There’s no problem. Our mutable borrow goes out of scope before we create an
-immutable one. But scope is the key to seeing how long a borrow lasts for.
+There’s no problem. Our mutable borrow goes out of scope before we create an immutable one. But scope is the key to seeing how long a borrow lasts for.
 
-## Issues borrowing prevents
+没有任何问题。在我们创建一个不可变借用时，可变的借用已经离开作用域。但是作用域是一个借用能够持续多久的关键。
 
-Why have these restrictive rules? Well, as we noted, these rules prevent data
-races. What kinds of issues do data races cause? Here’s a few.
+## Issues borrowing prevents  借用防止的问题
 
-### Iterator invalidation
+Why have these restrictive rules? Well, as we noted, these rules prevent data races. What kinds of issues do data races cause? Here’s a few.
 
-One example is ‘iterator invalidation’, which happens when you try to mutate a
-collection that you’re iterating over. Rust’s borrow checker prevents this from
-happening:
+为什么要有这些限制性规则呢？我们注意到，这些规则阻止了数据竞争。数据竞争会引起哪些问题？这里有些例子。
+
+### Iterator invalidation   迭代器失效
+
+One example is ‘iterator invalidation’, which happens when you try to mutate a collection that you’re iterating over. Rust’s borrow checker prevents this from happening:
+
+一个例子是“迭代器失效”，这发生在当我们试图改变一个正在遍历的集合时。Rust的借用检查阻止这种情况发生：
 
 ```rust
 let mut v = vec![1, 2, 3];
@@ -267,9 +278,10 @@ for i in &v {
 }
 ```
 
-This prints out one through three. As we iterate through the vectors, we’re
-only given references to the elements. And `v` is itself borrowed as immutable,
-which means we can’t change it while we’re iterating:
+This prints out one through three. As we iterate through the vectors, we’re only given references to the elements. And `v` is itself borrowed as immutable,which means we can’t change it while we’re iterating:
+
+这将打印出三个中的一个。当我们遍历向量时，我们只是将地址引用传递给元素。`v`是它本身的借用作为不可变变量，这意味着当我们正在遍历时，我们不能够改变它：
+
 
 ```rust,ignore
 let mut v = vec![1, 2, 3];
@@ -281,6 +293,8 @@ for i in &v {
 ```
 
 Here’s the error:
+
+错误：
 
 ```text
 error: cannot borrow `v` as mutable because it is also borrowed as immutable
@@ -300,13 +314,17 @@ for i in &v {
 
 We can’t modify `v` because it’s borrowed by the loop.
 
-### use after free
+我们不能够修改`v`因为它被循环借用者。
 
-References must live as long as the resource they refer to. Rust will check the
-scopes of your references to ensure that this is true.
+### use after free   释放后使用
 
-If Rust didn’t check that this property, we could accidentally use a reference
-which was invalid. For example:
+References must live as long as the resource they refer to. Rust will check the scopes of your references to ensure that this is true.
+
+地址引用必须跟他们引用的资源的存活期一样。Rust将检查你引用的作用域来确定这是正确的。
+
+If Rust didn’t check that this property, we could accidentally use a reference which was invalid. For example:
+
+如果Rust不检查这个属性，我们可能会使用一个失效的地址引用。例如：
 
 ```rust,ignore
 let y: &i32;
@@ -320,31 +338,32 @@ println!("{}", y);
 
 We get this error:
 
+我们得到错误：
+
 ```text
 error: `x` does not live long enough
     y = &x;
          ^
-note: reference must be valid for the block suffix following statement 0 at
-2:16...
+note: reference must be valid for the block suffix following statement 0 at 2:16...
 let y: &i32;
 { 
     let x = 5;
     y = &x;
 }
 
-note: ...but borrowed value is only valid for the block suffix following
-statement 0 at 4:18
+note: ...but borrowed value is only valid for the block suffix following statement 0 at 4:18
     let x = 5;
     y = &x;
 }
 ```
 
-In other words, `y` is only valid for the scope where `x` exists. As soon as
-`x` goes away, it becomes invalid to refer to it. As such, the error says that
-the borrow ‘doesn’t live long enough’ because it’s not valid for the right
-amount of time.
+In other words, `y` is only valid for the scope where `x` exists. As soon as `x` goes away, it becomes invalid to refer to it. As such, the error says that the borrow ‘doesn’t live long enough’ because it’s not valid for the right amount of time.
+
+换句话说，当`x`存在时，`y`对作用于来说是有效的。一旦`x`消失，对于引用他的来说将是失效的。正是正阳，错误告我们借用“没有足够的存活时间”，因为它在此刻是失效的。
 
 The same problem occurs when the reference is declared _before_ the variable it refers to:
+
+相同的问题发生 _在_ 他引用的变量 _之前_ 声明地址引用时：
 
 ```rust,ignore
 let y: &i32;

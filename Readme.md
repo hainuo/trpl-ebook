@@ -25,6 +25,7 @@ Ps：由于是根据个人兴趣进行翻译，可能你所需要的章节没有
   - 第五节  [for循环](src/for-loops.md)
   - 第六节  [while循环语句](src/while-loops.md)
   - 第七节  [所有权](src/ownership.md)
+  - 第八节  [地址引用和借用](references-and-borrowing.md)
   
 This repository contains stuff to convert [this book](http://doc.rust-lang.org/book/) to HTML, EPUB and PDF.
 

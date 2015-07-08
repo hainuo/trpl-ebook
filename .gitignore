@@ -1,6 +1,6 @@
 #dist/
 .DS_Store
-
+.idea/
 rustlanguage.sublime-project
 
 rustlanguage.sublime-workspace
